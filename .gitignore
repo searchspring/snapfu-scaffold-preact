@@ -1,0 +1,8 @@
+# ignore the node_modules folder
+node_modules/
+
+# ignore generated content
+dist/
+
+# ignore annoying files
+.DS_Store
