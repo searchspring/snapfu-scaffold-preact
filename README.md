@@ -1,4 +1,4 @@
-# {{snapfu.name}}
+# Preact template app
 
 Preact app with Snap SDK components.
 
@@ -13,3 +13,11 @@ npm install
 ```bash
 npm run dev
 ```
+
+## Build
+
+```bash
+npm run build
+```
+
+Files are output to `./dist`
