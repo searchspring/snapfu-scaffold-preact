@@ -37,6 +37,4 @@ jobs:
         run: |
           aws s3 sync --delete dist s3://${{secrets.SNAPFU_AWS_BUCKET}}/{{snapfu.siteId}}/${{ steps.extract_branch.outputs.branch }}
       - name: Create cloudfront distribution
-        run: aws cloudfront create-distribution \
-          --origin-domain-name ${{ secrets.SNAPFU_AWS_BUCKET }}.s3.amazonaws.com \
-          --default-root-object index.html
+        run: aws cloudfront create-distribution --origin-domain-name ${{ secrets.SNAPFU_AWS_BUCKET }}.s3.amazonaws.com --default-root-object index.html
