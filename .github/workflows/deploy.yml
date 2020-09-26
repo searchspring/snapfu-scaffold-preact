@@ -1,7 +1,7 @@
 on:
   push:
     branches:    
-      - '**'        # matches every branch
+      - '**' # matches every branch
 
 jobs:
   upload:
