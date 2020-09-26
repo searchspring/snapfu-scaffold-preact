@@ -27,10 +27,16 @@ jobs:
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
-      - uses: shallwefootball/s3-upload-action@master
+      - name: Configure AWS credentials from Production account
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws_key_id: ${{ secrets.AWS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
-          aws_bucket: ${{ secrets.AWS_BUCKET }}
-          source_dir: 'dist'
-          destination_dir: '{{snapfu.siteId}}/${{ steps.extract_branch.outputs.branch }}'
+          aws-access-key-id: ${{ secrets.AWS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+      - name: Copy files to s3
+        run: |
+          aws s3 sync --delete dist s3://${{secrets.AWS_BUCKET}}/{{snapfu.siteId}}/${{ steps.extract_branch.outputs.branch }}
+      - name: Create cloudfront distribution
+        run: aws cloudfront create-distribution \
+          --origin-domain-name ${{ secrets.AWS_BUCKET }}.s3.amazonaws.com \
+          --default-root-object index.html
