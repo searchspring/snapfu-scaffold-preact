@@ -10,7 +10,7 @@ import { Profiler } from '@searchspring/snap-profiler';
 import { DomTargeter } from '@searchspring/snap-toolbox';
 
 /* local imports */
-import { searchspring } from '../package.json';
+import config from '../package.json';
 import { middleware } from './scripts/custom';
 import './styles/custom.scss';
 
@@ -21,7 +21,7 @@ import { Content } from './components/Content/Content';
  */
 
 let globals = {
-	siteId: searchspring.siteId,
+	siteId: config.searchspring.siteId,
 };
 
 const client = new SnapClient(globals);
