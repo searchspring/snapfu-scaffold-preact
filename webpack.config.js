@@ -57,12 +57,16 @@ module.exports = {
 	},
 	devtool: 'source-map',
 	devServer: {
+		https: true,
 		port: 3333,
 		contentBase: [path.join(__dirname, 'public')],
 		contentBasePublicPath: ['/'],
 		watchContentBase: true,
 		hot: true,
 		publicPath: '/dev',
-		allowedHosts: ['searchspring.com'],
+		disableHostCheck: true,
+		headers: {
+			'Access-Control-Allow-Origin': '*',
+		},
 	},
 };
