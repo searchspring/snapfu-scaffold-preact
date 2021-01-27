@@ -3,31 +3,72 @@
 	"version": "0.0.1",
 	"main": "index.js",
 	"scripts": {
-		"build": "npx webpack --mode=production --display-modules",
-		"dev": "npx webpack-dev-server"
+		"build": "webpack --mode=production",
+		"cypress": "cypress open --project tests",
+		"dev": "webpack serve",
+		"format": "prettier --write \"**/*.{js,ts,json}\"",
+		"lint": "eslint --fix \"**/*.{js,ts}\"",
+		"test": "cypress run --project tests"
 	},
 	"author": "{{snapfu.author}}",
-	"license": "MIT",
-	"dependencies": {
-		"preact": "^10.4.8"
+	"searchspring": {
+		"siteId": "{{snapfu.siteId}}"
 	},
-	"siteId": "{{snapfu.siteId}}",
+	"license": "MIT",
+	"prettier": "@searchspring/prettier",
+	"dependencies": {
+		"@searchspring/snap-client-javascript": "^1.0.1",
+		"@searchspring/snap-controller-search": "0.0.8",
+		"@searchspring/snap-event-manager": "0.0.12",
+		"@searchspring/snap-profiler": "0.0.4",
+		"@searchspring/snap-store-mobx-search": "0.0.7",
+		"@searchspring/snap-toolbox": "0.0.13",
+		"@searchspring/snap-url-manager": "0.0.9",
+		"mobx": "^6.0.5",
+		"mobx-react": "^7.0.6",
+		"preact": "^10.5.12"
+	},
 	"devDependencies": {
-		"@babel/cli": "^7.11.6",
-		"@babel/core": "^7.11.6",
-		"@babel/plugin-proposal-class-properties": "^7.10.4",
-		"@babel/plugin-proposal-decorators": "^7.10.5",
-		"@babel/plugin-transform-react-jsx": "^7.10.4",
-		"@babel/preset-env": "^7.11.5",
-		"@babel/preset-react": "^7.10.4",
-		"babel-loader": "^8.1.0",
-		"css-loader": "^4.2.2",
-		"html-webpack-plugin": "^4.4.1",
-		"node-sass": "^4.14.1",
-		"sass-loader": "^10.0.2",
-		"style-loader": "^1.2.1",
-		"webpack": "^4.44.1",
-		"webpack-cli": "^3.3.12",
-		"webpack-dev-server": "^3.11.0"
+		"@babel/core": "^7.12.10",
+		"@babel/plugin-proposal-class-properties": "^7.12.1",
+		"@babel/plugin-proposal-decorators": "^7.12.12",
+		"@babel/plugin-transform-react-jsx": "^7.12.12",
+		"@babel/plugin-transform-runtime": "^7.12.10",
+		"@babel/preset-env": "^7.12.11",
+		"@babel/preset-react": "^7.12.10",
+		"@searchspring/prettier": "^1.0.2",
+		"babel-eslint": "^10.1.0",
+		"babel-loader": "^8.2.2",
+		"core-js": "^3.8.3",
+		"css-loader": "^5.0.1",
+		"cypress": "^6.3.0",
+		"eslint": "^7.18.0",
+		"eslint-plugin-react": "^7.22.0",
+		"file-loader": "^6.2.0",
+		"husky": "^4.3.8",
+		"lighthouse": "^7.0.1",
+		"lint-staged": "^10.5.3",
+		"node-sass": "^5.0.0",
+		"prettier": "^2.2.1",
+		"sass-loader": "^10.1.1",
+		"style-loader": "^2.0.0",
+		"webpack": "^5.18.0",
+		"webpack-bundle-analyzer": "^4.4.0",
+		"webpack-cli": "^4.4.0",
+		"webpack-dev-server": "^3.11.2"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	},
+	"lint-staged": {
+		"./package.json": [
+			"prettier --write"
+		],
+		"*.{js,ts}": [
+			"prettier --write",
+			"eslint --fix"
+		]
 	}
 }

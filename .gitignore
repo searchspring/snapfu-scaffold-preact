@@ -1,4 +1,14 @@
-node_modules/
-dist/
+# ignore the node_modules folder
+node_modules
+
+# ignore annoying files
 .DS_Store
-.env
+
+# ignore dist folder
+dist
+
+# ignore test coverage
+coverage
+
+# ignore cypress videos
+tests/cypress/videos

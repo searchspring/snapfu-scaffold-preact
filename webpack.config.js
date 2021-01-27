@@ -1,4 +1,5 @@
-const HtmlWebPackPlugin = require("html-webpack-plugin");
+const path = require('path');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
 	mode: 'development',
@@ -37,25 +38,31 @@ module.exports = {
 		],
 	},
 	output: {
-		path: __dirname + '/dist',
-		filename: 'bundle.js'
+		path: path.join(__dirname, 'dist'),
+		filename: 'bundle.js',
 	},
 	plugins: [
-		new HtmlWebPackPlugin({
-			template: "./public/index.html",
-			favicon: "./public/favicon.ico"
-		}),
+		/* uncomment to see analysis of bundle */
 		// new BundleAnalyzerPlugin()
 	],
-	resolve: { 
+	resolve: {
 		extensions: ['.js', '.jsx'],
-		alias: { 
-			"react": "preact/compat",
-			"react-dom": "preact/compat"
-		}
+		alias: {
+			react: 'preact/compat',
+			'react-dom/test-utils': 'preact/test-utils',
+			'react-dom': 'preact/compat',
+			preact: path.resolve(__dirname, 'node_modules', 'preact'),
+			'preact/hooks': path.resolve(__dirname, 'node_modules', 'preact', 'hooks'),
+		},
 	},
 	devtool: 'source-map',
 	devServer: {
-		port: 3333
-	}
+		port: 3333,
+		contentBase: [path.join(__dirname, 'public')],
+		contentBasePublicPath: ['/'],
+		watchContentBase: true,
+		hot: true,
+		publicPath: '/dev',
+		allowedHosts: ['searchspring.com'],
+	},
 };
