@@ -63,7 +63,7 @@ module.exports = {
 		contentBasePublicPath: ['/'],
 		watchContentBase: true,
 		hot: true,
-		publicPath: '/dev',
+		publicPath: '/dist',
 		disableHostCheck: true,
 		headers: {
 			'Access-Control-Allow-Origin': '*',
