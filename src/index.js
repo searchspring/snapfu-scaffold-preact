@@ -38,7 +38,7 @@ const cntrlrConfig = {
 	id: 'search',
 	settings: {
 		redirects: {
-			enabled: false,
+			merchandising: false,
 		},
 	},
 };

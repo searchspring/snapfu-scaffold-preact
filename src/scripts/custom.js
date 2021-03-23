@@ -10,7 +10,7 @@ export const middleware = (controller) => {
 		controller.log.imageText({
 			url: 'https://searchspring.com/wp-content/themes/SearchSpring-Theme/dist/images/favicons/favicon.svg',
 			text: `   ${versionText}`,
-			style: `color: ${colors.indigo}; font-weight: bold;`,
+			style: `color: ${controller.log.colors.indigo}; font-weight: bold;`,
 		});
 
 		await next();
