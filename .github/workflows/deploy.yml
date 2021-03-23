@@ -4,14 +4,23 @@ on:
       - '**' # matches every branch
 
 jobs:
-  upload:
+  Deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repositiory
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 12
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@searchspring'
+
       - name: Cache node modules
         uses: actions/cache@v2
         env:
-            cache-name: cache-node-modules
+          cache-name: cache-node-modules
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
           path: ~/.npm
@@ -21,18 +30,38 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - run: npm install
-      - run: npm run build
-      - name: Extract branch name
+      - name: Install packages
+        run: npm install
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.PACKAGE_TOKEN }}
+
+      - name: Build bundle
+        run: npm run build
+
+      # - name: Start server
+      #   run: npm run serve &
+
+      # - name: Run Cypress
+      #   run: npm run test
+
+      - name: Extract Variables
+        id: variables
         shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
+        run: |
+          branch=`echo ${GITHUB_REF#refs/heads/}`
+          echo "::set-output name=branch::$branch"
+          echo "Using branch: $branch"
+          siteId=`jq -r '.searchspring.siteId' < package.json`
+          echo "::set-output name=siteId::$siteId"
+          echo "Using siteId: $siteId"
+
       - name: Configure AWS credentials from Production account
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.SNAPFU_AWS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.SNAPFU_AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-2
+
       - name: Copy files to s3
         run: |
-          aws s3 sync --delete --acl public-read dist s3://${{secrets.SNAPFU_AWS_BUCKET}}/{{snapfu.siteId}}/${{ steps.extract_branch.outputs.branch }}
+          aws s3 sync --delete --acl public-read dist s3://${{secrets.SNAPFU_AWS_BUCKET}}/${{ steps.variables.outputs.siteId }}/${{ steps.variables.outputs.branch }}

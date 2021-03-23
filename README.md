@@ -1,6 +1,7 @@
-# Preact template app
+# Searchspring Snap Preact Template
 
-Preact app with Snap SDK components.
+Snap SDK packages and components built with Preact.
+https://preactjs.com/guide/v10/getting-started
 
 ## Install
 

@@ -5,10 +5,10 @@ node_modules
 .DS_Store
 
 # ignore dist folder
-dist
+/dist
 
 # ignore test coverage
 coverage
 
 # ignore cypress videos
-tests/cypress/videos
+testing/cypress/screenshots

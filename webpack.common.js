@@ -1,9 +1,11 @@
 const path = require('path');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
-	mode: 'development',
 	entry: './src/index.js',
+	stats: {
+		modulesSort: 'size',
+		modulesSpace: 70,
+	},
 	module: {
 		rules: [
 			{
@@ -38,13 +40,10 @@ module.exports = {
 		],
 	},
 	output: {
+		publicPath: '',
 		path: path.join(__dirname, 'dist'),
 		filename: 'bundle.js',
 	},
-	plugins: [
-		/* uncomment to see analysis of bundle */
-		// new BundleAnalyzerPlugin()
-	],
 	resolve: {
 		extensions: ['.js', '.jsx'],
 		alias: {
@@ -53,20 +52,6 @@ module.exports = {
 			'react-dom': 'preact/compat',
 			preact: path.resolve(__dirname, 'node_modules', 'preact'),
 			'preact/hooks': path.resolve(__dirname, 'node_modules', 'preact', 'hooks'),
-		},
-	},
-	devtool: 'source-map',
-	devServer: {
-		https: true,
-		port: 3333,
-		contentBase: [path.join(__dirname, 'public')],
-		contentBasePublicPath: ['/'],
-		watchContentBase: true,
-		hot: true,
-		publicPath: '/dist',
-		disableHostCheck: true,
-		headers: {
-			'Access-Control-Allow-Origin': '*',
 		},
 	},
 };

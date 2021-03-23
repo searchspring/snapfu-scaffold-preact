@@ -16,5 +16,16 @@
 // Import commands.js using ES2015 syntax:
 import './commands';
 
-// Alternatively you can use CommonJS syntax:
-// require('./commands')
+beforeEach(() => {
+	cy.blockResources([
+		'https://widget.privy.com/assets/widget.js',
+		'cdn.searchspring.net/search/', // v3 resources
+		'cdn.searchspring.net/autocomplete/', // v2 AC resources
+		'cdn.searchspring.net/ajax_search/js/', // v2 resources
+	]);
+
+	// make references to requests available
+	cy.intercept('searchspring.io/api/v1/search').as('search');
+	cy.intercept('searchspring.io/api/v1/autocomplete').as('autocomplete');
+	cy.intercept('searchspring.io/api/v1/meta').as('meta');
+});

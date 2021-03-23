@@ -1,13 +1,17 @@
 import { h, Fragment, render } from 'preact';
+import { configure as configureMobx } from 'mobx';
 
 /* searchspring imports */
-import { SearchController } from '@searchspring/snap-controller-search';
 import SnapClient from '@searchspring/snap-client-javascript';
-import { SearchStore } from '@searchspring/snap-store-mobx-search';
+
 import { UrlManager, QueryStringTranslator, ReactLinker } from '@searchspring/snap-url-manager';
 import { EventManager } from '@searchspring/snap-event-manager';
 import { Profiler } from '@searchspring/snap-profiler';
+import { Logger } from '@searchspring/snap-logger';
 import { DomTargeter } from '@searchspring/snap-toolbox';
+
+import { SearchController } from '@searchspring/snap-controller';
+import { SearchStore } from '@searchspring/snap-store-mobx';
 
 /* local imports */
 import config from '../package.json';
@@ -39,13 +43,14 @@ const cntrlrConfig = {
 	},
 };
 
-const cntrlr = (window.cntrlr = new SearchController(cntrlrConfig, {
+const cntrlr = new SearchController(cntrlrConfig, {
 	client,
 	store: new SearchStore(),
-	urlManager: new UrlManager(new QueryStringTranslator(), ReactLinker),
+	urlManager: new UrlManager(new QueryStringTranslator({ queryParameter: 'search_query' }), ReactLinker),
 	eventManager: new EventManager(),
 	profiler: new Profiler(),
-}));
+	logger: new Logger(),
+});
 
 // custom codez
 cntrlr.use(middleware);
@@ -67,3 +72,8 @@ cntrlr.on('init', async () => {
 
 cntrlr.init();
 cntrlr.search();
+
+// for testing purposes
+window.sssnap = {
+	search: cntrlr,
+};
