@@ -9,7 +9,8 @@
 		"dev": "kill $(lsof -ti:3333,8888); webpack serve --config webpack.dev.js",
 		"format": "prettier --write \"**/*.{js,ts,json}\"",
 		"lint": "eslint --fix \"**/*.{js,ts}\"",
-		"test": "kill $(lsof -ti:3333,8888); webpack serve --config webpack.prod.js & (cypress run --project tests && kill $(lsof -ti:3333,8888))"
+		"test": "kill $(lsof -ti:3333,8888); webpack serve --config webpack.prod.js & (cypress run --project tests && kill $(lsof -ti:3333,8888))",
+		"prepare": "husky install"
 	},
 	"author": "{{snapfu.author}}",
 	"searchspring": {
@@ -18,15 +19,15 @@
 	"license": "MIT",
 	"prettier": "@searchspring/prettier",
 	"dependencies": {
-		"@searchspring/snap-client": "^0.1.9",
-		"@searchspring/snap-controller": "^0.1.9",
-		"@searchspring/snap-event-manager": "^0.1.9",
-		"@searchspring/snap-logger": "^0.1.9",
-		"@searchspring/snap-preact-components": "^0.1.9",
-		"@searchspring/snap-profiler": "^0.1.9",
-		"@searchspring/snap-store-mobx": "^0.1.9",
-		"@searchspring/snap-toolbox": "^0.1.9",
-		"@searchspring/snap-url-manager": "0.1.9",
+		"@searchspring/snap-client": "^0.1.10",
+		"@searchspring/snap-controller": "^0.1.10",
+		"@searchspring/snap-event-manager": "^0.1.10",
+		"@searchspring/snap-logger": "^0.1.10",
+		"@searchspring/snap-preact-components": "^0.1.10",
+		"@searchspring/snap-profiler": "^0.1.10",
+		"@searchspring/snap-store-mobx": "^0.1.10",
+		"@searchspring/snap-toolbox": "^0.1.10",
+		"@searchspring/snap-url-manager": "0.1.10",
 		"mobx": "^6.3.0",
 		"mobx-react": "^7.1.0",
 		"preact": "^10.5.13"
