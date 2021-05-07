@@ -50,8 +50,6 @@ module.exports = {
 			react: 'preact/compat',
 			'react-dom/test-utils': 'preact/test-utils',
 			'react-dom': 'preact/compat',
-			preact: path.resolve(__dirname, 'node_modules', 'preact'),
-			'preact/hooks': path.resolve(__dirname, 'node_modules', 'preact', 'hooks'),
 		},
 	},
 };

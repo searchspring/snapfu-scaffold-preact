@@ -5,7 +5,7 @@ async function scrollToTop(search, next) {
 
 export const middleware = (controller) => {
 	controller.on('init', async ({ controller }, next) => {
-		const versionText = 'SNAPreact 0.2.1';
+		const versionText = 'Snap Preact 0.2.1';
 
 		controller.log.imageText({
 			url: 'https://searchspring.com/wp-content/themes/SearchSpring-Theme/dist/images/favicons/favicon.svg',
@@ -13,6 +13,12 @@ export const middleware = (controller) => {
 			style: `color: ${controller.log.colors.indigo}; font-weight: bold;`,
 		});
 
+		await next();
+	});
+
+	// log the store
+	controller.on('afterStore', async ({ controller }, next) => {
+		controller.log.debug('store', controller.store.toJSON());
 		await next();
 	});
 

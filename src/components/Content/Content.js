@@ -1,7 +1,6 @@
 import { h, Fragment, Component } from 'preact';
 import { observer } from 'mobx-react';
 import { StoreProvider } from '../../services/providers';
-
 @observer
 export class Content extends Component {
 	render() {

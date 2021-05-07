@@ -1,10 +1,9 @@
 import { h, Fragment, render } from 'preact';
-import { configure as configureMobx } from 'mobx';
 
 /* searchspring imports */
-import SnapClient from '@searchspring/snap-client-javascript';
+import { SnapClient } from '@searchspring/snap-client';
 
-import { UrlManager, QueryStringTranslator, ReactLinker } from '@searchspring/snap-url-manager';
+import { UrlManager, UrlTranslator, reactLinker } from '@searchspring/snap-url-manager';
 import { EventManager } from '@searchspring/snap-event-manager';
 import { Profiler } from '@searchspring/snap-profiler';
 import { Logger } from '@searchspring/snap-logger';
@@ -34,34 +33,29 @@ const client = new SnapClient(globals);
 	search
  */
 
-const cntrlrConfig = {
+const searchControllerConfig = {
 	id: 'search',
-	settings: {
-		redirects: {
-			merchandising: false,
-		},
-	},
 };
 
-const cntrlr = new SearchController(cntrlrConfig, {
+const searchController = new SearchController(searchControllerConfig, {
 	client,
 	store: new SearchStore(),
-	urlManager: new UrlManager(new QueryStringTranslator({ queryParameter: 'search_query' }), ReactLinker),
+	urlManager: new UrlManager(new UrlTranslator({ queryParameter: 'search' }), reactLinker),
 	eventManager: new EventManager(),
 	profiler: new Profiler(),
 	logger: new Logger(),
 });
 
 // custom codez
-cntrlr.use(middleware);
+searchController.use(middleware);
 
 // render <Content/> component into #searchspring-content
-cntrlr.on('init', async () => {
+searchController.on('init', async () => {
 	new DomTargeter(
 		[
 			{
 				selector: '#searchspring-content',
-				component: <Content store={cntrlr.store} />,
+				component: <Content store={searchController.store} />,
 			},
 		],
 		(target, elem) => {
@@ -70,10 +64,10 @@ cntrlr.on('init', async () => {
 	);
 });
 
-cntrlr.init();
-cntrlr.search();
+searchController.init();
+searchController.search();
 
 // for testing purposes
 window.sssnap = {
-	search: cntrlr,
+	search: searchController,
 };
