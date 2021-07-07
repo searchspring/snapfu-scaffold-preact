@@ -14,7 +14,8 @@
 	},
 	"author": "{{snapfu.author}}",
 	"searchspring": {
-		"siteId": "{{snapfu.siteId}}"
+		"siteId": "{{snapfu.siteId}}",
+		"framework": "{{snapfu.framework}}"
 	},
 	"license": "MIT",
 	"prettier": "@searchspring/prettier",
