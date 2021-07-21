@@ -1,4 +1,7 @@
 const path = require('path');
+const webpack = require('webpack');
+const childProcess = require("child_process");
+const branchName = childProcess.execSync("git rev-parse --abbrev-ref HEAD").toString().trim();
 
 module.exports = {
 	entry: './src/index.js',
@@ -6,6 +9,11 @@ module.exports = {
 		modulesSort: 'size',
 		modulesSpace: 70,
 	},
+	plugins:[
+		new webpack.DefinePlugin({
+			BRANCHNAME: `"${branchName}"`,
+		})
+	],
 	module: {
 		rules: [
 			{
@@ -49,7 +57,7 @@ module.exports = {
 		alias: {
 			react: 'preact/compat',
 			'react-dom/test-utils': 'preact/test-utils',
-			'react-dom': 'preact/compat',
+			'react-dom': 'preact/compat'
 		},
-	},
+	}
 };

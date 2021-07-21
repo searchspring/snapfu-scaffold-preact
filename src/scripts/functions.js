@@ -40,10 +40,11 @@ export async function until(thing, customOptions) {
 				case 'function': {
 					return thing();
 				}
-				default:
+				default: {
 					if (thing) {
 						return thing;
 					}
+				}
 			}
 		}
 	});

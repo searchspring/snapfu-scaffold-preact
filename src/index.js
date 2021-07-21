@@ -1,20 +1,12 @@
 import { h, Fragment, render } from 'preact';
+import { configure as configureMobx } from 'mobx';
 
 /* searchspring imports */
-import { SnapClient } from '@searchspring/snap-client';
-
-import { UrlManager, UrlTranslator, reactLinker } from '@searchspring/snap-url-manager';
-import { EventManager } from '@searchspring/snap-event-manager';
-import { Profiler } from '@searchspring/snap-profiler';
-import { Logger } from '@searchspring/snap-logger';
-import { DomTargeter } from '@searchspring/snap-toolbox';
-
-import { SearchController } from '@searchspring/snap-controller';
-import { SearchStore } from '@searchspring/snap-store-mobx';
+import { Snap } from '@searchspring/snap-preact';
 
 /* local imports */
-import config from '../package.json';
-import { middleware } from './scripts/custom';
+import { searchspring } from '../package.json';
+import { plugin } from './scripts/custom';
 import './styles/custom.scss';
 
 import { Content } from './components/Content/Content';
@@ -23,51 +15,60 @@ import { Content } from './components/Content/Content';
 	configuration and instantiation
  */
 
-let globals = {
-	siteId: config.searchspring.siteId,
-};
-
-const client = new SnapClient(globals);
+configureMobx({
+	useProxies: 'never',
+});
 
 /*
-	search
+	configuration and instantiation
  */
 
-const searchControllerConfig = {
-	id: 'search',
-};
-
-const searchController = new SearchController(searchControllerConfig, {
-	client,
-	store: new SearchStore(),
-	urlManager: new UrlManager(new UrlTranslator({ queryParameter: 'search' }), reactLinker),
-	eventManager: new EventManager(),
-	profiler: new Profiler(),
-	logger: new Logger(),
-});
-
-// custom codez
-searchController.use(middleware);
-
-// render <Content/> component into #searchspring-content
-searchController.on('init', async () => {
-	new DomTargeter(
-		[
+const config = {
+	parameters: {
+		query: { name: 'q' },
+	},
+	client: {
+		globals: {
+			siteId: searchspring.siteId,
+		},
+	},
+	controllers: {
+		search: [
 			{
-				selector: '#searchspring-content',
-				component: <Content store={searchController.store} />,
+				config: {
+					id: 'search',
+				},
+				targets: [
+					{
+						selector: '#searchspring-content',
+						component: Content,
+						hideTarget: true,
+					},
+				],
 			},
 		],
-		(target, elem) => {
-			render(target.component, elem);
-		}
-	);
-});
-
-searchController.init();
-searchController.search();
-
-// for testing purposes
-window.sssnap = {
-	search: searchController,
+		autocomplete: [
+			{
+				config: {
+					id: 'autocomplete',
+					selector: '#search-input',
+				},
+				targets: [
+					{
+						selector: '#search-input',
+						component: Autocomplete,
+					},
+				],
+			},
+		],
+	},
 };
+
+const snap = new Snap(config);
+const { search, autocomplete } = snap.controllers;
+
+/*
+	search middleware plugin
+	*/
+
+search.use(plugin);

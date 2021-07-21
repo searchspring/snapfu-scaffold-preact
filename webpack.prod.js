@@ -14,5 +14,5 @@ module.exports = merge(common, {
 		headers: {
 			'Access-Control-Allow-Origin': '*',
 		},
-	},
+	}
 });
