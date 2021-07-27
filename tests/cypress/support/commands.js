@@ -26,15 +26,6 @@
 
 import config from '../../../package.json';
 
-Cypress.Commands.add('blockResources', (scripts = []) => {
-	scripts = typeof scripts === 'string' ? [scripts] : scripts;
-
-	scripts.forEach((script) => {
-		cy.intercept(script, (req) => {
-			req.destroy();
-		});
-	});
-});
 
 Cypress.Commands.add('addScript', (script) => {
 	cy.get('head').then(($elem) => {
@@ -78,7 +69,7 @@ Cypress.Commands.add('snapStore', (controllerId = 'search') => {
 				};
 	
 				if (cntrlr.store.loading) {
-					cntrlr.on('afterStore', after);
+					return cntrlr.on('afterStore', after);
 				} else {
 					resolve(cntrlr.store);
 				}

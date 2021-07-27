@@ -21,6 +21,7 @@
 			"pragma": "h",
 			"pragmaFrag": "Fragment"
 		}],
-		["@babel/plugin-transform-arrow-functions"]
+		["@babel/plugin-transform-arrow-functions"],
+		["@prefresh/babel-plugin"]
 	]
 }

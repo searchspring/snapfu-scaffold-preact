@@ -3,7 +3,7 @@ async function scrollToTop(search, next) {
 	await next();
 }
 
-export const plugin = (controller) => {
+export const middleware = (controller) => {
 	// log the store
 	controller.on('afterStore', async ({ controller }, next) => {
 		controller.log.debug('store', controller.store.toJSON());

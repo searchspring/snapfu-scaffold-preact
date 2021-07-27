@@ -17,15 +17,19 @@
 import './commands';
 
 beforeEach(() => {
-	cy.blockResources([
-		'https://widget.privy.com/assets/widget.js',
-		'cdn.searchspring.net/search/', // v3 resources
-		'cdn.searchspring.net/autocomplete/', // v2 AC resources
-		'cdn.searchspring.net/ajax_search/js/', // v2 resources
-	]);
+	// ignore party uncaught exceptions
+	cy.on('uncaught:exception', (err, runnable) => false);
 
 	// make references to requests available
-	cy.intercept('searchspring.io/api/v1/search').as('search');
-	cy.intercept('searchspring.io/api/v1/autocomplete').as('autocomplete');
-	cy.intercept('searchspring.io/api/v1/meta').as('meta');
+	cy.intercept(/.*searchspring.io\/api\/search\/search/).as('search');
+	cy.intercept(/.*searchspring.io\/api\/search\/autocomplete/).as('autocomplete');
+	cy.intercept(/.*searchspring.io\/api\/meta\/meta/).as('meta');
+
+	// prevent v2 and v3 assets
+	cy.intercept(/.*searchspring.net\/search\/*/, (req) => { req.destroy() });
+	cy.intercept(/.*searchspring.net\/autocomplete\/*/, (req) => { req.destroy() });
+	cy.intercept(/.*searchspring.net\/ajax_search\/js\/*/, (req) => { req.destroy() });
+
+	// prevent 3rd party assets
+	cy.intercept(/.*widget.privy.com\/*/, (req) => {req.destroy()})
 });
