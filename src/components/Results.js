@@ -21,7 +21,7 @@ export class Results extends Component {
 				{results.map((result) => (
 					<li class="ss__result" key={result.id}>
 						{{
-							banner: <InlineBanner content={result} />,
+							banner: <InlineBanner banner={result} />,
 						}[result.type] || <Result result={result} />}
 					</li>
 				))}
