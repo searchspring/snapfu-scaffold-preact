@@ -40,7 +40,7 @@ const config = {
 			{
 				config: {
 					id: 'search',
-					use: middleware,
+					plugin: middleware,
 				},
 				targets: [
 					{

@@ -21,8 +21,8 @@
 	"license": "MIT",
 	"prettier": "@searchspring/prettier",
 	"dependencies": {
-		"@searchspring/snap-preact": "^0.3.14",
-		"@searchspring/snap-preact-components": "^0.3.14",
+		"@searchspring/snap-preact": "^0.3.27",
+		"@searchspring/snap-preact-components": "^0.3.27",
 		"mobx": "^6.3.2",
 		"mobx-react": "^7.2.0",
 		"preact": "^10.5.14"

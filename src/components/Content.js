@@ -26,7 +26,7 @@ export class Content extends Component {
 						<Banner content={merchandising.content} type="header" />
 						<Banner content={merchandising.content} type="banner" />
 
-						{pagination.totalResults ? (
+						{pagination.totalResults > 0 ? (
 							<div>
 								{isMobile && store.facets.length && store.pagination.totalResults && (
 									<Slideout buttonContent={<SlideoutButton />}>
