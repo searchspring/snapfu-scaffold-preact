@@ -16,13 +16,13 @@
 	"author": "{{snapfu.author}}",
 	"searchspring": {
 		"siteId": "{{snapfu.siteId}}",
-		"framework": "{{snapfu.framework}}"
+		"framework": "preact"
 	},
 	"license": "MIT",
 	"prettier": "@searchspring/prettier",
 	"dependencies": {
-		"@searchspring/snap-preact": "^0.3.30",
-		"@searchspring/snap-preact-components": "^0.3.30",
+		"@searchspring/snap-preact": "^0.5.0",
+		"@searchspring/snap-preact-components": "^0.5.0",
 		"mobx": "^6.3.2",
 		"mobx-react": "^7.2.0",
 		"preact": "^10.5.14"
