@@ -64,7 +64,7 @@
 		"./package.json": [
 			"prettier --write"
 		],
-		"./src/**/*.{js,ts}": [
+		"./src/**/*.{js,jsx,ts,tsx}": [
 			"prettier --write",
 			"eslint --fix"
 		]
