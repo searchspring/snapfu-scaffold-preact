@@ -16,7 +16,8 @@
 	"author": "{{snapfu.author}}",
 	"searchspring": {
 		"siteId": "{{snapfu.siteId}}",
-		"framework": "preact"
+		"framework": "preact",
+		"tags": []
 	},
 	"license": "MIT",
 	"prettier": "@searchspring/prettier",
