@@ -9,10 +9,13 @@ module.exports = merge(common, {
 		https: true,
 		port: 3333,
 		hot: false,
-		publicPath: '/dist/',
-		disableHostCheck: true,
+		allowedHosts: 'all',
 		headers: {
 			'Access-Control-Allow-Origin': '*',
+		},
+		client: false,
+		devMiddleware: {
+			publicPath: '/dist/',
 		},
 	}
 });

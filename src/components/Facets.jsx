@@ -1,6 +1,6 @@
 import { h, Fragment, Component } from 'preact';
 import { observer } from 'mobx-react';
-import { Slider, withController } from '@searchspring/snap-preact-components';
+import { FacetSlider, withController } from '@searchspring/snap-preact-components';
 
 @withController
 @observer
@@ -43,7 +43,7 @@ export class Facet extends Component {
 								grid: <div>grid component</div>,
 								palette: <div>palette component</div>,
 								hierarchy: <div>hierarchy component</div>,
-								slider: <Slider facet={facet} />,
+								slider: <FacetSlider facet={facet} />,
 							}[facet.display] || <FacetOptionsList facet={facet} />}
 						</div>
 					</div>

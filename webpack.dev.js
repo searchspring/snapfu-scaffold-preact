@@ -11,18 +11,22 @@ module.exports = merge(common, {
 	devServer: {
 		https: true,
 		port: 3333,
-		contentBase: [path.join(__dirname, 'public')],
-		contentBasePublicPath: ['/'],
-		watchContentBase: true,
-		writeToDisk: (filePath) => {
-			return /bundle\.js.*/.test(filePath);
-		},
 		hot: true,
-		publicPath: '/dist/',
-		disableHostCheck: true,
+		allowedHosts: 'all',
 		headers: {
 			'Access-Control-Allow-Origin': '*',
 		},
+		static: {
+			directory: path.join(__dirname, 'public'),
+			publicPath: ['/'],
+			watch: true,
+		},
+		devMiddleware: {
+			publicPath: '/dist/',
+			writeToDisk: (filePath) => {
+				return /bundle\.js.*/.test(filePath);
+			},
+		}
 	},
 	plugins: [
 		new webpack.HotModuleReplacementPlugin(),

@@ -27,8 +27,12 @@ configureMobx({
  */
 
 const config = {
-	parameters: {
-		query: { name: 'q' },
+	url: {
+		parameters: {
+			core: {
+				query: { name: 'q' },
+			},
+		},
 	},
 	client: {
 		globals: {
@@ -40,7 +44,7 @@ const config = {
 			{
 				config: {
 					id: 'search',
-					plugin: middleware,
+					plugins: [[middleware]],
 				},
 				targets: [
 					{
