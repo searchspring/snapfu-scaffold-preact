@@ -13,6 +13,12 @@ module.exports = merge(common, {
 		port: 3333,
 		hot: true,
 		allowedHosts: 'all',
+		client: {
+			overlay: {
+				errors: true,
+				warnings: false,
+			},
+		},
 		headers: {
 			'Access-Control-Allow-Origin': '*',
 		},
