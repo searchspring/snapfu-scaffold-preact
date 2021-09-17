@@ -70,6 +70,16 @@ config?.pages?.forEach((page, _i) => {
 					expect(store.pagination.page).to.equal(1);
 				});
 			});
+			it('saves a screenshot', function () {
+				if (_i === 0) { // only take screenshot once
+					cy.screenshot('snapshot', { capture: 'viewport' });
+					cy.visit(page.url);
+					cy.addLocalSnap(); // as @script	
+					cy.wait(5000);
+				} else {
+					this.skip();
+				}
+			});
 		});
 
 		describe('Pagination', () => {
