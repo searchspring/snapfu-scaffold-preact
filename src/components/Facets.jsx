@@ -61,7 +61,7 @@ class FacetOptionsList extends Component {
 
 		return (
 			<ul class="ss__facet-options-list">
-				{values.map((value) => {
+				{values?.map((value) => {
 					return (
 						<li class={`ss__facet-options-list__option ${value.filtered ? 'ss__facet-options-list__option--active' : ''}`}>
 							<a {...value.url.link} title={`Remove filter ${value.label}`}>
