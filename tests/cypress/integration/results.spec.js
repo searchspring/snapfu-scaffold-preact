@@ -73,9 +73,6 @@ config?.pages?.forEach((page, _i) => {
 			it('saves a screenshot', function () {
 				if (_i === 0) { // only take screenshot once
 					cy.screenshot('snapshot', { capture: 'viewport' });
-					cy.visit(page.url);
-					cy.addLocalSnap(); // as @script	
-					cy.wait(5000);
 				} else {
 					this.skip();
 				}
