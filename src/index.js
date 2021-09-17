@@ -48,7 +48,6 @@ const config = {
 							return (await import('./components/Sidebar')).Sidebar;
 						},
 						hideTarget: true,
-						prefetch: true,
 					},
 					{
 						selector: '#searchspring-content',
@@ -57,7 +56,6 @@ const config = {
 							return (await import('./components/Content')).Content;
 						},
 						hideTarget: true,
-						prefetch: true,
 					},
 					{
 						selector: '#searchspring-header',
@@ -65,7 +63,6 @@ const config = {
 							return (await import('./components/SearchHeader')).SearchHeader;
 						},
 						hideTarget: true,
-						prefetch: true,
 					},
 				],
 			},
