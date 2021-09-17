@@ -3,16 +3,11 @@ import { configure as configureMobx } from 'mobx';
 
 /* searchspring imports */
 import { Snap } from '@searchspring/snap-preact';
-import { Autocomplete } from '@searchspring/snap-preact-components';
 
 /* local imports */
 import { searchspring } from '../package.json';
 import { middleware } from './scripts/middleware';
 import './styles/custom.scss';
-
-import { SearchHeader } from './components/SearchHeader';
-import { Sidebar } from './components/Sidebar';
-import { Content } from './components/Content';
 
 /*
 	configuration and instantiation
@@ -49,17 +44,24 @@ const config = {
 				targets: [
 					{
 						selector: '#searchspring-sidebar',
-						component: Sidebar,
+						component: async() => {
+							return (await import('./components/Sidebar')).Sidebar;
+						},
 						hideTarget: true,
 					},
 					{
 						selector: '#searchspring-content',
 						component: Content,
+						component: async() => {
+							return (await import('./components/Content')).Content;
+						},
 						hideTarget: true,
 					},
 					{
 						selector: '#searchspring-header',
-						component: SearchHeader,
+						component: async() => {
+							return (await import('./components/SearchHeader')).SearchHeader;
+						},
 						hideTarget: true,
 					},
 				],
@@ -74,7 +76,9 @@ const config = {
 				targets: [
 					{
 						selector: '#search-input',
-						component: Autocomplete,
+						component: async() => {
+							return (await import('@searchspring/snap-preact-components')).Autocomplete;
+						},
 					},
 				],
 			},
