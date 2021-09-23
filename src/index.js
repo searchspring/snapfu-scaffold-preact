@@ -51,7 +51,6 @@ const config = {
 					},
 					{
 						selector: '#searchspring-content',
-						component: Content,
 						component: async() => {
 							return (await import('./components/Content')).Content;
 						},
