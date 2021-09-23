@@ -31,7 +31,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install packages
-        run: npm install
+        run: npm ci
         env:
           NODE_AUTH_TOKEN: ${{ secrets.PACKAGE_TOKEN }}
 
