@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
-const childProcess = require("child_process");
-const branchName = childProcess.execSync("git rev-parse --abbrev-ref HEAD").toString().trim();
+const childProcess = require('child_process');
+const branchName = childProcess.execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
 
 module.exports = {
 	entry: './src/index.js',
@@ -9,10 +9,14 @@ module.exports = {
 		modulesSort: 'size',
 		modulesSpace: 70,
 	},
-	plugins:[
+	plugins: [
 		new webpack.DefinePlugin({
 			BRANCHNAME: `"${branchName}"`,
-		})
+		}),
+		// to disable code splitting, include the following:
+		// new webpack.optimize.LimitChunkCountPlugin({
+		// 	maxChunks: 1,
+		// }),
 	],
 	module: {
 		rules: [
@@ -50,13 +54,14 @@ module.exports = {
 	output: {
 		path: path.join(__dirname, 'dist'),
 		filename: 'bundle.js',
+		chunkFilename: 'snap_[name].js',
 	},
 	resolve: {
 		extensions: ['.js', '.jsx'],
 		alias: {
 			react: 'preact/compat',
 			'react-dom/test-utils': 'preact/test-utils',
-			'react-dom': 'preact/compat'
+			'react-dom': 'preact/compat',
 		},
-	}
+	},
 };

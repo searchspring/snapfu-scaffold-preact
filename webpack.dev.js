@@ -31,7 +31,7 @@ module.exports = merge(common, {
 			writeToDisk: (filePath) => {
 				return /bundle\.js.*/.test(filePath);
 			},
-		}
+		},
 	},
 	plugins: [
 		new PreactRefreshPlugin(),
