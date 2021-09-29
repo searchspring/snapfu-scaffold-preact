@@ -48,8 +48,11 @@ Cypress.Commands.add('addScripts', (scripts = []) => {
 });
 
 Cypress.Commands.add('addLocalSnap', () => {
-	cy.intercept(/.*localhost:3333\/dist\/bundle.js$/).as('script');
-	cy.addScript('https://localhost:3333/dist/bundle.js');
+	cy.window().then((window) => {
+		if(!window?.searchspring) {
+			cy.addScript('https://localhost:3333/dist/bundle.js');
+		}
+	});
 });
 
 Cypress.Commands.add('addCloudSnap', (branch = 'master') => {
@@ -57,7 +60,7 @@ Cypress.Commands.add('addCloudSnap', (branch = 'master') => {
 	cy.addScript(`https://snapui.searchspring.io/${config.searchspring.siteId}/${branch}/bundle.js`);
 });
 
-Cypress.Commands.add('snapStore', (controllerId = 'search') => {
+Cypress.Commands.add('snapController', (controllerId = 'search') => {
 	cy.window().then((window) => {
 		return new Cypress.Promise((resolve, reject) => {
 			const cntrlr = window.searchspring.controller[controllerId];
@@ -65,13 +68,13 @@ Cypress.Commands.add('snapStore', (controllerId = 'search') => {
 			if (cntrlr) {
 				const after = function afterLoad({ controller }) {
 					controller.eventManager.events.afterStore.remove(afterLoad);
-					resolve(cntrlr.store);
+					resolve(cntrlr);
 				};
 	
 				if (cntrlr.store.loading) {
 					return cntrlr.on('afterStore', after);
 				} else {
-					resolve(cntrlr.store);
+					resolve(cntrlr);
 				}
 			} else {
 				reject(`no controller found with id: ${controllerId}`);
@@ -79,20 +82,3 @@ Cypress.Commands.add('snapStore', (controllerId = 'search') => {
 		});
 	});
 });
-
-function getByPath(obj, path) {
-	path = path.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
-	path = path.replace(/^\./, ''); // strip a leading dot
-
-	const split = path.split('.');
-	for (let i = 0, n = split.length; i < n; ++i) {
-		const p = split[i];
-		if (p in obj) {
-			obj = obj[p];
-		} else {
-			return;
-		}
-	}
-
-	return obj;
-}

@@ -13,7 +13,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
-          node-version: 15
+          node-version: 16
           registry-url: 'https://npm.pkg.github.com'
           scope: '@searchspring'
 
@@ -35,11 +35,11 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.PACKAGE_TOKEN }}
 
-      # - name: Run Tests
-      #   run: npm run test
-
       - name: Build bundle
         run: npm run build
+
+      - name: Run Tests
+        run: npm run test
 
       - name: Extract Variables
         id: variables

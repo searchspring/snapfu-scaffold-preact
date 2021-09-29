@@ -41,24 +41,24 @@ const config = {
 					id: 'search',
 					plugins: [[middleware]],
 				},
-				targets: [
+				targeters: [
 					{
 						selector: '#searchspring-sidebar',
-						component: async() => {
+						component: async () => {
 							return (await import('./components/Sidebar')).Sidebar;
 						},
 						hideTarget: true,
 					},
 					{
 						selector: '#searchspring-content',
-						component: async() => {
+						component: async () => {
 							return (await import('./components/Content')).Content;
 						},
 						hideTarget: true,
 					},
 					{
 						selector: '#searchspring-header',
-						component: async() => {
+						component: async () => {
 							return (await import('./components/SearchHeader')).SearchHeader;
 						},
 						hideTarget: true,
@@ -72,10 +72,10 @@ const config = {
 					id: 'autocomplete',
 					selector: '#search-input',
 				},
-				targets: [
+				targeters: [
 					{
 						selector: '#search-input',
-						component: async() => {
+						component: async () => {
 							return (await import('@searchspring/snap-preact-components')).Autocomplete;
 						},
 					},
@@ -86,4 +86,7 @@ const config = {
 };
 
 const snap = new Snap(config);
-const { search, autocomplete } = snap.controllers;
+
+snap.getController('search').then((search) => {
+	// search controller available
+});
