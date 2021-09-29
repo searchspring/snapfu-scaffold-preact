@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import { h, Component, Fragment } from 'preact';
 import { observer } from 'mobx-react';
 
 import { withController } from '@searchspring/snap-preact-components';
@@ -12,9 +12,9 @@ export class FilterMessages extends Component {
 		let message = '';
 		if (pagination.totalResults === 0 && filters.length === 0) {
 			message = (
-				<>
+				<Fragment>
 					There are no results to refine. If you need additional help, please try our search "<strong>Suggestions</strong>".
-				</>
+				</Fragment>
 			);
 		} else if (pagination.totalResults === 0 && filters.length) {
 			message = 'If you are not seeing any results, try removing some of your selected filters.';
