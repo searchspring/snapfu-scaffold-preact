@@ -54,7 +54,7 @@ module.exports = {
 	output: {
 		path: path.join(__dirname, 'dist'),
 		filename: 'bundle.js',
-		chunkFilename: 'snap_[name].js',
+		chunkFilename: 'snap.chunk.[id].js',
 	},
 	resolve: {
 		extensions: ['.js', '.jsx'],
