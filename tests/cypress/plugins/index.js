@@ -24,7 +24,7 @@ module.exports = (on, config) => {
 	on('after:screenshot', ({ path }) => {
 		// this screenshot is used in snapp-explorer
 		if (path.includes('snapshot')) {
-			renameSync(path, '../snapshot.png');
+			renameSync(path, '../public/snapshot.png');
 		}
 	});
 
