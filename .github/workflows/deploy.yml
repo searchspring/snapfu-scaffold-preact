@@ -9,7 +9,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: searchspring/snap-action
-          token: ${{ secrets.ACTION_PAT }}
       - name: Run @searchspring/snap-action
         uses: ./
         with:
@@ -21,5 +20,10 @@ jobs:
           aws-cloudfront-distribution-id: ${{secrets.SNAPFU_AWS_DISTRIBUTION_ID}}
           aws-s3-bucket-name: ${{secrets.SNAPFU_AWS_BUCKET}}
         # optional
+          aws-region: us-east-2
           NODE_AUTH_TOKEN: ${{ secrets.PACKAGE_TOKEN }}
           GITHUB_BOT_TOKEN: ${{ secrets.MACHINE_TOKEN }}
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+          skipTests: false
+          skipLighthouse: false
+          skipPublish: false
