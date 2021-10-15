@@ -12,3 +12,7 @@ coverage
 
 # ignore cypress videos
 tests/cypress/screenshots
+
+# ignore lighthouse files
+.lighthouseci
+lighthouse

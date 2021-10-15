@@ -1,74 +1,25 @@
-on:
-  push:
-    branches:
-      - '**' # matches every branch
-
+on: [push, pull_request]
+    
 jobs:
-  Deploy:
+  Publish:
     runs-on: ubuntu-latest
+    name: Snap Action
     steps:
-      - name: Checkout repositiory
+      - name: checkout action
         uses: actions/checkout@v2
-
-      - name: Setup Node
-        uses: actions/setup-node@v2
         with:
-          node-version: 16
-          registry-url: 'https://npm.pkg.github.com'
-          scope: '@searchspring'
-
-      - name: Cache node modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
+          repository: searchspring/snap-action
+      - name: Run @searchspring/snap-action
+        uses: ./
         with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-
-      - name: Install packages
-        run: npm ci
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.PACKAGE_TOKEN }}
-
-      - name: Build bundle
-        run: npm run build
-
-      - name: Run Tests
-        run: npm run test
-
-      - name: Extract Variables
-        id: variables
-        shell: bash
-        run: |
-          branch=`echo ${GITHUB_REF#refs/heads/}`
-          echo "::set-output name=branch::$branch"
-          echo "Using branch: $branch"
-          siteId=`jq -r '.searchspring.siteId' < package.json`
-          echo "::set-output name=siteId::$siteId"
-          echo "Using siteId: $siteId"
-
-      - name: Configure AWS credentials from Production account
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
+        # required
+          repository: ${{ env.GITHUB_REPOSITORY }}
+          secretKey: ${{ secrets.WEBSITE_SECRET_KEY }}
           aws-access-key-id: ${{ secrets.SNAPFU_AWS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.SNAPFU_AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-2
-
-      - name: Copy Files to S3
-        run: |
-          aws s3 sync --delete --acl public-read dist s3://${{secrets.SNAPFU_AWS_BUCKET}}/${{ steps.variables.outputs.siteId }}/${{ steps.variables.outputs.branch }}
-          aws s3 sync --delete --acl public-read public s3://${{secrets.SNAPFU_AWS_BUCKET}}/${{ steps.variables.outputs.siteId }}/${{ steps.variables.outputs.branch }}/public
-
-      - name: Invalidate Branch Files
-        run: |
-          aws cloudfront create-invalidation --distribution-id ${{secrets.SNAPFU_AWS_DISTRIBUTION_ID}} --paths "/${{ steps.variables.outputs.siteId }}/${{ steps.variables.outputs.branch }}/*"
-
-      - name: Invalidate Integration Script
-        if: steps.variables.outputs.branch == 'production'
-        run: |
-          aws cloudfront create-invalidation --distribution-id ${{secrets.SNAPFU_AWS_DISTRIBUTION_ID}} --paths "/${{ steps.variables.outputs.siteId }}/bundle.js"
+          aws-cloudfront-distribution-id: ${{secrets.SNAPFU_AWS_DISTRIBUTION_ID}}
+          aws-s3-bucket-name: ${{secrets.SNAPFU_AWS_BUCKET}}
+        # optional
+          NODE_AUTH_TOKEN: ${{ secrets.PACKAGE_TOKEN }}
+          GITHUB_BOT_TOKEN: ${{ secrets.MACHINE_TOKEN }}
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
