@@ -1,5 +1,4 @@
 import { h, Fragment, render } from 'preact';
-import { configure as configureMobx } from 'mobx';
 
 /* searchspring imports */
 import { Snap } from '@searchspring/snap-preact';
@@ -8,14 +7,6 @@ import { Snap } from '@searchspring/snap-preact';
 import { searchspring } from '../package.json';
 import { middleware } from './scripts/middleware';
 import './styles/custom.scss';
-
-/*
-	configuration and instantiation
- */
-
-configureMobx({
-	useProxies: 'never',
-});
 
 /*
 	configuration and instantiation
