@@ -27,7 +27,7 @@ const config = {
 	startingQuery: 't', // initial query (displays terms, facets, and results)
 };
 
-if(config.url && selectors.website.input) {
+if(config.url && config.selectors.website.input) {
 	describe('Autocomplete', () => {
 		describe('Setup', () => {
 			it('adds snap bundle to autocomplete page', () => {
