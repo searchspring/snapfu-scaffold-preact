@@ -15,6 +15,7 @@ const config = {
 	selectors: {
 		website: {
 			input: 'input[type="text"]', // selector of <input> elements (config.controllers[].autocomplete[].config.selector)
+			openInputButton: '',         // selector for a button to click in order to make the input visible
 		},
 		autocomplete: {
 			// selector of the wrapping element. Expects child element to contain <a>
