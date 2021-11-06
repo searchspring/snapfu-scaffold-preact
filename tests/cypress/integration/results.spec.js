@@ -72,13 +72,6 @@ config?.pages?.forEach((page, _i) => {
 						expect(store.pagination.page).to.equal(1);
 					});
 				});
-				it('saves a screenshot', function () {
-					if (_i === 0) { // only take screenshot once
-						cy.screenshot('snapshot', { capture: 'viewport' });
-					} else {
-						this.skip();
-					}
-				});
 			});
 	
 			describe('Pagination', () => {
@@ -548,6 +541,17 @@ config?.pages?.forEach((page, _i) => {
 					});
 				});
 			});
+
+			if (_i === 0) { // only take screenshot for first page
+				describe('Snapshot', () => {
+					it('saves a screenshot', function () {
+						cy.visit(page.url);
+						cy.snapController().then(({ store }) => {
+							cy.screenshot('snapshot', { capture: 'viewport' });
+						});
+					});
+				});
+			}
 		});
 	}
 });
