@@ -1,5 +1,3 @@
-import { h, Fragment, render } from 'preact';
-
 /* searchspring imports */
 import { Snap } from '@searchspring/snap-preact';
 
@@ -67,7 +65,7 @@ const config = {
 					{
 						selector: '#search-input',
 						component: async () => {
-							return (await import('@searchspring/snap-preact-components')).Autocomplete;
+							return (await import('./components/Autocomplete')).Autocomplete;
 						},
 					},
 				],
