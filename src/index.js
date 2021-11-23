@@ -7,10 +7,17 @@ import { middleware } from './scripts/middleware';
 import './styles/custom.scss';
 
 /*
+	context and background filtering
+ */
+
+const context = getContext(['shopper']);
+
+/*
 	configuration and instantiation
  */
 
 const config = {
+	context,
 	url: {
 		parameters: {
 			core: {
