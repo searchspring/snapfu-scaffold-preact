@@ -1,18 +1,17 @@
-const dev = process.env.NODE_ENV === "development";
-
 module.exports = (api) => {
 	api.cache.using(() => process.env.NODE_ENV);
 
 	return {
 		"presets": [
 			[
-				"@babel/preset-env",
+				'@babel/preset-env',
 				{
-					"useBuiltIns": "entry",
-					"corejs": {
-						"version": 3
-					}
-				}
+					modules: false,
+					useBuiltIns: 'usage',
+					corejs: {
+						version: '3.19',
+					},
+				},
 			],
 			["@babel/preset-react"]
 		],
@@ -27,7 +26,6 @@ module.exports = (api) => {
 				"pragmaFrag": "Fragment"
 			}],
 			["@babel/plugin-transform-arrow-functions"],
-			dev && ["@prefresh/babel-plugin"]
-		].filter(Boolean)
+		]
 	}
 };

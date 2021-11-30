@@ -1,23 +1,41 @@
-const PreactRefreshPlugin = require('@prefresh/webpack');
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 const path = require('path');
 
-module.exports = merge(common, {
+const universal = merge(common, {
 	mode: 'development',
-	target: 'web',
-	devtool: 'source-map',
+	entry: './src/universal.js',
+	output: {
+		filename: 'universal.bundle.js',
+		chunkFilename: 'snap.universal.chunk.[fullhash:8].[id].js',
+	},
+	target: 'browserslist:universal',
+	module: {
+		rules: [
+			{
+				test: /\.(js|jsx)$/,
+				exclude: /node_modules/,
+				use: {
+					loader: 'babel-loader',
+					options: {
+						presets: [
+							[
+								'@babel/preset-env',
+								{
+									browserslistEnv: 'universal',
+								},
+							],
+						],
+					},
+				},
+			},
+		],
+	},
 	devServer: {
 		https: true,
 		port: 3333,
 		hot: true,
 		allowedHosts: 'all',
-		client: {
-			overlay: {
-				errors: true,
-				warnings: false,
-			},
-		},
 		headers: {
 			'Access-Control-Allow-Origin': '*',
 		},
@@ -28,12 +46,40 @@ module.exports = merge(common, {
 		},
 		devMiddleware: {
 			publicPath: '/dist/',
-			writeToDisk: (filePath) => {
-				return /bundle\.js.*/.test(filePath);
-			},
 		},
 	},
-	plugins: [
-		new PreactRefreshPlugin(),
-	]
 });
+
+const modern = merge(common, {
+	mode: 'development',
+	entry: './src/index.js',
+	output: {
+		filename: 'bundle.js',
+		chunkFilename: 'snap.chunk.[fullhash:8].[id].js',
+	},
+	target: 'browserslist:modern',
+	module: {
+		rules: [
+			{
+				test: /\.(js|jsx)$/,
+				exclude: /node_modules/,
+				use: {
+					loader: 'babel-loader',
+					options: {
+						presets: [
+							[
+								'@babel/preset-env',
+								{
+									browserslistEnv: 'modern',
+								},
+							],
+						],
+					},
+				},
+			},
+		],
+	},
+	devtool: 'source-map',
+});
+
+module.exports = [universal, modern];

@@ -4,12 +4,12 @@ const path = require('path');
 
 module.exports = merge(common, {
 	mode: 'production',
-	entry: './src/index.js',
+	entry: './src/universal.js',
 	output: {
-		filename: 'bundle.js',
-		chunkFilename: 'snap.chunk.[fullhash:8].[id].js',
+		filename: 'universal.bundle.js',
+		chunkFilename: 'snap.universal.chunk.[fullhash:8].[id].js',
 	},
-	target: 'browserslist:modern',
+	target: 'browserslist:universal',
 	module: {
 		rules: [
 			{
@@ -22,7 +22,7 @@ module.exports = merge(common, {
 							[
 								'@babel/preset-env',
 								{
-									browserslistEnv: 'modern',
+									browserslistEnv: 'universal',
 								},
 							],
 						],
