@@ -2,8 +2,7 @@
 import { Snap } from '@searchspring/snap-preact';
 
 /* local imports */
-import { searchspring } from '../package.json';
-import { middleware } from './scripts/middleware';
+import { plugin } from './scripts/plugin';
 import './styles/custom.scss';
 
 /*
@@ -27,7 +26,7 @@ const config = {
 	},
 	client: {
 		globals: {
-			siteId: searchspring.siteId,
+			siteId: '{{snapfu.siteId}}',
 		},
 	},
 	controllers: {
@@ -35,7 +34,7 @@ const config = {
 			{
 				config: {
 					id: 'search',
-					plugins: [[middleware]],
+					plugins: [[plugin]],
 				},
 				targeters: [
 					{
