@@ -1,5 +1,6 @@
 /* searchspring imports */
 import { Snap } from '@searchspring/snap-preact';
+import { getContext } from '@searchspring/snap-toolbox';
 
 /* local imports */
 import { plugin } from './scripts/plugin';
@@ -81,7 +82,3 @@ const config = {
 };
 
 const snap = new Snap(config);
-
-snap.getController('search').then((search) => {
-	// search controller available
-});

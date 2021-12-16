@@ -7,8 +7,8 @@
 module.exports = {
 	ci: {
 		collect: {
-			numberOfRuns: 5,
-			staticDistDir: './public', // for localhost
+			numberOfRuns: 3,
+			staticDistDir: './tests/lighthouse/public', // for localhost
 			url: ['http://localhost/lighthouse.html'],
 		},
 		upload: {

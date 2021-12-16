@@ -2,6 +2,7 @@
 
 Snap SDK packages and components built with Preact.
 https://preactjs.com/guide/v10/getting-started
+https://searchspring.github.io/snap/#/start-preact
 
 ## Install
 

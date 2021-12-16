@@ -3,7 +3,7 @@ module.exports = {
 		'no-console': 'error',
 		'no-magic-numbers': 'off',
 	},
-	parser: 'babel-eslint',
+	parser: '@babel/eslint-parser',
 	parserOptions: {
 		ecmaFeatures: {
 			legacyDecorators: true,

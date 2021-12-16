@@ -46,7 +46,7 @@ const universal = merge(common, {
 			watch: true,
 		},
 		devMiddleware: {
-			publicPath: '/dist/',
+			publicPath: '/',
 		},
 		client: {
 			overlay: {
