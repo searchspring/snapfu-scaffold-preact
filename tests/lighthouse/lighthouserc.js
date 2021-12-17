@@ -13,7 +13,7 @@ module.exports = {
 		},
 		upload: {
 			target: 'filesystem',
-			outputDir: './tests/lighthouse/runs'
+			outputDir: './tests/lighthouse/runs',
 		},
 	},
 };

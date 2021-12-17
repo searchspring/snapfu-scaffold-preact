@@ -28,5 +28,19 @@ module.exports = (on, config) => {
 		}
 	});
 
+	/*
+		add task to log to headless console
+
+		use in test with:
+		cy.task('log', 'log to the console');
+	 */
+	on('task', {
+		log(...message) {
+			console.log(...message);
+
+			return null;
+		},
+	});
+
 	return config;
 };

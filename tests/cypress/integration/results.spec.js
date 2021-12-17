@@ -19,7 +19,7 @@ const config = {
 			removeAllFacetsButton: '.ss__filter-summary__clear-all',
 		},
 		sortBy: {
-			native: 'select#SortBy',
+			native: 'select.ss__sorting',
 		},
 		pagination: {
 			prev: '.ss__pagination .ss__pagination__prev',
@@ -38,7 +38,7 @@ config?.pages?.forEach((page, _i) => {
 			it('adds snap bundle to search page', () => {
 				cy.on('uncaught:exception', (err, runnable) => false);
 				cy.visit(page.url);
-				
+
 				cy.addLocalSnap();
 
 				if (config.disableGA) {
@@ -67,21 +67,31 @@ config?.pages?.forEach((page, _i) => {
 				if (!config?.selectors?.pagination?.next && !config?.selectors?.pagination?.page) this.skip();
 
 				if (config?.selectors?.pagination?.next) {
-					cy.get(`${config.selectors.pagination.next}`).first().should('exist').as('next').invoke('attr', 'href').then(function(href) {
-						if (href) {
-							cy.get('@next').click({ force: true });
-						} else {
-							cy.get('@next').find('a').click({ force: true });
-						}
-					});
+					cy.get(`${config.selectors.pagination.next}`)
+						.first()
+						.should('exist')
+						.as('next')
+						.invoke('attr', 'href')
+						.then(function (href) {
+							if (href) {
+								cy.get('@next').click({ force: true });
+							} else {
+								cy.get('@next').find('a').click({ force: true });
+							}
+						});
 				} else if (config?.selectors?.pagination?.page) {
-					cy.get(config.selectors.pagination.page).eq(1).should('exist').as('page2').invoke('attr', 'href').then(function(href) {
-						if (href) {
-							cy.get('@page2').click({ force: true });
-						} else {
-							cy.get('@page2').find('a').click({ force: true });
-						}
-					});
+					cy.get(config.selectors.pagination.page)
+						.eq(1)
+						.should('exist')
+						.as('page2')
+						.invoke('attr', 'href')
+						.then(function (href) {
+							if (href) {
+								cy.get('@page2').click({ force: true });
+							} else {
+								cy.get('@page2').find('a').click({ force: true });
+							}
+						});
 				}
 
 				cy.snapController().then(({ store }) => {
@@ -93,21 +103,31 @@ config?.pages?.forEach((page, _i) => {
 				if (!config?.selectors?.pagination?.prev && !config?.selectors?.pagination?.page) this.skip();
 
 				if (config?.selectors?.pagination?.prev) {
-					cy.get(`${config.selectors.pagination.prev}`).first().should('exist').as('prev').invoke('attr', 'href').then(function(href) {
-						if (href) {
-							cy.get('@prev').click({ force: true });
-						} else {
-							cy.get('@prev').find('a').click({ force: true });
-						}
-					});
+					cy.get(`${config.selectors.pagination.prev}`)
+						.first()
+						.should('exist')
+						.as('prev')
+						.invoke('attr', 'href')
+						.then(function (href) {
+							if (href) {
+								cy.get('@prev').click({ force: true });
+							} else {
+								cy.get('@prev').find('a').click({ force: true });
+							}
+						});
 				} else if (config?.selectors?.pagination?.page) {
-					cy.get(config.selectors.pagination.page).eq(0).should('exist').as('page1').invoke('attr', 'href').then(function(href) {
-						if (href) {
-							cy.get('@page1').click({ force: true });
-						} else {
-							cy.get('@page1').find('a').click({ force: true });
-						}
-					});
+					cy.get(config.selectors.pagination.page)
+						.eq(0)
+						.should('exist')
+						.as('page1')
+						.invoke('attr', 'href')
+						.then(function (href) {
+							if (href) {
+								cy.get('@page1').click({ force: true });
+							} else {
+								cy.get('@page1').find('a').click({ force: true });
+							}
+						});
 				}
 
 				cy.snapController().then(({ store }) => {
@@ -118,13 +138,19 @@ config?.pages?.forEach((page, _i) => {
 			it('can go to the third page', function () {
 				if (!config?.selectors?.pagination?.page) this.skip();
 
-				cy.get(config.selectors.pagination.page).eq(2).first().should('exist').as('page3').invoke('attr', 'href').then(function(href) {
-					if (href) {
-						cy.get('@page3').click({ force: true });
-					} else {
-						cy.get('@page3').find('a').click({ force: true });
-					}
-				});
+				cy.get(config.selectors.pagination.page)
+					.eq(2)
+					.first()
+					.should('exist')
+					.as('page3')
+					.invoke('attr', 'href')
+					.then(function (href) {
+						if (href) {
+							cy.get('@page3').click({ force: true });
+						} else {
+							cy.get('@page3').find('a').click({ force: true });
+						}
+					});
 
 				cy.snapController().then(({ store }) => {
 					expect(store.pagination.page).to.equal(3);
@@ -175,8 +201,7 @@ config?.pages?.forEach((page, _i) => {
 				if (
 					!config?.selectors?.sidebar?.facetWrapper &&
 					!config?.selectors?.sidebar?.facetCollapseButton &&
-					(!config?.selectors?.sidebar?.facetOpen ||
-					!config?.selectors?.sidebar?.facetCollapsed)
+					(!config?.selectors?.sidebar?.facetOpen || !config?.selectors?.sidebar?.facetCollapsed)
 				)
 					this.skip();
 
@@ -184,11 +209,9 @@ config?.pages?.forEach((page, _i) => {
 					function checkCollapsed(elem) {
 						let isCollapsed;
 						if (config?.selectors?.sidebar?.facetOpen) {
-							isCollapsed = !(elem[0].matches(config.selectors.sidebar.facetOpen) ||
-							elem.find(config.selectors.sidebar.facetOpen).length > 0);
+							isCollapsed = !(elem[0].matches(config.selectors.sidebar.facetOpen) || elem.find(config.selectors.sidebar.facetOpen).length > 0);
 						} else if (config?.selectors?.sidebar?.facetCollapsed) {
-							isCollapsed = elem[0].matches(config.selectors.sidebar.facetCollapsed) ||
-							elem.find(config.selectors.sidebar.facetCollapsed).length > 0;
+							isCollapsed = elem[0].matches(config.selectors.sidebar.facetCollapsed) || elem.find(config.selectors.sidebar.facetCollapsed).length > 0;
 						}
 
 						return isCollapsed;
@@ -276,7 +299,9 @@ config?.pages?.forEach((page, _i) => {
 
 								cy.snapController().then(({ store }) => {
 									// expect visible values to be filtered
-									const refinedOptions = store.facets[obj.index].refinedValues.filter((valueOption) => valueOption.value.toLowerCase().includes(valueToType));
+									const refinedOptions = store.facets[obj.index].refinedValues.filter((valueOption) =>
+										valueOption.value.toLowerCase().includes(valueToType)
+									);
 									const visibleOptions = obj.el.find(config.selectors.sidebar.facetOption);
 									expect(refinedOptions.length).to.equal(visibleOptions.length);
 								});
@@ -285,53 +310,8 @@ config?.pages?.forEach((page, _i) => {
 				});
 			});
 
-			it('can select a slider option', function () {
-				if (!config?.selectors?.sidebar?.facetWrapper || !config?.selectors?.sidebar?.facetTitle)
-					this.skip();
-
-				cy.snapController().then(({ store }) => {
-					// find first display='slider' facet
-					const sliderFacet = store.facets.filter((facet) => facet.display === 'slider')[0];
-					if (!sliderFacet) this.skip();
-
-					let facetSliderElement;
-					cy.get(`${config.selectors.sidebar.facetWrapper}`).each((facet) => {
-						// find matching facet in dom
-						const title = facet.find(config.selectors.sidebar.facetTitle);
-						if (!facetSliderElement && sliderFacet.label.trim() === title.text().trim()) {
-							facetSliderElement = facet;
-							if (sliderFacet.collapsed) {
-								// toggle visibility if collapsed
-								sliderFacet.toggleCollapse();
-							}
-						}
-					})
-					.then(() => {
-						// use left arrow to change slider values
-						const leftHandle = cy.get(facetSliderElement.find('.ss__facet-slider__handles button')[0]);
-						if (leftHandle) {
-							leftHandle.should('have.attr', 'aria-valuenow', sliderFacet.active.low)
-							.should('have.attr', 'aria-valuemin', sliderFacet.active.low)
-							.should('have.attr', 'aria-valuemax', sliderFacet.active.high)
-							.type('{rightarrow}', { force: true })
-
-							cy.snapController().then(({ store }) => {
-								cy.get(facetSliderElement.find('.ss__facet-slider__handles button')[0])
-									.should('have.attr', 'aria-valuenow', sliderFacet.active.low + sliderFacet.step)
-									.should('have.attr', 'aria-valuemin', sliderFacet.active.low)
-									.should('have.attr', 'aria-valuemax', sliderFacet.active.high);
-							});
-						}
-					});
-				});
-			});
-
-			it.skip('can select a list option', function () {
-				if (
-					!config?.selectors?.sidebar?.facetWrapper ||
-					!config?.selectors?.sidebar?.facetTitle ||
-					!config?.selectors?.sidebar?.facetOption
-				)
+			it('can select a list option', function () {
+				if (!config?.selectors?.sidebar?.facetWrapper || !config?.selectors?.sidebar?.facetTitle || !config?.selectors?.sidebar?.facetOption)
 					this.skip();
 
 				cy.snapController().then(({ store }) => {
@@ -339,29 +319,67 @@ config?.pages?.forEach((page, _i) => {
 					const listFacet = store.facets.filter((facet) => facet.display === 'list')[0];
 					if (!listFacet) this.skip();
 
-					let facetListElement;
 					cy.get(`${config.selectors.sidebar.facetWrapper}`).each((facet) => {
 						// find matching facet in dom
 						const title = facet.find(config.selectors.sidebar.facetTitle);
-						if (!facetListElement && listFacet.label.trim() === title.text().trim()) {
-							facetListElement = facet;
+						if (listFacet.label.trim() === title.text().trim()) {
 							if (listFacet.collapsed) {
 								// toggle visibility if collapsed
 								listFacet.toggleCollapse();
 							}
+
+							// click on an option in facet and ensure urlManager contains new state
+							const facetListOption = facet.find(config.selectors.sidebar.facetOption)[0];
+							const clickedHref = facetListOption.getAttribute('href');
+							cy.get(facetListOption).click({ force: true });
+							cy.snapController().then(({ store }) => {
+								expect(Object.keys(store.services.urlManager.state.filter)).to.contain(listFacet.field);
+								expect(clickedHref).to.equal(store.services.urlManager.href);
+							});
 						}
-					})
-					.then(() => {
-						// click on an option in facet and ensure urlManager contains new state
-						const facetListOption = facetListElement.find(config.selectors.sidebar.facetOption)[0];
-						const clickedValue = facetListOption.innerText;
-						cy.get(facetListOption).click({ force: true });
-						cy.snapController().then(({ store }) => {
-							expect(Object.keys(store.services.urlManager.state.filter)).to.contain(listFacet.field);
-							const value = store.services.urlManager.state.filter[listFacet.field][0];
-							expect(clickedValue).to.contain(value);
-						});
 					});
+				});
+			});
+
+			it('can select a slider option', function () {
+				if (!config?.selectors?.sidebar?.facetWrapper || !config?.selectors?.sidebar?.facetTitle) this.skip();
+
+				cy.snapController().then(({ store }) => {
+					// find first display='slider' facet
+					const sliderFacet = store.facets.filter((facet) => facet.display === 'slider')[0];
+					if (!sliderFacet) this.skip();
+
+					let facetSliderElement;
+					cy.get(`${config.selectors.sidebar.facetWrapper}`)
+						.each((facet) => {
+							// find matching facet in dom
+							const title = facet.find(config.selectors.sidebar.facetTitle);
+							if (!facetSliderElement && sliderFacet.label.trim() === title.text().trim()) {
+								facetSliderElement = facet;
+								if (sliderFacet.collapsed) {
+									// toggle visibility if collapsed
+									sliderFacet.toggleCollapse();
+								}
+							}
+						})
+						.then(() => {
+							// use left arrow to change slider values
+							const leftHandle = cy.get(facetSliderElement.find('.ss__facet-slider__handles button')[0]);
+							if (leftHandle) {
+								leftHandle
+									.should('have.attr', 'aria-valuenow', sliderFacet.active.low)
+									.should('have.attr', 'aria-valuemin', sliderFacet.active.low)
+									.should('have.attr', 'aria-valuemax', sliderFacet.active.high)
+									.type('{rightarrow}', { force: true });
+
+								cy.snapController().then(({ store }) => {
+									cy.get(facetSliderElement.find('.ss__facet-slider__handles button')[0])
+										.should('have.attr', 'aria-valuenow', sliderFacet.active.low + sliderFacet.step)
+										.should('have.attr', 'aria-valuemin', sliderFacet.active.low)
+										.should('have.attr', 'aria-valuemax', sliderFacet.active.high);
+								});
+							}
+						});
 				});
 			});
 
@@ -379,9 +397,7 @@ config?.pages?.forEach((page, _i) => {
 					});
 
 					// remove an applied filter
-					cy.get(config.selectors.sidebar.summaryWrapper)
-						.find(config.selectors.sidebar.appliedFacetRemoveButton)
-						.first().click({ force: true });
+					cy.get(config.selectors.sidebar.summaryWrapper).find(config.selectors.sidebar.appliedFacetRemoveButton).first().click({ force: true });
 
 					// expect one less filter to be applied
 					cy.snapController().then(({ store }) => {
@@ -391,11 +407,7 @@ config?.pages?.forEach((page, _i) => {
 			});
 
 			it('can select a grid option', function () {
-				if (
-					!config?.selectors?.sidebar?.facetWrapper ||
-					!config?.selectors?.sidebar?.facetTitle ||
-					!config?.selectors?.sidebar?.facetOption
-				)
+				if (!config?.selectors?.sidebar?.facetWrapper || !config?.selectors?.sidebar?.facetTitle || !config?.selectors?.sidebar?.facetOption)
 					this.skip();
 
 				cy.snapController().then(({ store }) => {
@@ -404,37 +416,34 @@ config?.pages?.forEach((page, _i) => {
 					if (!gridFacet) this.skip();
 
 					let facetGridElement;
-					cy.get(`${config.selectors.sidebar.facetWrapper}`).each((facet) => {
-						// find matching facet in dom
-						const title = facet.find(config.selectors.sidebar.facetTitle);
-						if (!facetGridElement && gridFacet.label.trim() === title.text().trim()) {
-							facetGridElement = facet;
-							if (gridFacet.collapsed) {
-								// toggle visibility if collapsed
-								gridFacet.toggleCollapse();
+					cy.get(`${config.selectors.sidebar.facetWrapper}`)
+						.each((facet) => {
+							// find matching facet in dom
+							const title = facet.find(config.selectors.sidebar.facetTitle);
+							if (!facetGridElement && gridFacet.label.trim() === title.text().trim()) {
+								facetGridElement = facet;
+								if (gridFacet.collapsed) {
+									// toggle visibility if collapsed
+									gridFacet.toggleCollapse();
+								}
 							}
-						}
-					})
-					.then(() => {
-						// click on an option in facet and ensure urlManager contains new state
-						const facetGridOption = facetGridElement.find(config.selectors.sidebar.facetOption)[0];
-						const clickedValue = facetGridOption.innerText;
-						cy.get(facetGridOption).click({ force: true });
-						cy.snapController().then(({ store }) => {
-							expect(Object.keys(store.services.urlManager.state.filter)).to.contain(gridFacet.field);
-							const value = store.services.urlManager.state.filter[gridFacet.field][0];
-							expect(clickedValue).to.contain(value);
+						})
+						.then(() => {
+							// click on an option in facet and ensure urlManager contains new state
+							const facetGridOption = facetGridElement.find(config.selectors.sidebar.facetOption)[0];
+							const clickedValue = facetGridOption.innerText;
+							cy.get(facetGridOption).click({ force: true });
+							cy.snapController().then(({ store }) => {
+								expect(Object.keys(store.services.urlManager.state.filter)).to.contain(gridFacet.field);
+								const value = store.services.urlManager.state.filter[gridFacet.field][0];
+								expect(clickedValue).to.contain(value);
+							});
 						});
-					});
 				});
 			});
 
 			it('can select a palette option', function () {
-				if (
-					!config?.selectors?.sidebar?.facetWrapper ||
-					!config?.selectors?.sidebar?.facetTitle ||
-					!config?.selectors?.sidebar?.facetOption
-				)
+				if (!config?.selectors?.sidebar?.facetWrapper || !config?.selectors?.sidebar?.facetTitle || !config?.selectors?.sidebar?.facetOption)
 					this.skip();
 
 				cy.snapController().then(({ store }) => {
@@ -443,37 +452,34 @@ config?.pages?.forEach((page, _i) => {
 					if (!paletteFacet) this.skip();
 
 					let facetPaletteElement;
-					cy.get(`${config.selectors.sidebar.facetWrapper}`).each((facet) => {
-						// find matching facet in dom
-						const title = facet.find(config.selectors.sidebar.facetTitle);
-						if (!facetPaletteElement && paletteFacet.label.trim() === title.text().trim()) {
-							facetPaletteElement = facet;
-							if (paletteFacet.collapsed) {
-								// toggle visibility if collapsed
-								paletteFacet.toggleCollapse();
+					cy.get(`${config.selectors.sidebar.facetWrapper}`)
+						.each((facet) => {
+							// find matching facet in dom
+							const title = facet.find(config.selectors.sidebar.facetTitle);
+							if (!facetPaletteElement && paletteFacet.label.trim() === title.text().trim()) {
+								facetPaletteElement = facet;
+								if (paletteFacet.collapsed) {
+									// toggle visibility if collapsed
+									paletteFacet.toggleCollapse();
+								}
 							}
-						}
-					})
-					.then(() => {
-						// click on an option in facet and ensure urlManager contains new state
-						const facetPaletteOption = facetPaletteElement.find(config.selectors.sidebar.facetOption)[0];
-						const clickedValue = facetPaletteOption.innerText;
-						cy.get(facetPaletteOption).click({ force: true });
-						cy.snapController().then(({ store }) => {
-							expect(Object.keys(store.services.urlManager.state.filter)).to.contain(paletteFacet.field);
-							const value = store.services.urlManager.state.filter[paletteFacet.field][0];
-							expect(clickedValue).to.contain(value);
+						})
+						.then(() => {
+							// click on an option in facet and ensure urlManager contains new state
+							const facetPaletteOption = facetPaletteElement.find(config.selectors.sidebar.facetOption)[0];
+							const clickedValue = facetPaletteOption.innerText;
+							cy.get(facetPaletteOption).click({ force: true });
+							cy.snapController().then(({ store }) => {
+								expect(Object.keys(store.services.urlManager.state.filter)).to.contain(paletteFacet.field);
+								const value = store.services.urlManager.state.filter[paletteFacet.field][0];
+								expect(clickedValue).to.contain(value);
+							});
 						});
-					});
 				});
 			});
 
 			it('can select a hierarchy option', function () {
-				if (
-					!config?.selectors?.sidebar?.facetWrapper ||
-					!config?.selectors?.sidebar?.facetTitle ||
-					!config?.selectors?.sidebar?.facetOption
-				)
+				if (!config?.selectors?.sidebar?.facetWrapper || !config?.selectors?.sidebar?.facetTitle || !config?.selectors?.sidebar?.facetOption)
 					this.skip();
 
 				cy.snapController().then(({ store }) => {
@@ -482,28 +488,29 @@ config?.pages?.forEach((page, _i) => {
 					if (!hierarchyFacet) this.skip();
 
 					let facetHierarchyElement;
-					cy.get(`${config.selectors.sidebar.facetWrapper}`).each((facet) => {
-						// find matching facet in dom
-						const title = facet.find(config.selectors.sidebar.facetTitle);
-						if (!facetHierarchyElement && hierarchyFacet.label.trim() === title.text().trim()) {
-							facetHierarchyElement = facet;
-							if (hierarchyFacet.collapsed) {
-								// toggle visibility if collapsed
-								hierarchyFacet.toggleCollapse();
+					cy.get(`${config.selectors.sidebar.facetWrapper}`)
+						.each((facet) => {
+							// find matching facet in dom
+							const title = facet.find(config.selectors.sidebar.facetTitle);
+							if (!facetHierarchyElement && hierarchyFacet.label.trim() === title.text().trim()) {
+								facetHierarchyElement = facet;
+								if (hierarchyFacet.collapsed) {
+									// toggle visibility if collapsed
+									hierarchyFacet.toggleCollapse();
+								}
 							}
-						}
-					})
-					.then(() => {
-						// click on an option in facet and ensure urlManager contains new state
-						const facetHierarchyOption = facetHierarchyElement.find(config.selectors.sidebar.facetOption)[0];
-						const clickedValue = facetHierarchyOption.innerText.split('(')[0].trim();
-						cy.get(facetHierarchyOption).click({ force: true });
-						cy.snapController().then(({ store }) => {
-							expect(Object.keys(store.services.urlManager.state.filter)).to.contain(hierarchyFacet.field);
-							const value = store.services.urlManager.state.filter[hierarchyFacet.field][0].split(hierarchyFacet.hierarchyDelimiter).pop();
-							expect(clickedValue).to.contain(value);
+						})
+						.then(() => {
+							// click on an option in facet and ensure urlManager contains new state
+							const facetHierarchyOption = facetHierarchyElement.find(config.selectors.sidebar.facetOption)[0];
+							const clickedValue = facetHierarchyOption.innerText.split('(')[0].trim();
+							cy.get(facetHierarchyOption).click({ force: true });
+							cy.snapController().then(({ store }) => {
+								expect(Object.keys(store.services.urlManager.state.filter)).to.contain(hierarchyFacet.field);
+								const value = store.services.urlManager.state.filter[hierarchyFacet.field][0].split(hierarchyFacet.hierarchyDelimiter).pop();
+								expect(clickedValue).to.contain(value);
+							});
 						});
-					});
 				});
 			});
 
@@ -530,7 +537,8 @@ config?.pages?.forEach((page, _i) => {
 			});
 		});
 
-		if (_i === 0) { // only take screenshot once
+		if (_i === 0) {
+			// only take screenshot once
 			describe('Snapshot', () => {
 				it('saves a screenshot', function () {
 					cy.visit(page.url);

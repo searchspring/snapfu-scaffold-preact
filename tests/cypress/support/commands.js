@@ -26,7 +26,6 @@
 
 import packageJSON from '../../../package.json';
 
-
 Cypress.Commands.add('addScript', (script) => {
 	cy.get('head').then(($elem) => {
 		const scriptElem = document.createElement('script');
@@ -49,7 +48,7 @@ Cypress.Commands.add('addScripts', (scripts = []) => {
 
 Cypress.Commands.add('addLocalSnap', () => {
 	cy.window().then((window) => {
-		if(!window?.searchspring) {
+		if (!window?.searchspring) {
 			cy.addScript('https://localhost:3333/bundle.js');
 		}
 	});
@@ -70,7 +69,7 @@ Cypress.Commands.add('snapController', (controllerId = 'search') => {
 					controller.eventManager.events.afterStore.remove(afterLoad);
 					resolve(cntrlr);
 				};
-	
+
 				if (cntrlr.store.loading) {
 					return cntrlr.on('afterStore', after);
 				} else {
@@ -88,7 +87,7 @@ Cypress.Commands.add('waitForIdle', (options) => {
 
 	return cy.window().then({ timeout: options.initialTimeout }, (window) => {
 		return new Cypress.Promise((resolve) => {
-			let timeout = setTimeout(resolve, options.additionalTimeout)
+			let timeout = setTimeout(resolve, options.additionalTimeout);
 
 			const observer = new window.PerformanceObserver(() => {
 				clearTimeout(timeout);

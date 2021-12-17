@@ -26,13 +26,23 @@ beforeEach(() => {
 	cy.intercept(/.*searchspring.io\/api\/meta\/meta/).as('meta');
 
 	// prevent v2 and v3 assets
-	cy.intercept(/.*searchspring.net\/search\/*/, (req) => { req.destroy() });
-	cy.intercept(/.*searchspring.net\/autocomplete\/*/, (req) => { req.destroy() });
-	cy.intercept(/.*searchspring.net\/ajax_search\/js\/*/, (req) => { req.destroy() });
+	cy.intercept(/.*searchspring.net\/search\/*/, (req) => {
+		req.destroy();
+	});
+	cy.intercept(/.*searchspring.net\/autocomplete\/*/, (req) => {
+		req.destroy();
+	});
+	cy.intercept(/.*searchspring.net\/ajax_search\/js\/*/, (req) => {
+		req.destroy();
+	});
 
 	// prevent snap assets
-	cy.intercept(/.*snapui.searchspring.io\/.*.js$/, (req) => { req.destroy() });
-	
+	cy.intercept(/.*snapui.searchspring.io\/.*.js$/, (req) => {
+		req.destroy();
+	});
+
 	// prevent 3rd party assets
-	cy.intercept(/.*widget.privy.com\/*/, (req) => {req.destroy()})
+	cy.intercept(/.*widget.privy.com\/*/, (req) => {
+		req.destroy();
+	});
 });

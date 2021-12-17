@@ -14,17 +14,17 @@ const universal = merge(common, {
 		rules: [
 			{
 				test: /\.(js|jsx)$/,
-				include: [
-					/node_modules\/@searchspring/,
-					path.resolve(__dirname, 'src'),
-				],
+				include: [/node_modules\/@searchspring/, path.resolve(__dirname, 'src')],
 				use: {
 					loader: 'babel-loader',
 					options: {
 						presets: [
-							['@babel/preset-env', {
-								browserslistEnv: 'universal'
-							}]
+							[
+								'@babel/preset-env',
+								{
+									browserslistEnv: 'universal',
+								},
+							],
 						],
 					},
 				},
@@ -75,9 +75,12 @@ const modern = merge(common, {
 					loader: 'babel-loader',
 					options: {
 						presets: [
-							['@babel/preset-env', {
-								browserslistEnv: 'modern',
-							}]
+							[
+								'@babel/preset-env',
+								{
+									browserslistEnv: 'modern',
+								},
+							],
 						],
 					},
 				},
