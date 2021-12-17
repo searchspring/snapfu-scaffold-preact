@@ -19,7 +19,7 @@ const config = {
 			removeAllFacetsButton: '.ss__filter-summary__clear-all',
 		},
 		sortBy: {
-			native: 'select.ss__sorting',
+			native: 'select#ss__sort--select',
 		},
 		pagination: {
 			prev: '.ss__pagination .ss__pagination__prev',

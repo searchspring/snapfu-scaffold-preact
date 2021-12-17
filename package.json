@@ -4,6 +4,7 @@
 	"version": "0.1.0",
 	"license": "MIT",
 	"main": "index.js",
+	"private": true,
 	"scripts": {
 		"analyze": "webpack --config webpack.prod.js --analyze",
 		"analyze:modern": "webpack --config webpack.prod.modern.js --analyze",
