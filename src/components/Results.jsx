@@ -34,7 +34,7 @@ export class Results extends Component {
 @observer
 class Result extends Component {
 	render() {
-		const { result } = this.props;
+		const { result, controller } = this.props;
 		const {
 			attributes,
 			mappings: { core },
