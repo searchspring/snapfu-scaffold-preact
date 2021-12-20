@@ -76,7 +76,7 @@ config?.pages?.forEach((page, _i) => {
 							if (href) {
 								cy.get('@next').click({ force: true });
 							} else {
-								cy.get('@next').find('a').click({ force: true });
+								cy.get('@next').find('a, button').click({ force: true });
 							}
 						});
 				} else if (config?.selectors?.pagination?.page) {
@@ -89,7 +89,7 @@ config?.pages?.forEach((page, _i) => {
 							if (href) {
 								cy.get('@page2').click({ force: true });
 							} else {
-								cy.get('@page2').find('a').click({ force: true });
+								cy.get('@page2').find('a, button').click({ force: true });
 							}
 						});
 				}
@@ -112,7 +112,7 @@ config?.pages?.forEach((page, _i) => {
 							if (href) {
 								cy.get('@prev').click({ force: true });
 							} else {
-								cy.get('@prev').find('a').click({ force: true });
+								cy.get('@prev').find('a, button').click({ force: true });
 							}
 						});
 				} else if (config?.selectors?.pagination?.page) {
@@ -125,7 +125,7 @@ config?.pages?.forEach((page, _i) => {
 							if (href) {
 								cy.get('@page1').click({ force: true });
 							} else {
-								cy.get('@page1').find('a').click({ force: true });
+								cy.get('@page1').find('a, button').click({ force: true });
 							}
 						});
 				}
@@ -148,7 +148,7 @@ config?.pages?.forEach((page, _i) => {
 						if (href) {
 							cy.get('@page3').click({ force: true });
 						} else {
-							cy.get('@page3').find('a').click({ force: true });
+							cy.get('@page3').find('a, button').click({ force: true });
 						}
 					});
 

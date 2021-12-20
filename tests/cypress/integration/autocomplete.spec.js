@@ -48,7 +48,7 @@ describe('Autocomplete', () => {
 				cy.get(config.selectors.website.openInputButton).first().click({ force: true });
 			}
 
-			cy.get(config.selectors.website.input).first().should('exist').focus().type(term);
+			cy.get(config.selectors.website.input).first().should('exist').focus().type(term, {force: true});
 
 			cy.wait('@autocomplete').should('exist');
 
@@ -69,13 +69,13 @@ describe('Autocomplete', () => {
 		it('can clear input', function () {
 			if (!config?.selectors?.website?.input && !config?.startingQuery) this.skip();
 
-			cy.get(config.selectors.website.input).first().should('exist').should('have.value', config.startingQuery).clear().should('have.value', '');
+			cy.get(config.selectors.website.input).first().should('exist').should('have.value', config.startingQuery).clear({force: true}).should('have.value', '');
 		});
 
 		it('can make term query', function () {
 			if (!config?.selectors?.website?.input) this.skip();
 
-			cy.get(config.selectors.website.input).first().should('exist').type(term);
+			cy.get(config.selectors.website.input).first().should('exist').type(term, {force: true});
 
 			cy.wait('@autocomplete').should('exist');
 
@@ -95,7 +95,7 @@ describe('Autocomplete', () => {
 					.eq(1)
 					.find('a')
 					.should('exist')
-					.trigger('focus')
+					.trigger('focus', {force: true})
 					.invoke('text')
 					.then((text) => {
 						expect(text).to.equal(store.terms[1].value);
@@ -107,7 +107,7 @@ describe('Autocomplete', () => {
 		it('can hover over facet', function () {
 			if (!config?.selectors?.input && !config?.selectors?.autocomplete?.facet) this.skip();
 
-			cy.get(config.selectors.website.input).first().should('exist').clear().type(term);
+			cy.get(config.selectors.website.input).first().should('exist').clear({force: true}).type(term, {force: true});
 
 			cy.wait('@autocomplete').should('exist');
 

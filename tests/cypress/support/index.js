@@ -45,4 +45,7 @@ beforeEach(() => {
 	cy.intercept(/.*widget.privy.com\/*/, (req) => {
 		req.destroy();
 	});
+	cy.intercept(/.*.swymrelay.com\/*/, (req) => {
+		req.destroy();
+	});
 });
