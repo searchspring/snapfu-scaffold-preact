@@ -32,6 +32,15 @@ describe('Autocomplete', () => {
 
 	describe('Tests Autocomplete', () => {
 		let term = config.startingQuery || null;
+
+		it('has a controller with an empty store', function () {
+			cy.snapController('autocomplete').then(({ store }) => {
+				expect(store.results.length).to.equal(0);
+				expect(store.terms.length).to.equal(0);
+				expect(store.state.input).to.equal(undefined);
+			});
+		});
+
 		it('can make single letter query', function () {
 			if (!term && !config?.selectors?.website?.input) this.skip();
 
@@ -82,8 +91,9 @@ describe('Autocomplete', () => {
 
 			cy.snapController('autocomplete').then(({ store }) => {
 				if (!store.terms.length > 1) this.skip();
-				cy.get(`${config.selectors.autocomplete.term}:nth-child(2) a`)
-					.first()
+				cy.get(`${config.selectors.autocomplete.term}`)
+					.eq(1)
+					.find('a')
 					.should('exist')
 					.trigger('focus')
 					.invoke('text')
