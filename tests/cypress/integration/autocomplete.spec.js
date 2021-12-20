@@ -3,6 +3,7 @@ const config = {
 	disableGA: '',
 	selectors: {
 		website: {
+			openInputButton: '',
 			input: '.header-bar__search-input:first',
 		},
 		autocomplete: {
