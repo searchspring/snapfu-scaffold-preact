@@ -23,7 +23,6 @@ beforeEach(() => {
 	// make references to requests available
 	cy.intercept(/.*searchspring.io\/api\/search\/search/).as('search');
 	cy.intercept(/.*searchspring.io\/api\/search\/autocomplete/).as('autocomplete');
-	cy.intercept(/.*searchspring.io\/api\/meta\/meta/).as('meta');
 
 	// prevent v2 and v3 assets
 	cy.intercept(/.*searchspring.net\/search\/*/, (req) => {
