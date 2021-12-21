@@ -121,7 +121,7 @@ describe('Autocomplete', () => {
 
 				cy.get(`${config.selectors.autocomplete.facet} a`).then((facetOptions) => {
 					const firstOption = facetOptions[0];
-					expect(firstOption.innerText).to.equal(store.facets[0].values[0].label);
+					expect(firstOption.innerText).to.contain(store.facets[0].values[0].label);
 					cy.get(firstOption).trigger('focus');
 					cy.snapController('autocomplete').then(({ store }) => {
 						expect(totalResults).to.be.at.least(store.pagination.totalResults);
