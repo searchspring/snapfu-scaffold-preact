@@ -20,13 +20,17 @@ describe('Autocomplete', () => {
 	describe('Setup', () => {
 		it('adds snap bundle to autocomplete page', () => {
 			cy.visit(config.url);
-			cy.addLocalSnap(); // as @script
+			cy.addLocalSnap();
+
+			cy.waitForBundle().then(() => {
+				cy.window().then(window => {
+					expect(window.searchspring).to.exist;
+				});
+			});
 
 			if (config.disableGA) {
 				window[`ga-disable-${config.disableGA}`] = true;
 			}
-
-			cy.wait('@meta').should('exist');
 		});
 	});
 

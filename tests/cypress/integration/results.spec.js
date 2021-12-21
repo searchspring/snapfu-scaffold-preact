@@ -41,12 +41,15 @@ config?.pages?.forEach((page, _i) => {
 
 				cy.addLocalSnap();
 
+				cy.waitForBundle().then(() => {
+					cy.window().then(window => {
+						expect(window.searchspring).to.exist;
+					});
+				});
+
 				if (config.disableGA) {
 					window[`ga-disable-${config.disableGA}`] = true;
 				}
-
-				cy.wait('@meta').should('exist');
-				cy.wait('@search').should('exist');
 
 				cy.snapController().then(({ store }) => {
 					expect(typeof store).to.equal('object');
@@ -540,10 +543,18 @@ config?.pages?.forEach((page, _i) => {
 		if (_i === 0) {
 			// only take screenshot once
 			describe('Snapshot', () => {
-				it('saves a screenshot', function () {
+				it('saves a screenshot', () => {
 					cy.visit(page.url);
-					cy.waitForIdle().then(() => {
-						cy.screenshot('snapshot', { capture: 'viewport' });
+					cy.addLocalSnap();
+					
+					cy.waitForBundle().then(() => {
+						cy.snapController('search').then(({ store }) => {
+							expect(store.results.length).to.greaterThan(0);
+			
+							cy.waitForIdle().then(() => {
+								cy.screenshot('snapshot', { capture: 'viewport' });
+							});
+						});
 					});
 				});
 			});

@@ -82,6 +82,20 @@ Cypress.Commands.add('snapController', (controllerId = 'search') => {
 	});
 });
 
+Cypress.Commands.add('waitForBundle', () => {
+	cy.window().then((window) => {
+		return new Cypress.Promise((resolve) => {
+			const checkTimeout = 100;
+			let interval = setInterval(() => {
+				if (window.searchspring) {
+					clearInterval(interval);
+					resolve();
+				}
+			}, checkTimeout);
+		});
+	});
+});
+
 Cypress.Commands.add('waitForIdle', (options) => {
 	options = { initialTimeout: 2000, additionalTimeout: 200, ...options };
 
