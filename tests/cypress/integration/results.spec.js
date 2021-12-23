@@ -202,7 +202,7 @@ config?.pages?.forEach((page, _i) => {
 
 			it('can toggle facet collapsed', function () {
 				if (
-					!config?.selectors?.sidebar?.facetWrapper &&
+					!config?.selectors?.sidebar?.facetWrapper ||
 					!config?.selectors?.sidebar?.facetCollapseButton &&
 					(!config?.selectors?.sidebar?.facetOpen || !config?.selectors?.sidebar?.facetCollapsed)
 				)

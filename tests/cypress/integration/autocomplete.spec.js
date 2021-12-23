@@ -86,7 +86,7 @@ describe('Autocomplete', () => {
 			cy.snapController('autocomplete').then(({ store }) => {
 				expect(store.terms.length).to.greaterThan(0);
 
-				expect(store.terms[0].value).to.equal(term);
+				expect(store.terms[0].value).to.contain(term);
 			});
 		});
 
