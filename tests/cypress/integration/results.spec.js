@@ -12,7 +12,7 @@ const config = {
 			facetOpen: '.ss__dropdown--open',
 			facetCollapsed: '',
 			facetOption: '.ss__facet__options a',
-			showMoreButton: 'ss__facet__show-more-less',
+			showMoreButton: '.ss__facet__show-more-less',
 			searchWithinInput: '',
 			summaryWrapper: '.ss__filter-summary',
 			appliedFacetRemoveButton: '.ss__filter',

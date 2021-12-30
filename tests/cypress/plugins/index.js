@@ -21,6 +21,15 @@ module.exports = (on, config) => {
 	// `on` is used to hook into various events Cypress emits
 	// `config` is the resolved Cypress config
 
+	on('before:browser:launch', (browser, launchOptions) => {
+		if (browser.name === 'electron' && browser.isHeadless) {
+			launchOptions.preferences.width = 1280;
+			launchOptions.preferences.height = 960;
+		}
+
+		return launchOptions
+	});
+
 	on('after:screenshot', ({ path }) => {
 		// this screenshot is used in snapp-explorer
 		if (path.includes('snapshot')) {
