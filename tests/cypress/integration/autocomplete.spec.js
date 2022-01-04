@@ -91,10 +91,10 @@ describe('Autocomplete', () => {
 		});
 
 		it('can hover over next term', function () {
-			let term = config.startingQuery || null;
+			if (!config?.selectors?.autocomplete?.term) this.skip();
+			term = config.startingQuery || null;
 			cy.get(config.selectors.website.input).first().should('exist').clear({force: true}).type(term, {force: true});
 
-			if (!config?.selectors?.autocomplete?.term) this.skip();
 
 			cy.snapController('autocomplete').then(({ store }) => {
 				if (!store.terms.length > 1) this.skip();
