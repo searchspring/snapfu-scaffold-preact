@@ -1,23 +1,42 @@
-const PreactRefreshPlugin = require('@prefresh/webpack');
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 const path = require('path');
 
-module.exports = merge(common, {
+const universal = merge(common, {
 	mode: 'development',
-	target: 'web',
+	entry: './src/universal.js',
+	output: {
+		filename: 'bundle.js',
+		chunkFilename: 'bundle.chunk.[fullhash:8].[id].js',
+	},
+	target: 'browserslist:universal',
+	module: {
+		rules: [
+			{
+				test: /\.(js|jsx)$/,
+				include: [/node_modules\/@searchspring/, path.resolve(__dirname, 'src')],
+				use: {
+					loader: 'babel-loader',
+					options: {
+						presets: [
+							[
+								'@babel/preset-env',
+								{
+									browserslistEnv: 'universal',
+								},
+							],
+						],
+					},
+				},
+			},
+		],
+	},
 	devtool: 'source-map',
 	devServer: {
-		https: true,
+		server: 'https',
 		port: 3333,
 		hot: true,
 		allowedHosts: 'all',
-		client: {
-			overlay: {
-				errors: true,
-				warnings: false,
-			},
-		},
 		headers: {
 			'Access-Control-Allow-Origin': '*',
 		},
@@ -27,13 +46,48 @@ module.exports = merge(common, {
 			watch: true,
 		},
 		devMiddleware: {
-			publicPath: '/dist/',
-			writeToDisk: (filePath) => {
-				return /bundle\.js.*/.test(filePath);
+			publicPath: '/',
+		},
+		client: {
+			overlay: {
+				errors: true,
+				warnings: false,
 			},
 		},
 	},
-	plugins: [
-		new PreactRefreshPlugin(),
-	]
+	devtool: 'source-map',
 });
+
+const modern = merge(common, {
+	mode: 'development',
+	entry: './src/index.js',
+	output: {
+		filename: 'modern.bundle.js',
+		chunkFilename: 'modern.bundle.chunk.[fullhash:8].[id].js',
+	},
+	target: 'browserslist:modern',
+	module: {
+		rules: [
+			{
+				test: /\.(js|jsx)$/,
+				exclude: /node_modules/,
+				use: {
+					loader: 'babel-loader',
+					options: {
+						presets: [
+							[
+								'@babel/preset-env',
+								{
+									browserslistEnv: 'modern',
+								},
+							],
+						],
+					},
+				},
+			},
+		],
+	},
+	devtool: 'source-map',
+});
+
+module.exports = [universal, modern];

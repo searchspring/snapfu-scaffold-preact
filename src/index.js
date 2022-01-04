@@ -1,9 +1,9 @@
 /* searchspring imports */
 import { Snap } from '@searchspring/snap-preact';
+import { getContext } from '@searchspring/snap-toolbox';
 
 /* local imports */
-import { searchspring } from '../package.json';
-import { middleware } from './scripts/middleware';
+import { plugin } from './scripts/plugin';
 import './styles/custom.scss';
 
 /*
@@ -27,7 +27,7 @@ const config = {
 	},
 	client: {
 		globals: {
-			siteId: searchspring.siteId,
+			siteId: '{{snapfu.siteId}}',
 		},
 	},
 	controllers: {
@@ -35,7 +35,7 @@ const config = {
 			{
 				config: {
 					id: 'search',
-					plugins: [[middleware]],
+					plugins: [[plugin]],
 				},
 				targeters: [
 					{
@@ -82,7 +82,3 @@ const config = {
 };
 
 const snap = new Snap(config);
-
-snap.getController('search').then((search) => {
-	// search controller available
-});
