@@ -142,7 +142,7 @@ describe('Autocomplete', () => {
 				
 				cy.get(`${config.selectors.autocomplete.facet} a`).then((facetOptions) => {
 					const firstOption = facetOptions[0];
-					const textContent = firstOption.innerText;
+					const textContent = firstOption.innerText.toLowerCase();
 					
 					cy.get(firstOption).rightclick({force: true}); // trigger onFocus event
 					
@@ -150,7 +150,7 @@ describe('Autocomplete', () => {
 
 					cy.snapController('autocomplete').then(({ store }) => {
 						cy.wrap(store.services.urlManager).its('state.filter').should('exist');
-						cy.wrap(store.services.urlManager.href).should('match', new RegExp(`filter:.*:${textContent}`, 'i'))
+						cy.wrap(store.services.urlManager.href.toLowerCase()).should('contain', encodeURIComponent(textContent).replace(/%/g, '$$25'));
 					});
 				});
 			});
