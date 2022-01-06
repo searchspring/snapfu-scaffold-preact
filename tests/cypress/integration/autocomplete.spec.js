@@ -18,6 +18,12 @@ const config = {
 
 describe('Autocomplete', () => {
 	describe('Setup', () => {
+		it('has valid config', () => {
+			cy.wrap(config).its('url').should('have.length.at.least', 1);
+			cy.wrap(config).its('startingQuery').should('have.length.at.least', 1);
+			cy.wrap(config).its('selectors.website.input').should('have.length.at.least', 1);
+		});
+
 		it('adds snap bundle to autocomplete page', () => {
 			cy.visit(config.url);
 			cy.addLocalSnap();
@@ -90,44 +96,61 @@ describe('Autocomplete', () => {
 			});
 		});
 
-		it('can hover over next term', function () {
+		it('can hover over term', function () {
 			if (!config?.selectors?.autocomplete?.term) this.skip();
-			term = config.startingQuery || null;
-			cy.get(config.selectors.website.input).first().should('exist').clear({force: true}).type(term, {force: true});
 
+			cy.get(config.selectors.website.input).first().should('exist').clear({force: true}).type(config.startingQuery, {force: true});
+			cy.wait('@autocomplete').should('exist');
 
 			cy.snapController('autocomplete').then(({ store }) => {
 				if (!store.terms.length > 1) this.skip();
+				cy.get('body').then((body) => {
+					if(!body.find(`${config.selectors.autocomplete.term}`).length) {
+						this.skip(); // skip if no terms in DOM
+					}
+				});
+
 				cy.get(`${config.selectors.autocomplete.term}`)
-					.eq(1)
+					.last()
 					.find('a')
 					.should('exist')
-					.trigger('focus', {force: true})
-					.invoke('text')
-					.then((text) => {
-						expect(text).to.equal(store.terms[1].value);
-						term = text;
-					});
+					.rightclick({force: true}); // trigger onFocus event
+
+				cy.wait('@autocomplete').should('exist');
+				
+				cy.snapController('autocomplete').then(({ store }) => {
+					const lastTerm = store.terms[store.terms.length - 1];
+					expect(lastTerm.active).to.equal(true);
+					expect(lastTerm.value).to.equal(store.search.query.string);
+				});
 			});
 		});
 
 		it('can hover over facet', function () {
 			if (!config?.selectors?.input && !config?.selectors?.autocomplete?.facet) this.skip();
 
-			cy.get(config.selectors.website.input).first().should('exist').clear({force: true}).type(term, {force: true});
-
+			cy.get(config.selectors.website.input).first().should('exist').clear({force: true}).type(config.startingQuery, {force: true});
 			cy.wait('@autocomplete').should('exist');
 
 			cy.snapController('autocomplete').then(({ store }) => {
-				const totalResults = store.pagination.totalResults;
-				if (!store.facets.length > 0 || !store.facets[0].values.length > 0) this.skip(); //skip if this term has no facets
-
+				if (!store.facets.length > 0) this.skip(); //skip if this term has no facets
+				cy.get('body').then((body) => {
+					if(!body.find(`${config.selectors.autocomplete.facet} a`).length) {
+						this.skip(); // skip if no facets in DOM
+					}
+				});
+				
 				cy.get(`${config.selectors.autocomplete.facet} a`).then((facetOptions) => {
 					const firstOption = facetOptions[0];
-					expect(firstOption.innerText).to.contain(store.facets[0].values[0].label);
-					cy.get(firstOption).trigger('focus', {force: true});
+					const textContent = firstOption.innerText.toLowerCase();
+					
+					cy.get(firstOption).rightclick({force: true}); // trigger onFocus event
+					
+					cy.wait('@autocomplete').should('exist');
+
 					cy.snapController('autocomplete').then(({ store }) => {
-						expect(totalResults).to.be.at.least(store.pagination.totalResults);
+						cy.wrap(store.services.urlManager).its('state.filter').should('exist');
+						cy.wrap(store.services.urlManager.href.toLowerCase()).should('contain', encodeURIComponent(textContent).replace(/%/g, '$$25'));
 					});
 				});
 			});
