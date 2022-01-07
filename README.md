@@ -1,4 +1,4 @@
-# Searchspring Snap Preact Template
+# {{snapfu.name}}
 
 Snap SDK packages and components built with Preact.
 
