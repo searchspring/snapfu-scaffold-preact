@@ -21,6 +21,9 @@
 	"searchspring": {
 		"siteId": "{{snapfu.siteId}}",
 		"framework": "preact",
+		"updates": [
+			"all"
+		],
 		"tags": []
 	},
 	"prettier": "@searchspring/prettier",
