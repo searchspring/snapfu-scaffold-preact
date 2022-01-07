@@ -6,9 +6,9 @@
 	"main": "index.js",
 	"private": true,
 	"scripts": {
-		"analyze": "webpack --config webpack.prod.js --analyze",
-		"analyze:modern": "webpack --config webpack.prod.modern.js --analyze",
-		"build": "rm -rf ./dist && webpack --config webpack.prod.modern.js && webpack --config webpack.prod.js",
+		"analyze": "webpack --config webpack.modern.js --analyze",
+		"analyze:universal": "webpack --config webpack.universal.js --analyze",
+		"build": "rm -rf ./dist && webpack --config webpack.modern.js && webpack --config webpack.universal.js",
 		"cypress": "cypress open --project tests",
 		"clean": "rm -rf ./node_modules && rm ./package-lock.json",
 		"dev": "kill $(lsof -ti:3333,8888); webpack serve --config webpack.dev.js",
@@ -21,12 +21,15 @@
 	"searchspring": {
 		"siteId": "{{snapfu.siteId}}",
 		"framework": "preact",
+		"updates": [
+			"all"
+		],
 		"tags": []
 	},
 	"prettier": "@searchspring/prettier",
 	"dependencies": {
-		"@searchspring/snap-preact": "^0.13.2",
-		"@searchspring/snap-preact-components": "^0.13.2",
+		"@searchspring/snap-preact": "^0.13.3",
+		"@searchspring/snap-preact-components": "^0.13.3",
 		"classnames": "^2.3.1",
 		"mobx": "^6.3.8",
 		"mobx-react": "^7.2.1",
