@@ -28,8 +28,8 @@
 	},
 	"prettier": "@searchspring/prettier",
 	"dependencies": {
-		"@searchspring/snap-preact": "^0.13.2",
-		"@searchspring/snap-preact-components": "^0.13.2",
+		"@searchspring/snap-preact": "^0.13.3",
+		"@searchspring/snap-preact-components": "^0.13.3",
 		"classnames": "^2.3.1",
 		"mobx": "^6.3.8",
 		"mobx-react": "^7.2.1",
