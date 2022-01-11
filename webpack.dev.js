@@ -6,8 +6,8 @@ const universal = merge(common, {
 	mode: 'development',
 	entry: './src/universal.js',
 	output: {
-		filename: 'bundle.js',
-		chunkFilename: 'bundle.chunk.[fullhash:8].[id].js',
+		filename: 'universal.bundle.js',
+		chunkFilename: 'universal.bundle.chunk.[fullhash:8].[id].js',
 	},
 	target: 'browserslist:universal',
 	module: {
@@ -62,8 +62,8 @@ const modern = merge(common, {
 	mode: 'development',
 	entry: './src/index.js',
 	output: {
-		filename: 'modern.bundle.js',
-		chunkFilename: 'modern.bundle.chunk.[fullhash:8].[id].js',
+		filename: 'bundle.js',
+		chunkFilename: 'bundle.chunk.[fullhash:8].[id].js',
 	},
 	target: 'browserslist:modern',
 	module: {
