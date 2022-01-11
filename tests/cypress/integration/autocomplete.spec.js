@@ -1,19 +1,31 @@
+/**
+ * End to end tests with Cypress!
+ * 
+ * The purpose of these tests is to prevent publishing of the bundle if a 
+ * breaking change has been made to the implementation code in the future
+ * 
+ * Start by fill out the config object below. If a selector is not provided, 
+ * the applicable tests will be skipped.
+ * 
+ */
+
 const config = {
-	url: 'https://localhost:3333/index.html',
-	disableGA: '',
+	url: 'https://localhost:3333/index.html',  // page containing autocomplete (recommended: home/about/contact page)
+	disableGA: '',  // disable google analytic events (example: 'UA-123456-1')
 	selectors: {
 		website: {
-			openInputButton: '',
-			input: '.header-bar__search-input:first',
+			openInputButton: '', // selector for a button to click in order to make the input visible
+			input: '.header-bar__search-input:first', // selector of <input> elements (config.controllers[].autocomplete[].config.selector)
 		},
 		autocomplete: {
+			// selector of the wrapping element. Expects child element to contain <a>
 			term: `.ss__autocomplete .ss__autocomplete__terms__option`,
 			facet: '.ss__autocomplete .ss__facet .ss__facet__options',
 			result: '.ss__autocomplete .ss__results .ss__result',
 			seeMore: '.ss__autocomplete .ss__autocomplete__content__info',
 		},
 	},
-	startingQuery: 't',
+	startingQuery: 't', // initial query (displays terms, facets, and results)
 };
 
 describe('Autocomplete', () => {

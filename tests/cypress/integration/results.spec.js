@@ -1,33 +1,45 @@
+/**
+ * End to end tests with Cypress!
+ * 
+ * The purpose of these tests is to prevent publishing of the bundle if a 
+ * breaking change has been made to the implementation code in the future
+ * 
+ * Start by fill out the config object below. If a selector is not provided, 
+ * the applicable tests will be skipped.
+ * 
+ */
+
 const config = {
+	// pages to test (recommended: 1 search page, 1 category page)
 	pages: [
 		{ url: 'https://localhost:3333/index.html', id: 'Search' },
 		// { url: 'https://try.searchspring.com/dresses', id: 'Category' },
 	],
-	disableGA: '',
+	disableGA: '', // disable google analytic events (example: 'UA-123456-1')
 	selectors: {
 		sidebar: {
-			facetWrapper: '.ss__facet',
-			facetTitle: '.ss__facet__header',
-			facetCollapseButton: '.ss__dropdown__button',
-			facetOpen: '.ss__dropdown--open',
-			facetCollapsed: '',
-			facetOption: '.ss__facet__options a',
-			showMoreButton: '.ss__facet__show-more-less',
-			searchWithinInput: '',
-			summaryWrapper: '.ss__filter-summary',
-			appliedFacetRemoveButton: '.ss__filter',
-			removeAllFacetsButton: '.ss__filter-summary__clear-all',
+			facetWrapper: '.ss__facet', // facet wrapper
+			facetTitle: '.ss__facet__header', // facet title, should contain facet.label innerText
+			facetCollapseButton: '.ss__dropdown__button', // facet collapse button, should contain onClick to toggle collapse
+			facetOpen: '.ss__dropdown--open', // facet open state class
+			facetCollapsed: '', // facet closed state class
+			facetOption: '.ss__facet__options a', // facet option, should be <a> element
+			showMoreButton: '.ss__facet__show-more-less', // facet show more button, should contain onClick
+			searchWithinInput: '', // facet search within, should be <input> element
+			summaryWrapper: '.ss__filter-summary', // filter summary wrapper
+			appliedFacetRemoveButton: '.ss__filter', // filter summary - a filter's remove button onClick and/or <a> element
+			removeAllFacetsButton: '.ss__filter-summary__clear-all', // filter summary clear all button
 		},
 		sortBy: {
-			native: 'select#ss__sort--select',
+			native: 'select#ss__sort--select', // sort by <select> element (if applicable)
 		},
 		pagination: {
-			prev: '.ss__pagination .ss__pagination__prev',
-			page: '.ss__pagination .ss__pagination__page',
-			next: '.ss__pagination .ss__pagination__next',
+			prev: '.ss__pagination .ss__pagination__prev', // pagination previous
+			page: '.ss__pagination .ss__pagination__page', // pagination page
+			next: '.ss__pagination .ss__pagination__next', // pagination next
 		},
 		results: {
-			productWrapper: '.ss__contents .grid__item',
+			productWrapper: '.ss__contents .grid__item', // single result wrapper
 		},
 	},
 };
