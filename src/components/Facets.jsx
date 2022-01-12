@@ -30,6 +30,7 @@ export class Facet extends Component {
 			facet && (
 				<div class="ss__facet">
 					<h5
+						class="ss__facet__header"
 						onClick={() => {
 							facet.toggleCollapse();
 						}}

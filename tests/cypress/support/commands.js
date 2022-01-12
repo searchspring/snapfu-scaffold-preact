@@ -61,22 +61,25 @@ Cypress.Commands.add('addCloudSnap', (branch = 'production') => {
 Cypress.Commands.add('snapController', (controllerId = 'search') => {
 	cy.window().then((window) => {
 		return new Cypress.Promise((resolve, reject) => {
-			const cntrlr = window.searchspring.controller[controllerId];
+			const checkTimeout = 100;
+			let interval = setInterval(() => {
+				const cntrlr = window.searchspring.controller[controllerId];
 
-			if (cntrlr) {
-				const after = function afterLoad({ controller }) {
-					controller.eventManager.events.afterStore.remove(afterLoad);
-					resolve(cntrlr);
-				};
+				if (cntrlr) {
+					clearInterval(interval);
 
-				if (cntrlr.store.loading) {
-					return cntrlr.on('afterStore', after);
-				} else {
-					resolve(cntrlr);
+					const after = function afterLoad({ controller }) {
+						controller.eventManager.events.afterStore.remove(afterLoad);
+						resolve(cntrlr);
+					};
+	
+					if (cntrlr.store.loading) {
+						cntrlr.on('afterStore', after);
+					} else {
+						resolve(cntrlr);
+					}
 				}
-			} else {
-				reject(`no controller found with id: ${controllerId}`);
-			}
+			}, checkTimeout);
 		});
 	});
 });
@@ -96,15 +99,15 @@ Cypress.Commands.add('waitForBundle', () => {
 });
 
 Cypress.Commands.add('waitForIdle', (options) => {
-	options = { initialTimeout: 2000, additionalTimeout: 200, ...options };
+	options = { timeout: 200, ...options };
 
-	return cy.window().then({ timeout: options.initialTimeout }, (window) => {
+	return cy.window().then((window) => {
 		return new Cypress.Promise((resolve) => {
-			let timeout = setTimeout(resolve, options.additionalTimeout);
+			let timeout = setTimeout(resolve, options.timeout);
 
 			const observer = new window.PerformanceObserver(() => {
 				clearTimeout(timeout);
-				timeout = setTimeout(resolve, options.additionalTimeout);
+				timeout = setTimeout(resolve, options.timeout);
 			});
 
 			observer.observe({ entryTypes: ['resource'] });
