@@ -20,15 +20,15 @@ const config = {
 		sidebar: {
 			facetWrapper: '.ss__facet', // facet wrapper
 			facetTitle: '.ss__facet__header', // facet title, should contain facet.label innerText
-			facetCollapseButton: '.ss__dropdown__button', // facet collapse button, should contain onClick to toggle collapse
-			facetOpen: '.ss__dropdown--open', // facet open state class
-			facetCollapsed: '', // facet closed state class
-			facetOption: '.ss__facet__options a', // facet option, should be <a> element
+			facetCollapseButton: '.ss__facet__header', // facet collapse button, should contain onClick to toggle collapse
+			facetOpen: '', // facet open state class
+			facetCollapsed: '.ss__facet--collapsed', // facet closed state class
+			facetOption: '.ss__facet-options-list__option a', // facet option, should be <a> element or element handling onClick
 			showMoreButton: '.ss__facet__show-more-less', // facet show more button, should contain onClick
 			searchWithinInput: '', // facet search within, should be <input> element
-			summaryWrapper: '.ss__filter-summary', // filter summary wrapper
-			appliedFacetRemoveButton: '.ss__filter', // filter summary - a filter's remove button onClick and/or <a> element
-			removeAllFacetsButton: '.ss__filter-summary__clear-all', // filter summary clear all button
+			summaryWrapper: '.ss__filters', // filter summary wrapper
+			appliedFacetRemoveButton: '.ss__filters__filter a', // filter summary - a filter's remove button onClick and/or <a> element
+			removeAllFacetsButton: '.ss__filters__clear-all', // filter summary clear all button
 		},
 		sortBy: {
 			native: 'select#ss__sort--select', // sort by <select> element (if applicable)
@@ -192,7 +192,8 @@ config?.pages?.forEach((page, _i) => {
 						cy.snapController().then(({ store }) => {
 							const activeOption = store.sorting.options[optionIndexToSelect];
 							expect(activeOption.active).to.equal(true);
-							expect(store.sorting.current).to.equal(activeOption);
+							expect(store.sorting.current.field).to.equal(activeOption.field);
+							expect(store.sorting.current.direction).to.equal(activeOption.direction);
 						});
 					});
 			});
@@ -202,13 +203,15 @@ config?.pages?.forEach((page, _i) => {
 			it('has correct titles', function () {
 				if (!config?.selectors?.sidebar?.facetTitle) this.skip();
 
+				if (config?.selectors?.sidebar?.facetToggle) {
+					cy.get(config?.selectors?.sidebar?.facetToggle).click({ force: true });
+				}
+
 				cy.snapController().then(({ store }) => {
-					cy.get(config.selectors.sidebar.facetTitle)
-						.should('have.length', store.facets.length)
-						.each((el, index) => {
-							const title = el.text().trim();
-							expect(title).to.equal(store.facets[index].label.trim());
-						});
+					cy.get(config.selectors.sidebar.facetWrapper).each((el, index) => {
+						const title = el.find(config.selectors.sidebar.facetTitle);
+						expect(title.text().trim()).to.equal(store.facets[index].label.trim());
+					});
 				});
 			});
 
@@ -535,7 +538,7 @@ config?.pages?.forEach((page, _i) => {
 				cy.snapController().then(({ store }) => {
 					if (store.filters.length === 0) this.skip();
 				});
-				cy.get(config?.selectors?.sidebar?.removeAllFacetsButton).should('exist').click({ force: true });
+				cy.get(config?.selectors?.sidebar?.removeAllFacetsButton).first().should('exist').click({ force: true });
 				cy.snapController().then(({ store }) => {
 					expect(store.filters.length).to.equal(0);
 				});
@@ -560,7 +563,7 @@ config?.pages?.forEach((page, _i) => {
 					cy.addLocalSnap();
 					
 					cy.waitForBundle().then(() => {
-						cy.snapController('search').then(({ store }) => {
+						cy.snapController().then(({ store }) => {
 							expect(store.results.length).to.greaterThan(0);
 			
 							cy.waitForIdle().then(() => {
