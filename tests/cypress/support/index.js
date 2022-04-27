@@ -16,10 +16,10 @@
 // Import commands.js using ES2015 syntax:
 import './commands';
 
-beforeEach(() => {
-	// ignore party uncaught exceptions
-	cy.on('uncaught:exception', (err, runnable) => false);
+// ignore 3rd party uncaught exceptions
+Cypress.on('uncaught:exception', (err, runnable) => false);
 
+beforeEach(() => {
 	// make references to requests available
 	cy.intercept(/.*searchspring.io\/api\/search\/search/).as('search');
 	cy.intercept(/.*searchspring.io\/api\/search\/autocomplete/).as('autocomplete');
