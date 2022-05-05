@@ -95,7 +95,7 @@ describe('Autocomplete', () => {
 			if (!config?.selectors?.autocomplete?.term) this.skip();
 
 			cy.snapController('autocomplete').then(({ store }) => {
-				if (!store.terms.length > 1) this.skip();
+				if (store.terms.length <= 1) this.skip();
 				cy.get('body').then((body) => {
 					if (!body.find(`${config.selectors.autocomplete.term}`).length) {
 						this.skip(); // skip if no terms in DOM
@@ -121,7 +121,7 @@ describe('Autocomplete', () => {
 			cy.wait('@autocomplete').should('exist');
 
 			cy.snapController('autocomplete').then(({ store }) => {
-				if (!store.facets.length > 0) this.skip(); //skip if this term has no facets
+				if (store.facets.length == 0) this.skip(); //skip if this term has no facets
 				cy.get('body').then((body) => {
 					if (!body.find(`${config.selectors.autocomplete.facet} a`).length) {
 						this.skip(); // skip if no facets in DOM
