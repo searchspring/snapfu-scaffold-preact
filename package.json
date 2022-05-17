@@ -21,6 +21,7 @@
 	"searchspring": {
 		"siteId": "{{snapfu.siteId}}",
 		"framework": "preact",
+		"template": "snapfu-template-preact",
 		"updates": [
 			"all"
 		],
