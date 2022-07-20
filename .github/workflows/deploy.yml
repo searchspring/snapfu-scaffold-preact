@@ -15,6 +15,7 @@ jobs:
         # required
           repository: ${{ env.GITHUB_REPOSITORY }}
           secretKey: ${{ secrets.WEBSITE_SECRET_KEY }}
+          secrets: ${{ toJSON(secrets) }}
           aws-access-key-id: ${{ secrets.SNAPFU_AWS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.SNAPFU_AWS_SECRET_ACCESS_KEY }}
           aws-cloudfront-distribution-id: ${{secrets.SNAPFU_AWS_DISTRIBUTION_ID}}
@@ -23,4 +24,3 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.PACKAGE_TOKEN }}
           GITHUB_BOT_TOKEN: ${{ secrets.MACHINE_TOKEN }}
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-          secrets: ${{ toJSON(secrets) }}
