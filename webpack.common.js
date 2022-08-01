@@ -1,8 +1,12 @@
 const webpack = require('webpack');
 const childProcess = require('child_process');
+const path = require('path');
 const branchName = childProcess.execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
 
 module.exports = {
+	output: {
+		path: path.resolve(__dirname, 'distro'),
+	},
 	stats: {
 		modulesSort: 'size',
 		modulesSpace: 70,

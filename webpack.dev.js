@@ -6,7 +6,6 @@ const universal = merge(common, {
 	mode: 'development',
 	entry: './src/universal.js',
 	output: {
-		path: path.resolve(__dirname, 'dist'),
 		filename: 'universal.bundle.js',
 		chunkFilename: 'universal.bundle.chunk.[fullhash:8].[id].js',
 	},
@@ -63,7 +62,6 @@ const modern = merge(common, {
 	mode: 'development',
 	entry: './src/index.js',
 	output: {
-		path: path.resolve(__dirname, 'dist'),
 		filename: 'bundle.js',
 		chunkFilename: 'bundle.chunk.[fullhash:8].[id].js',
 	},
