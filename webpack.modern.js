@@ -8,6 +8,7 @@ module.exports = merge(common, {
 	mode: 'production',
 	entry: './src/index.js',
 	output: {
+		path: path.resolve(__dirname, 'dist'),
 		filename: 'bundle.js',
 		chunkFilename: 'bundle.chunk.[fullhash:8].[id].js',
 		chunkLoadingGlobal: `${branchName}BundleChunks`,
