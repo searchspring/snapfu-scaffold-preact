@@ -5,7 +5,7 @@ const branchName = childProcess.execSync('git rev-parse --abbrev-ref HEAD').toSt
 
 module.exports = {
 	output: {
-		path: path.resolve(__dirname, 'distro'),
+		path: path.resolve(__dirname, 'dist'),
 	},
 	stats: {
 		modulesSort: 'size',
