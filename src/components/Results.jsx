@@ -1,19 +1,10 @@
-import { h, Fragment, Component } from 'preact';
+import { h } from 'preact';
 import { observer } from 'mobx-react';
 import { Price, InlineBanner, withController } from '@searchspring/snap-preact-components';
 
-@withController
-@observer
-export class Results extends Component {
-	componentDidMount() {
-		// custom JS integration code
-	}
-	componentDidUpdate() {
-		// custom JS integration code
-	}
-
-	render() {
-		const controller = this.props.controller;
+export const Results = withController(
+	observer((props) => {
+		const controller = props.controller;
 		const { results } = controller.store;
 
 		return (
@@ -27,14 +18,12 @@ export class Results extends Component {
 				))}
 			</ul>
 		);
-	}
-}
+	})
+);
 
-@withController
-@observer
-class Result extends Component {
-	render() {
-		const { result, controller } = this.props;
+const Result = withController(
+	observer((props) => {
+		const { result, controller } = props;
 		const {
 			attributes,
 			mappings: { core },
@@ -52,14 +41,12 @@ class Result extends Component {
 				</div>
 			)
 		);
-	}
-}
+	})
+);
 
-@withController
-@observer
-export class NoResults extends Component {
-	render() {
-		const controller = this.props.controller;
+export const NoResults = withController(
+	observer((props) => {
+		const controller = props.controller;
 		const store = controller.store;
 		const dym = store.search.didYouMean;
 		const contactEmail = 'contact@thesite.com';
@@ -127,5 +114,5 @@ export class NoResults extends Component {
 				</div>
 			</div>
 		);
-	}
-}
+	})
+);

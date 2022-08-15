@@ -1,6 +1,5 @@
-import { h, Fragment, Component } from 'preact';
+import { h } from 'preact';
 import { observer } from 'mobx-react';
-
 import { Banner, Slideout, useMediaQuery, ControllerProvider } from '@searchspring/snap-preact-components';
 
 import { Results, NoResults } from './Results';
@@ -9,48 +8,46 @@ import { Facets } from './Facets';
 import { FilterSummary } from './FilterSummary';
 import { Pagination } from './Pagination';
 
-@observer
-export class Content extends Component {
-	render() {
-		const controller = this.props.controller;
-		const {
-			store,
-			store: { pagination, merchandising },
-		} = controller;
-		const isMobile = useMediaQuery('(max-width: 767px)');
+export const Content = observer((props) => {
+	const controller = props.controller;
+	const {
+		store,
+		store: { pagination, merchandising },
+	} = controller;
 
-		return (
-			controller.store.loaded && (
-				<ControllerProvider controller={controller}>
-					<div class="ss__content">
-						<Banner content={merchandising.content} type="header" />
-						<Banner content={merchandising.content} type="banner" />
+	const isMobile = useMediaQuery('(max-width: 767px)');
 
-						{pagination.totalResults > 0 ? (
-							<div>
-								{isMobile && store.facets.length && store.pagination.totalResults && (
-									<Slideout buttonContent={<SlideoutButton />}>
-										<SlideoutContent />
-									</Slideout>
-								)}
+	return (
+		controller.store.loaded && (
+			<ControllerProvider controller={controller}>
+				<div class="ss__content">
+					<Banner content={merchandising.content} type="header" />
+					<Banner content={merchandising.content} type="banner" />
 
-								<SortBy />
+					{pagination.totalResults > 0 ? (
+						<div>
+							{isMobile && store.facets.length && store.pagination.totalResults && (
+								<Slideout buttonContent={<SlideoutButton />}>
+									<SlideoutContent />
+								</Slideout>
+							)}
 
-								<Results results={store.results}></Results>
+							<SortBy />
 
-								<Pagination pagination={store.pagination} />
-							</div>
-						) : (
-							pagination.totalResults === 0 && <NoResults />
-						)}
+							<Results results={store.results}></Results>
 
-						<Banner content={merchandising.content} type="footer" />
-					</div>
-				</ControllerProvider>
-			)
-		);
-	}
-}
+							<Pagination pagination={store.pagination} />
+						</div>
+					) : (
+						pagination.totalResults === 0 && <NoResults />
+					)}
+
+					<Banner content={merchandising.content} type="footer" />
+				</div>
+			</ControllerProvider>
+		)
+	);
+});
 
 const SlideoutButton = () => {
 	return <button>Filters</button>;
