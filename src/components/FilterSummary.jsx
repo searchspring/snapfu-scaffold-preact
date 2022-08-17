@@ -10,6 +10,7 @@ export class FilterSummary extends Component {
 		const {
 			store: { filters },
 		} = controller;
+		const removeAll = controller?.urlManager.remove('filter');
 
 		return (
 			filters.length !== 0 && (
@@ -21,6 +22,9 @@ export class FilterSummary extends Component {
 							</a>
 						</li>
 					))}
+					<a {...removeAll.link} className="ss-list-link ss__filters__clear-all">
+						Clear All
+					</a>
 				</ul>
 			)
 		);

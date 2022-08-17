@@ -23,7 +23,7 @@ const config = {
 			facetCollapseButton: '.ss__facet__header', // facet collapse button, should contain onClick to toggle collapse
 			facetOpen: '', // facet open state class
 			facetCollapsed: '.ss__facet--collapsed', // facet closed state class
-			facetOption: '.ss__facet-options-list__option a', // facet option, should be <a> element or element handling onClick
+			facetOption: '.ss__facet-options a', // facet option, should be <a> element or element handling onClick
 			showMoreButton: '.ss__facet__show-more-less', // facet show more button, should contain onClick
 			searchWithinInput: '', // facet search within, should be <input> element
 			summaryWrapper: '.ss__filters', // filter summary wrapper
@@ -39,7 +39,7 @@ const config = {
 			next: '.ss__pagination .ss__pagination__next', // pagination next
 		},
 		results: {
-			productWrapper: '.ss__contents .grid__item', // single result wrapper
+			productWrapper: '.ss__content .ss__result', // single result wrapper
 		},
 	},
 };

@@ -15,7 +15,7 @@ const config = {
 	selectors: {
 		website: {
 			openInputButton: '', // selector for a button to click in order to make the input visible
-			input: '.searchspring-ac', // selector of <input> elements (config.controllers[].autocomplete[].config.selector)
+			input: '#search-input', // selector of <input> elements (config.controllers[].autocomplete[].config.selector)
 		},
 		autocomplete: {
 			// selector of the wrapping element. Expects child element to contain <a>
@@ -155,7 +155,7 @@ describe('Autocomplete', () => {
 
 				cy.get(`${config.selectors.autocomplete.facet} a`).then((facetOptions) => {
 					const firstOption = facetOptions[0];
-					const optionURL = firstOption.href;
+					const optionURL = firstOption.href.replace(config.url,'');
 
 					cy.get(firstOption).rightclick({ force: true }); // trigger onFocus event
 

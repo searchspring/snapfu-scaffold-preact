@@ -1,6 +1,6 @@
 import { h, Fragment, Component } from 'preact';
 import { observer } from 'mobx-react';
-import { FacetSlider, withController } from '@searchspring/snap-preact-components';
+import { FacetSlider, FacetGridOptions, FacetPaletteOptions, FacetHierarchyOptions, withController } from '@searchspring/snap-preact-components';
 
 @withController
 @observer
@@ -39,11 +39,11 @@ export class Facet extends Component {
 					</h5>
 
 					<div class={`ss__facet--field-${facet.field} ss__facet--display-${facet.display} ${facet.collapsed ? 'ss__facet--collapsed' : ''}`}>
-						<div class="collapsible-content__inner">
+						<div class="collapsible-content__inner ss__facet-options">
 							{{
-								grid: <div>grid component</div>,
-								palette: <div>palette component</div>,
-								hierarchy: <div>hierarchy component</div>,
+								grid: <FacetGridOptions values={facet.values} />,
+								palette: <FacetPaletteOptions values={facet.values} />,
+								hierarchy: <FacetHierarchyOptions values={facet.values} />,
 								slider: <FacetSlider facet={facet} />,
 							}[facet.display] || <FacetOptionsList facet={facet} />}
 						</div>
