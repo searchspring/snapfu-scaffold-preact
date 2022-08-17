@@ -1,13 +1,10 @@
-import { h, Component, Fragment } from 'preact';
+import { h, Fragment } from 'preact';
 import { observer } from 'mobx-react';
-
 import { withController } from '@searchspring/snap-preact-components';
 
-@withController
-@observer
-export class FilterMessages extends Component {
-	render() {
-		const { facets, filters, pagination } = this.props.controller.store;
+export const FilterMessages = withController(
+	observer((props) => {
+		const { facets, filters, pagination } = props.controller.store;
 
 		let message = '';
 		if (pagination.totalResults === 0 && filters.length === 0) {
@@ -33,5 +30,5 @@ export class FilterMessages extends Component {
 				</div>
 			)
 		);
-	}
-}
+	})
+);

@@ -1,12 +1,10 @@
-import { h, Fragment, Component } from 'preact';
+import { h } from 'preact';
 import { observer } from 'mobx-react';
 import { withController } from '@searchspring/snap-preact-components';
 
-@withController
-@observer
-export class FilterSummary extends Component {
-	render() {
-		const controller = this.props.controller;
+export const FilterSummary = withController(
+	observer((props) => {
+		const controller = props.controller;
 		const {
 			store: { filters },
 		} = controller;
@@ -24,5 +22,5 @@ export class FilterSummary extends Component {
 				</ul>
 			)
 		);
-	}
-}
+	})
+);

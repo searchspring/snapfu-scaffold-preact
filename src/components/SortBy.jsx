@@ -1,12 +1,10 @@
-import { h, Fragment, Component } from 'preact';
+import { h } from 'preact';
 import { observer } from 'mobx-react';
 import { withController } from '@searchspring/snap-preact-components';
 
-@withController
-@observer
-export class SortBy extends Component {
-	render() {
-		const controller = this.props.controller;
+export const SortBy = withController(
+	observer((props) => {
+		const controller = props.controller;
 		const { sorting } = controller.store;
 
 		return (
@@ -31,5 +29,5 @@ export class SortBy extends Component {
 				</div>
 			)
 		);
-	}
-}
+	})
+);

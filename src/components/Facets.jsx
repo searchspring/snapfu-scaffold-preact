@@ -1,12 +1,10 @@
-import { h, Fragment, Component } from 'preact';
+import { h } from 'preact';
 import { observer } from 'mobx-react';
 import { FacetSlider, withController } from '@searchspring/snap-preact-components';
 
-@withController
-@observer
-export class Facets extends Component {
-	render() {
-		const { facets } = this.props.controller.store;
+export const Facets = withController(
+	observer((props) => {
+		const { facets } = props.controller.store;
 
 		return (
 			facets.length !== 0 && (
@@ -17,14 +15,12 @@ export class Facets extends Component {
 				</div>
 			)
 		);
-	}
-}
+	})
+);
 
-@withController
-@observer
-export class Facet extends Component {
-	render() {
-		const { facet } = this.props;
+export const Facet = withController(
+	observer((props) => {
+		const { facet } = props;
 
 		return (
 			facet && (
@@ -51,27 +47,24 @@ export class Facet extends Component {
 				</div>
 			)
 		);
-	}
-}
+	})
+);
 
-@observer
-class FacetOptionsList extends Component {
-	render() {
-		const facet = this.props.facet;
-		const values = facet.refinedValues;
+const FacetOptionsList = observer((props) => {
+	const facet = props.facet;
+	const values = facet.refinedValues;
 
-		return (
-			<ul class="ss__facet-options-list">
-				{values?.map((value) => {
-					return (
-						<li class={`ss__facet-options-list__option ${value.filtered ? 'ss__facet-options-list__option--active' : ''}`}>
-							<a {...value.url.link} title={`Remove filter ${value.label}`}>
-								{value.label}
-							</a>
-						</li>
-					);
-				})}
-			</ul>
-		);
-	}
-}
+	return (
+		<ul class="ss__facet-options-list">
+			{values?.map((value) => {
+				return (
+					<li class={`ss__facet-options-list__option ${value.filtered ? 'ss__facet-options-list__option--active' : ''}`}>
+						<a {...value.url.link} title={`Remove filter ${value.label}`}>
+							{value.label}
+						</a>
+					</li>
+				);
+			})}
+		</ul>
+	);
+});

@@ -1,13 +1,9 @@
-import { h, Fragment, Component } from 'preact';
+import { h } from 'preact';
 import { observer } from 'mobx-react';
-
 import { Autocomplete as LibraryAutocomplete } from '@searchspring/snap-preact-components';
 
-@observer
-export class Autocomplete extends Component {
-	render() {
-		const { controller, input } = this.props;
+export const Autocomplete = observer((props) => {
+	const { controller, input } = props;
 
-		return <LibraryAutocomplete controller={controller} input={input} />;
-	}
-}
+	return <LibraryAutocomplete controller={controller} input={input} />;
+});
