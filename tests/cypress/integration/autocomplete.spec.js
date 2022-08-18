@@ -155,7 +155,7 @@ describe('Autocomplete', () => {
 
 				cy.get(`${config.selectors.autocomplete.facet} a`).then((facetOptions) => {
 					const firstOption = facetOptions[0];
-					const optionURL = firstOption.href.replace(config.url,'');
+					const optionURL = firstOption.href;
 
 					cy.get(firstOption).rightclick({ force: true }); // trigger onFocus event
 
