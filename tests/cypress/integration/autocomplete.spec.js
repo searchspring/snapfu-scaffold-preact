@@ -15,7 +15,7 @@ const config = {
 	selectors: {
 		website: {
 			openInputButton: '', // selector for a button to click in order to make the input visible
-			input: '.searchspring-ac', // selector of <input> elements (config.controllers[].autocomplete[].config.selector)
+			input: '#search-input', // selector of <input> elements (config.controllers[].autocomplete[].config.selector)
 		},
 		autocomplete: {
 			// selector of the wrapping element. Expects child element to contain <a>

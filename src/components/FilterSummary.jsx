@@ -8,6 +8,7 @@ export const FilterSummary = withController(
 		const {
 			store: { filters },
 		} = controller;
+		const removeAll = controller?.urlManager.remove('filter');
 
 		return (
 			filters.length !== 0 && (
@@ -19,6 +20,9 @@ export const FilterSummary = withController(
 							</a>
 						</li>
 					))}
+					<a {...removeAll.link} className="ss-list-link ss__filters__clear-all">
+						Clear All
+					</a>
 				</ul>
 			)
 		);
