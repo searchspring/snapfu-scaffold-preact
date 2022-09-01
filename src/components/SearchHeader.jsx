@@ -8,7 +8,7 @@ export const SearchHeader = observer((props) => {
 		store: { pagination, search },
 	} = controller;
 	const originalQuery = search.originalQuery;
-	const landingPage = controller.store.landingPage;
+	const landingPage = controller.store.merchandising.landingPage;
 	return (
 		store.loaded && (
 			<div class="ss__search-header">
