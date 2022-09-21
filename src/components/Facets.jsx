@@ -1,8 +1,8 @@
-import { h } from 'preact';
+import { h, Fragment } from 'preact';
 import { observer } from 'mobx-react';
 import { FacetSlider, FacetGridOptions, FacetPaletteOptions, FacetHierarchyOptions, withController } from '@searchspring/snap-preact-components';
 
-export const Facets = withController(
+export const CustomFacets = withController(
 	observer((props) => {
 		const { facets } = props.controller.store;
 
@@ -10,7 +10,7 @@ export const Facets = withController(
 			facets.length !== 0 && (
 				<div class="ss__facets">
 					{facets.map((facet) => (
-						<Facet facet={facet} />
+						<CustomFacet facet={facet} />
 					))}
 				</div>
 			)
@@ -18,7 +18,7 @@ export const Facets = withController(
 	})
 );
 
-export const Facet = withController(
+export const CustomFacet = withController(
 	observer((props) => {
 		const { facet } = props;
 
@@ -41,7 +41,7 @@ export const Facet = withController(
 								palette: <FacetPaletteOptions values={facet.values} />,
 								hierarchy: <FacetHierarchyOptions values={facet.values} />,
 								slider: <FacetSlider facet={facet} />,
-							}[facet.display] || <FacetOptionsList facet={facet} />}
+							}[facet.display] || <CustomFacetOptionsList facet={facet} />}
 						</div>
 					</div>
 				</div>
@@ -50,7 +50,7 @@ export const Facet = withController(
 	})
 );
 
-const FacetOptionsList = observer((props) => {
+const CustomFacetOptionsList = observer((props) => {
 	const facet = props.facet;
 	const values = facet.refinedValues;
 

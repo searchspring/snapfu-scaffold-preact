@@ -1,10 +1,10 @@
-import { h } from 'preact';
+import { h, Fragment } from 'preact';
 import { observer } from 'mobx-react';
 import { Banner, Slideout, useMediaQuery, ControllerProvider } from '@searchspring/snap-preact-components';
 
 import { Results, NoResults } from './Results';
 import { SortBy } from './SortBy';
-import { Facets } from './Facets';
+import { CustomFacets } from './Facets';
 import { FilterSummary } from './FilterSummary';
 import { Pagination } from './Pagination';
 
@@ -61,7 +61,7 @@ const SlideoutContent = (props) => {
 			<>
 				{/* slideout content here */}
 				<FilterSummary />
-				<Facets />
+				<CustomFacets />
 			</>
 		)
 	);

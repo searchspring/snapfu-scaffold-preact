@@ -1,8 +1,8 @@
-import { h } from 'preact';
+import { h, Fragment } from 'preact';
 import { observer } from 'mobx-react';
 import { Banner, ControllerProvider } from '@searchspring/snap-preact-components';
 
-import { Facets } from './Facets';
+import { CustomFacets } from './Facets';
 import { FilterSummary } from './FilterSummary';
 import { FilterMessages } from './FilterMessages';
 
@@ -14,7 +14,7 @@ export const Sidebar = observer((props) => {
 		<ControllerProvider controller={controller}>
 			<div class="ss__sidebar">
 				<FilterSummary />
-				<Facets />
+				<CustomFacets />
 				<FilterMessages />
 				<Banner content={merchandising.content} type="left" />
 			</div>

@@ -1,4 +1,4 @@
-import { h } from 'preact';
+import { h, Fragment } from 'preact';
 import { observer } from 'mobx-react';
 import { Autocomplete as LibraryAutocomplete } from '@searchspring/snap-preact-components';
 
