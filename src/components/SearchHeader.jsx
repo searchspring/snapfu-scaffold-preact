@@ -8,6 +8,7 @@ export const SearchHeader = observer((props) => {
 		store: { merchandising, pagination, search },
 	} = controller;
 	const originalQuery = search.originalQuery;
+	const query = search.query;
 	const landingPage = merchandising.landingPage;
 	return (
 		store.loaded && (
@@ -45,7 +46,7 @@ export const SearchHeader = observer((props) => {
 
 						{originalQuery && (
 							<div class="ss__oq">
-								Search instead for "<a href={originalQuery.url.href}>{originalQuery.string}</a>"
+								No results found for "{originalQuery.string}", showing results for "{query.string}"
 							</div>
 						)}
 					</>
