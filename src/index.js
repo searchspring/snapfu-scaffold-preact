@@ -30,6 +30,18 @@ const config = {
 			siteId: '{{snapfu.siteId}}',
 		},
 	},
+	instantiators: {
+		recommendation: {
+			components: {
+				Default: async () => {
+					return (await import('./components/Recommendations/Recs')).Recs;
+				},
+			},
+			config: {
+				branch: BRANCHNAME,
+			},
+		},
+	},
 	controllers: {
 		search: [
 			{

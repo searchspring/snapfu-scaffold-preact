@@ -3,9 +3,9 @@ import { observer } from 'mobx-react';
 
 import { Recommendation } from '@searchspring/snap-preact-components';
 
-import './Default.scss';
+import './Recs.scss';
 
-export const Default = observer((props) => {
+export const Recs = observer((props) => {
 	const controller = props.controller;
 	const store = controller?.store;
 
