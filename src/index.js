@@ -18,6 +18,11 @@ const context = getContext(['shopper']);
 
 const config = {
 	context,
+	features: {
+		integratedSpellCorrection: {
+			enabled: true,
+		},
+	},
 	url: {
 		parameters: {
 			core: {
