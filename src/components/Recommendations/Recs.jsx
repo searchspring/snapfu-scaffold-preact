@@ -15,5 +15,5 @@ export const Recs = observer((props) => {
 
 	const parameters = store?.profile?.display?.templateParameters;
 
-	return store.results.length > 0 && <Recommendation controller={controller} />;
+	return store.results.length > 0 && <Recommendation controller={controller} title={parameters?.title} />;
 });
