@@ -354,6 +354,7 @@ config?.pages?.forEach((page, _i) => {
 								expect(Object.keys(store.services.urlManager.state.filter)).to.contain(listFacet.field);
 								expect(clickedHref).to.equal(store.services.urlManager.href);
 							});
+							return false;
 						}
 					});
 				});
