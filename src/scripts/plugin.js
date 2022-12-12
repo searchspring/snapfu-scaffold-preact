@@ -1,5 +1,7 @@
 async function scrollToTop(search, next) {
-	window.scroll({ top: 0, left: 0, behavior: 'smooth' });
+	setTimeout(() => {
+		window.scroll({ top: 0, left: 0, behavior: 'smooth' });
+	});
 	await next();
 }
 
