@@ -53,6 +53,9 @@ const universal = merge(common, {
 				errors: true,
 				warnings: false,
 			},
+			webSocketURL: {
+				hostname: 'localhost',
+			},
 		},
 	},
 	devtool: 'source-map',
