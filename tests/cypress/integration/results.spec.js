@@ -48,7 +48,6 @@ config?.pages?.forEach((page, _i) => {
 	describe(`${page.id || _i}`, () => {
 		describe('Setup', () => {
 			it('adds snap bundle to search page', () => {
-				cy.on('uncaught:exception', (err, runnable) => false);
 				cy.visit(page.url);
 
 				cy.addLocalSnap();
