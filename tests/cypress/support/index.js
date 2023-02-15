@@ -16,8 +16,14 @@
 // Import commands.js using ES2015 syntax:
 import './commands';
 
-// ignore 3rd party uncaught exceptions
-Cypress.on('uncaught:exception', (err, runnable) => false);
+// ignore 3rd party uncaught exceptions - but not bundle exceptions
+Cypress.on('uncaught:exception', (err) => {
+	if (err.stack.match(/\/\/localhost:\d+\/bundle\./)) {
+		return true;
+	}
+
+	return false;
+});
 
 beforeEach(() => {
 	// make references to requests available
