@@ -21,7 +21,7 @@ export const Pagination = withController(
 				)}
 
 				{pages.map((page) => (
-					<span key={page.key} className={`ss__pagination__page ${page.active ? 'ss__pagination__page--current' : ''}`}>
+					<span className={`ss__pagination__page ${page.active ? 'ss__pagination__page--current' : ''}`}>
 						<a {...page.url.link}>{page.number}</a>
 					</span>
 				))}
