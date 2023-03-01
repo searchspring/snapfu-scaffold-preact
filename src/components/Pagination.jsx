@@ -11,9 +11,9 @@ export const Pagination = withController(
 		const pages = pagination.getPages(5);
 
 		return (
-			<div class="ss__pagination">
+			<div className="ss__pagination">
 				{pagination.previous && (
-					<span class="ss__pagination__prev">
+					<span className="ss__pagination__prev">
 						<a {...pagination.previous.url.link} title="Previous">
 							Prev
 						</a>
@@ -21,13 +21,13 @@ export const Pagination = withController(
 				)}
 
 				{pages.map((page) => (
-					<span class={`ss__pagination__page ${page.active ? 'ss__pagination__page--current' : ''}`}>
+					<span className={`ss__pagination__page ${page.active ? 'ss__pagination__page--current' : ''}`}>
 						<a {...page.url.link}>{page.number}</a>
 					</span>
 				))}
 
 				{pagination.next && (
-					<span class="ss__pagination__next">
+					<span className="ss__pagination__next">
 						<a {...pagination.next.url.link} title="Next">
 							Next
 						</a>

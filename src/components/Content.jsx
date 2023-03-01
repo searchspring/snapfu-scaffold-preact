@@ -20,7 +20,7 @@ export const Content = observer((props) => {
 	return (
 		controller.store.loaded && (
 			<ControllerProvider controller={controller}>
-				<div class="ss__content">
+				<div className="ss__content">
 					<Banner content={merchandising.content} type="header" />
 					<Banner content={merchandising.content} type="banner" />
 

@@ -12,9 +12,9 @@ export const FilterSummary = withController(
 
 		return (
 			filters.length !== 0 && (
-				<ul class="ss__filters">
+				<ul className="ss__filters">
 					{filters.map((filter) => (
-						<li class="ss__filters__filter">
+						<li className="ss__filters__filter">
 							<a {...filter.url.link} title={`Remove filter ${filter.label}`}>
 								{filter.label}
 							</a>

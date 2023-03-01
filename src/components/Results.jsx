@@ -8,9 +8,9 @@ export const Results = withController(
 		const { results } = controller.store;
 
 		return (
-			<ul class="ss__results">
+			<ul className="ss__results">
 				{results.map((result) => (
-					<li class="ss__result" key={result.id}>
+					<li className="ss__result" key={result.id}>
 						{{
 							banner: <InlineBanner banner={result} />,
 						}[result.type] || <Result result={result} />}
@@ -52,19 +52,19 @@ export const NoResults = withController(
 		const contactEmail = 'contact@thesite.com';
 
 		return (
-			<div class="ss__no-results">
-				<div class="ss__no-results__container">
+			<div className="ss__no-results">
+				<div className="ss__no-results__container">
 					{dym && (
-						<p class="ss__did-you-mean">
+						<p className="ss__did-you-mean">
 							Did you mean <a href={dym.url.href}>{dym.string}</a>?
 						</p>
 					)}
 				</div>
 
-				<div class="ss__no-results__container">
+				<div className="ss__no-results__container">
 					<h4 style="margin-bottom: 5px;">Suggestions</h4>
 
-					<ul class="ss__no-results__suggestions">
+					<ul className="ss__no-results__suggestions">
 						<li>Check for misspellings.</li>
 						<li>Remove possible redundant keywords (ie. "products").</li>
 						<li>Use other words to describe what you are searching for.</li>
@@ -80,14 +80,14 @@ export const NoResults = withController(
 
 					<hr />
 
-					<div class="ss__no-results__container">
-						<div class="ss__no-results__contact">
-							<div class="ss__no-results__contact__phone">
+					<div className="ss__no-results__container">
+						<div className="ss__no-results__contact">
+							<div className="ss__no-results__contact__phone">
 								<h4 style="margin-bottom: 5px;">Call Us</h4>
 								<p>555-555-5555</p>
 							</div>
 
-							<div class="ss__no-results__contact__email">
+							<div className="ss__no-results__contact__email">
 								<h4 style="margin-bottom: 5px;">Email Us</h4>
 								<p>
 									<a href={`mailto:${contactEmail}`} style="font-size: 14px;">
@@ -96,7 +96,7 @@ export const NoResults = withController(
 								</p>
 							</div>
 
-							<div class="ss__no-results__contact__location">
+							<div className="ss__no-results__contact__location">
 								<h4 style="margin-bottom: 5px;">Physical Address</h4>
 								<p>
 									123 Street Address
@@ -105,7 +105,7 @@ export const NoResults = withController(
 								</p>
 							</div>
 
-							<div class="ss__no-results__contact__hours">
+							<div className="ss__no-results__contact__hours">
 								<h4 style="margin-bottom: 5px;">Hours</h4>
 								<p>Monday - Friday: 8am - 9pm MDT</p>
 							</div>
