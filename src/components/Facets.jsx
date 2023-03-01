@@ -8,7 +8,7 @@ export const CustomFacets = withController(
 
 		return (
 			facets.length !== 0 && (
-				<div class="ss__facets">
+				<div className="ss__facets">
 					{facets.map((facet) => (
 						<CustomFacet facet={facet} />
 					))}
@@ -24,9 +24,9 @@ export const CustomFacet = withController(
 
 		return (
 			facet && (
-				<div class="ss__facet">
+				<div className="ss__facet">
 					<h5
-						class="ss__facet__header"
+						className="ss__facet__header"
 						onClick={() => {
 							facet.toggleCollapse();
 						}}
@@ -34,8 +34,8 @@ export const CustomFacet = withController(
 						{facet.label}
 					</h5>
 
-					<div class={`ss__facet--field-${facet.field} ss__facet--display-${facet.display} ${facet.collapsed ? 'ss__facet--collapsed' : ''}`}>
-						<div class="collapsible-content__inner ss__facet-options">
+					<div className={`ss__facet--field-${facet.field} ss__facet--display-${facet.display} ${facet.collapsed ? 'ss__facet--collapsed' : ''}`}>
+						<div className="collapsible-content__inner ss__facet-options">
 							{{
 								grid: <FacetGridOptions values={facet.values} />,
 								palette: <FacetPaletteOptions values={facet.values} />,
@@ -55,10 +55,10 @@ const CustomFacetOptionsList = observer((props) => {
 	const values = facet.refinedValues;
 
 	return (
-		<ul class="ss__facet-options-list">
+		<ul className="ss__facet-options-list">
 			{values?.map((value) => {
 				return (
-					<li class={`ss__facet-options-list__option ${value.filtered ? 'ss__facet-options-list__option--active' : ''}`}>
+					<li className={`ss__facet-options-list__option ${value.filtered ? 'ss__facet-options-list__option--active' : ''}`}>
 						<a {...value.url.link} title={`Remove filter ${value.label}`}>
 							{value.label}
 						</a>

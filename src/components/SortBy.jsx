@@ -9,7 +9,7 @@ export const SortBy = withController(
 
 		return (
 			sorting.length !== 0 && (
-				<div class="ss__sorting">
+				<div className="ss__sorting">
 					<label for="ss__sort--select">Sort</label>
 
 					<select
