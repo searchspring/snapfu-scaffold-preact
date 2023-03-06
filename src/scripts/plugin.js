@@ -1,7 +1,11 @@
-async function scrollToTop(search, next) {
-	setTimeout(() => {
-		window.scroll({ top: 0, left: 0, behavior: 'smooth' });
-	});
+async function restorePosition({ element }, next) {
+	// scroll to top only if we are not going to be scrolling to stored element
+	if (!element) {
+		setTimeout(() => {
+			window.scroll({ top: 0, left: 0, behavior: 'smooth' });
+		});
+	}
+
 	await next();
 }
 
@@ -12,5 +16,5 @@ export const plugin = (controller) => {
 		await next();
 	});
 
-	controller.on('afterStore', scrollToTop);
+	controller.on('restorePosition', restorePosition);
 };
