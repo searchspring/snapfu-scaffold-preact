@@ -32,7 +32,7 @@ const Result = withController(
 
 		return (
 			result && (
-				<div>
+				<div className="ss__result__wrapper">
 					<a href={core.url} onClick={intellisuggest}>
 						{core.name}
 					</a>
