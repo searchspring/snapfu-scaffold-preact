@@ -10,7 +10,7 @@
 		"analyze:universal": "webpack --config webpack.universal.js --analyze",
 		"build": "rm -rf ./dist && webpack --config webpack.modern.js && webpack --config webpack.universal.js",
 		"cypress": "cypress open --project tests",
-		"clean": "rm -rf ./node_modules && rm ./package-lock.json",
+		"clean": "rm -rf ./node_modules && rm -f ./package-lock.json",
 		"dev": "kill $(lsof -ti:3333,8888); webpack serve --config webpack.dev.js",
 		"format": "prettier --write \"**/*.{js,jsx,ts,tsx,json}\"",
 		"lint": "eslint --fix \"./src/**/*.{js,jsx,ts,tsx}\"",
