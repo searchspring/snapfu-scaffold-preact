@@ -52,6 +52,7 @@ const universal = merge(common, {
 			overlay: {
 				errors: true,
 				warnings: false,
+				runtimeErrors: false,
 			},
 			webSocketURL: {
 				hostname: 'localhost',
