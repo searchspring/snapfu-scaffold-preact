@@ -30,13 +30,13 @@ const config = {
 
 describe('Autocomplete', () => {
 	describe('Setup', () => {
-		it('has valid config', () => {
+		it('has valid config', function () {
 			cy.wrap(config).its('url').should('have.length.at.least', 1);
 			cy.wrap(config).its('startingQuery').should('have.length.at.least', 1);
 			cy.wrap(config).its('selectors.website.input').should('have.length.at.least', 1);
 		});
 
-		it('adds snap bundle to autocomplete page', () => {
+		it('adds snap bundle to autocomplete page', function () {
 			cy.visit(config.url);
 			cy.addLocalSnap();
 
@@ -103,7 +103,7 @@ describe('Autocomplete', () => {
 			});
 		});
 
-		it('has correct count and term in see more link', () => {
+		it('has correct count and term in see more link', function () {
 			if (!config?.selectors?.autocomplete?.seeMore) this.skip();
 
 			cy.snapController('autocomplete').then(({ store }) => {

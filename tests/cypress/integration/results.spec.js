@@ -47,7 +47,7 @@ const config = {
 config?.pages?.forEach((page, _i) => {
 	describe(`${page.id || _i}`, () => {
 		describe('Setup', () => {
-			it('adds snap bundle to search page', () => {
+			it('adds snap bundle to search page', function () {
 				cy.visit(page.url);
 
 				cy.addLocalSnap();
@@ -67,7 +67,7 @@ config?.pages?.forEach((page, _i) => {
 				});
 			});
 
-			it('has data in the store', () => {
+			it('has data in the store', function () {
 				cy.snapController().then(({ store }) => {
 					expect(store).to.haveOwnProperty('pagination');
 					expect(store.pagination.totalResults).to.be.greaterThan(0);
@@ -558,7 +558,7 @@ config?.pages?.forEach((page, _i) => {
 		if (_i === 0) {
 			// only take screenshot once
 			describe('Snapshot', () => {
-				it('saves a screenshot', () => {
+				it('saves a screenshot', function () {
 					cy.visit(page.url);
 					cy.addLocalSnap();
 					
