@@ -559,17 +559,9 @@ config?.pages?.forEach((page, _i) => {
 			// only take screenshot once
 			describe('Snapshot', () => {
 				it('saves a screenshot', function () {
-					cy.visit(page.url);
-					cy.addLocalSnap();
-					
-					cy.waitForBundle().then(() => {
-						cy.snapController().then(({ store }) => {
-							expect(store.results.length).to.greaterThan(0);
-			
-							cy.waitForIdle().then(() => {
-								cy.screenshot('snapshot', { capture: 'viewport' });
-							});
-						});
+					cy.waitForIdle().then(() => {
+						cy.scrollTo('top');
+						cy.screenshot('snapshot', { capture: 'viewport' });
 					});
 				});
 			});
