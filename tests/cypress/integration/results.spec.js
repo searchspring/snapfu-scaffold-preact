@@ -559,10 +559,8 @@ config?.pages?.forEach((page, _i) => {
 			// only take screenshot once
 			describe('Snapshot', () => {
 				it('saves a screenshot', function () {
-					cy.waitForIdle().then(() => {
-						cy.scrollTo('top');
-						cy.screenshot('snapshot', { capture: 'viewport' });
-					});
+					cy.window().scrollTo('topLeft', { ensureScrollable: false });
+					cy.screenshot('snapshot', { capture: 'viewport' });
 				});
 			});
 		}
