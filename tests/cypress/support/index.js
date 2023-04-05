@@ -1,23 +1,27 @@
-// ***********************************************************
-// This example support/index.js is processed and
-// loaded automatically before your test files.
-//
-// This is a great place to put global configuration and
-// behavior that modifies Cypress.
-//
-// You can change the location of this file or turn off
-// automatically serving support files with the
-// 'supportFile' configuration option.
+// DO NOT EDIT - THIS FILE CAN/WILL BE REPLACED!!!
+// ***********************************************
+// Custom Snap Cypress Configuration
 //
 // You can read more here:
 // https://on.cypress.io/configuration
-// ***********************************************************
+// ***********************************************
 
 // Import commands.js using ES2015 syntax:
 import './commands';
+import './custom';
+import { ignoredErrors } from "./custom";
 
 // ignore 3rd party uncaught exceptions - but not bundle exceptions
 Cypress.on('uncaught:exception', (err) => {
+	if (ignoredErrors?.length) {
+		for (let i = 0; i < ignoredErrors.length; i++) {
+			const checkFor = new RegExp(ignoredErrors[i].replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+			if (err.stack.match(checkFor)) {
+				return false;
+			}
+		}
+	}
+
 	if (err.stack.match(/\/\/localhost:\d+\/bundle\./)) {
 		return true;
 	}
@@ -43,14 +47,6 @@ beforeEach(() => {
 
 	// prevent snap assets
 	cy.intercept(/.*snapui.searchspring.io\/.*.js$/, (req) => {
-		req.destroy();
-	});
-
-	// prevent 3rd party assets
-	cy.intercept(/.*widget.privy.com\/*/, (req) => {
-		req.destroy();
-	});
-	cy.intercept(/.*.swymrelay.com\/*/, (req) => {
 		req.destroy();
 	});
 });
