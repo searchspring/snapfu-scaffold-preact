@@ -1,9 +1,16 @@
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+    branches:
+      - "**"
 
 jobs:
   Publish:
-    runs-on: ubuntu-latest
+    runs-on: ${{ (startsWith(github.head_ref, 'updater/patch/') || startsWith(github.ref_name, 'updater/patch/') || startsWith(github.head_ref, 'updater/revert/') || startsWith(github.ref_name, 'updater/revert/') || (github.ref_name == github.event.repository.master_branch && (contains(github.event.head_commit.message,'from searchspring-implementations/updater/patch/') || contains(github.event.head_commit.message,'from searchspring-implementations/updater/revert/')))) && 'snapp-updater' || 'ubuntu-latest' }}
     name: Snap Action
+    timeout-minutes: 10
     steps:
       - name: Checkout action
         uses: actions/checkout@v2
@@ -12,7 +19,7 @@ jobs:
       - name: Run @searchspring/snap-action
         uses: ./
         with:
-        # required
+          # required
           repository: ${{ env.GITHUB_REPOSITORY }}
           secretKey: ${{ secrets.WEBSITE_SECRET_KEY }}
           secrets: ${{ toJSON(secrets) }}
@@ -20,7 +27,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.SNAPFU_AWS_SECRET_ACCESS_KEY }}
           aws-cloudfront-distribution-id: ${{secrets.SNAPFU_AWS_DISTRIBUTION_ID}}
           aws-s3-bucket-name: ${{secrets.SNAPFU_AWS_BUCKET}}
-        # optional
+          # optional
           NODE_AUTH_TOKEN: ${{ secrets.PACKAGE_TOKEN }}
           GITHUB_BOT_TOKEN: ${{ secrets.MACHINE_TOKEN }}
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}

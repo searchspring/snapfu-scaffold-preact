@@ -16,3 +16,6 @@ coverage
 # ignore lighthouse
 /.lighthouseci
 /tests/lighthouse/runs
+
+# ignore patch
+patch
