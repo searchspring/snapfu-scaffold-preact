@@ -18,6 +18,7 @@ const config = {
 	disableGA: '', // disable google analytic events (example: 'UA-123456-1')
 	selectors: {
 		sidebar: {
+			facetToggle: '', // button to open facet container
 			facetWrapper: '.ss__facet', // facet wrapper
 			facetTitle: '.ss__facet__header', // facet title, should contain facet.label innerText
 			facetCollapseButton: '.ss__facet__header', // facet collapse button, should contain onClick to toggle collapse
