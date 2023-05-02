@@ -1,6 +1,6 @@
 {
-	"name": "{{snapfu.name}}",
-	"author": "{{snapfu.author}}",
+	"name": "CWCSearchSpring",
+	"author": "Louis",
 	"version": "0.1.0",
 	"license": "MIT",
 	"main": "index.js",
@@ -20,8 +20,8 @@
 	},
 	"searchspring": {
 		"siteId": {
-			"{{snapfu.siteId}}": {
-				"name": "{{snapfu.name}}"
+			"1mvf26": {
+				"name": "CWCSearchSpring"
 			}
 		},
 		"framework": "preact",

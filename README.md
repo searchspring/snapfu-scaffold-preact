@@ -1,4 +1,4 @@
-# {{snapfu.name}}
+# CWCSearchSpring
 
 Snap SDK packages and components built with Preact.
 

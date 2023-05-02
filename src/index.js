@@ -32,7 +32,7 @@ const config = {
 	},
 	client: {
 		globals: {
-			siteId: '{{snapfu.siteId}}',
+			siteId: '1mvf26',
 		},
 	},
 	instantiators: {
@@ -56,21 +56,21 @@ const config = {
 				},
 				targeters: [
 					{
-						selector: '#searchspring-sidebar',
+						selector: '#faceted-search-container',
 						component: async () => {
 							return (await import('./components/Sidebar')).Sidebar;
 						},
 						hideTarget: true,
 					},
 					{
-						selector: '#searchspring-content',
+						selector: '#product-listing-container',
 						component: async () => {
 							return (await import('./components/Content')).Content;
 						},
 						hideTarget: true,
 					},
 					{
-						selector: '#searchspring-header',
+						selector: '.page-heading',
 						component: async () => {
 							return (await import('./components/SearchHeader')).SearchHeader;
 						},
@@ -83,11 +83,11 @@ const config = {
 			{
 				config: {
 					id: 'autocomplete',
-					selector: '#search-input',
+					selector: '#nav-quick-search',
 				},
 				targeters: [
 					{
-						selector: '#search-input',
+						selector: '#nav-quick-search',
 						component: async () => {
 							return (await import('./components/Autocomplete')).Autocomplete;
 						},
