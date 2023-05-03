@@ -10,7 +10,20 @@ import './styles/custom.scss';
 	context and background filtering
  */
 
-const context = getContext(['shopper']);
+const context = getContext(['collection', 'tags', 'template', 'shopper']);
+const backgroundFilters = [];
+
+if (context.collection?.handle) {
+	// set background filter
+	if (context.collection.handle != 'all') {
+		backgroundFilters.push({
+			field: 'collection_handle',
+			value: context.collection.handle,
+			type: 'value',
+			background: true,
+		});
+	}
+}
 
 /*
 	configuration and instantiation
@@ -53,6 +66,9 @@ const config = {
 				config: {
 					id: 'search',
 					plugins: [[plugin]],
+					globals: {
+						filters: backgroundFilters,
+					},
 				},
 				targeters: [
 					{
