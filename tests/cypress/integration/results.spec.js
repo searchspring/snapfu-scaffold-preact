@@ -367,7 +367,7 @@ config?.pages?.forEach((page, _i) => {
 					// find first display='slider' facet
 					const sliderFacet = store.facets.filter((facet) => facet.display === 'slider')[0];
 					if (!sliderFacet) this.skip();
-
+					let slid = false;
 					let facetSliderElement;
 					cy.get(`${config.selectors.sidebar.facetWrapper}`)
 						.each((facet) => {
@@ -391,14 +391,27 @@ config?.pages?.forEach((page, _i) => {
 									.should('have.attr', 'aria-valuemax', sliderFacet.active.high)
 									.type('{rightarrow}', { force: true });
 
-								cy.snapController().then(({ store }) => {
-									cy.get(facetSliderElement.find('.ss__facet-slider__handles button')[0])
-										.should('have.attr', 'aria-valuenow', sliderFacet.active.low + sliderFacet.step)
-										.should('have.attr', 'aria-valuemin', sliderFacet.active.low)
-										.should('have.attr', 'aria-valuemax', sliderFacet.active.high);
-								});
+
+								slid = true;
 							}
 						});
+						if (slid) {
+							//regrab everything now that it rerendered
+							cy.get(`${config.selectors.sidebar.facetWrapper}`).each((facet) => {
+								// find matching facet in dom
+								const title = facet.find(config.selectors.sidebar.facetTitle);
+								if (title.text().trim().indexOf(sliderFacet.label.trim()) > -1) {
+									facetSliderElement = facet;
+								}
+							}).then(() => {
+								//get updated handle and see that it has the new values
+								const updatedleftHandle = cy.get(facetSliderElement.find('.ss__facet-slider__handles button')[0]);
+								updatedleftHandle
+									.should('have.attr', 'aria-valuenow', sliderFacet.active.low + sliderFacet.step)
+									.should('have.attr', 'aria-valuemin', sliderFacet.active.low)
+									.should('have.attr', 'aria-valuemax', sliderFacet.active.high);
+							})
+						}
 				});
 			});
 
