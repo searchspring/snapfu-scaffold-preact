@@ -35,6 +35,7 @@ const config = {
 			native: 'select#ss__sort--select', // sort by <select> element (if applicable)
 		},
 		pagination: {
+			infinite: false,
 			prev: '.ss__pagination .ss__pagination__prev', // pagination previous
 			page: '.ss__pagination .ss__pagination__page', // pagination page
 			next: '.ss__pagination .ss__pagination__next', // pagination next
@@ -78,6 +79,51 @@ config?.pages?.forEach((page, _i) => {
 		});
 
 		describe('Pagination', () => {
+
+			it("loads next page when scrolled while using Infinite Scroll", function () {
+				if (!config.selectors.pagination.infinite) this.skip();
+
+				cy.snapController().then(({ store }) => {
+					expect(store.pagination.page).to.equal(1);
+					cy.get(config.selectors.results?.productWrapper).should('exist').should('have.length', store.pagination.pageSize);
+
+				});
+
+				cy.window().scrollTo('bottom', { ensureScrollable: false });
+
+				cy.snapController().then(({ store }) => {
+					expect(store.pagination.page).to.equal(2);
+					cy.get(config.selectors.results?.productWrapper).should('exist').should('have.length', store.pagination.pageSize * 2);
+
+				});
+
+				cy.window().scrollTo('bottom', { ensureScrollable: false });
+
+				cy.snapController().then(({ store }) => {
+					expect(store.pagination.page).to.equal(3);
+					cy.get(config.selectors.results?.productWrapper).should('exist').should('have.length', store.pagination.pageSize * 3);
+				});
+
+				//reset back to page 1
+				cy.visit(page.url);
+
+				cy.addLocalSnap();
+
+				cy.waitForBundle().then(() => {
+					cy.window().then(window => {
+						expect(window.searchspring).to.exist;
+					});
+				});
+
+				if (config.disableGA) {
+					window[`ga-disable-${config.disableGA}`] = true;
+				}
+
+				cy.snapController().then(({ store }) => {
+					expect(typeof store).to.equal('object');
+				});
+			});
+
 			it('can navigate to the second page', function () {
 				if (!config?.selectors?.pagination?.next && !config?.selectors?.pagination?.page) this.skip();
 
