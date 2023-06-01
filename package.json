@@ -30,12 +30,12 @@
 			"all"
 		],
 		"tags": [],
-		"version": "0.44.3"
+		"version": "0.45.0"
 	},
 	"prettier": "@searchspring/prettier",
 	"dependencies": {
-		"@searchspring/snap-preact": "0.44.3",
-		"@searchspring/snap-preact-components": "0.44.3",
+		"@searchspring/snap-preact": "0.45.0",
+		"@searchspring/snap-preact-components": "0.45.0",
 		"mobx": "6.9.0",
 		"mobx-react": "7.6.0",
 		"preact": "10.9.0"
