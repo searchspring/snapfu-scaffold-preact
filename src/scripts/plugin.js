@@ -2,7 +2,7 @@ async function restorePosition({ element }, next) {
 	// scroll to top only if we are not going to be scrolling to stored element
 	if (!element) {
 		setTimeout(() => {
-			window.scrollTo(0, 0, 'smooth');
+			window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 		});
 	}
 
