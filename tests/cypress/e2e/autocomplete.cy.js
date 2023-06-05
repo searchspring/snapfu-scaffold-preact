@@ -49,10 +49,9 @@ describe('Autocomplete', () => {
 			if (config.disableGA) {
 				window[`ga-disable-${config.disableGA}`] = true;
 			}
+			
 		});
-	});
 
-	describe('Tests Autocomplete', () => {
 		it('has a controller with an empty store', function () {
 			cy.snapController('autocomplete').then(({ store }) => {
 				expect(store.results.length).to.equal(0);
@@ -60,6 +59,30 @@ describe('Autocomplete', () => {
 				expect(store.state.input).to.equal(undefined);
 			});
 		});
+	});
+
+	describe('Tests Autocomplete', () => {
+		
+		before('open input', function () {
+			if (config.selectors.website.openInputButton) {
+				cy.get(config.selectors.website.openInputButton).first().click({ force: true });
+			}
+		});
+
+		beforeEach('can make single letter query', function () {
+			if (!config.startingQuery || !config?.selectors?.website?.input) this.skip();
+
+			cy.get(config.selectors.website.input).first().should('exist').clear().blur();
+
+			cy.get(config.selectors.website.input).first().should('exist').focus().type(config.startingQuery, { force: true });
+
+			cy.wait('@autocomplete').should('exist');
+
+			cy.snapController('autocomplete').then(({ store }) => {
+				expect(store.state.input).to.equal(config.startingQuery);
+				expect(store.terms.length).to.greaterThan(0);
+			});
+		}) 
 
 		it('has trending results when focused', function () {
 			cy.snapController('autocomplete').then(({ store }) => {
@@ -83,23 +106,6 @@ describe('Autocomplete', () => {
 				} else {
 					this.skip();
 				}
-			});
-		});
-
-		it('can make single letter query', function () {
-			if (!config.startingQuery || !config?.selectors?.website?.input) this.skip();
-
-			if (config.selectors.website.openInputButton) {
-				cy.get(config.selectors.website.openInputButton).first().click({ force: true });
-			}
-
-			cy.get(config.selectors.website.input).first().should('exist').focus().type(config.startingQuery, { force: true });
-
-			cy.wait('@autocomplete').should('exist');
-
-			cy.snapController('autocomplete').then(({ store }) => {
-				expect(store.state.input).to.equal(config.startingQuery);
-				expect(store.terms.length).to.greaterThan(0);
 			});
 		});
 
