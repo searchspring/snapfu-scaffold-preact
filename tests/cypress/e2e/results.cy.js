@@ -36,6 +36,7 @@ const config = {
 		},
 		pagination: {
 			infinite: false,
+			loadMoreButton: '',
 			prev: '.ss__pagination .ss__pagination__page--previous', // pagination previous
 			page: '.ss__pagination .ss__pagination__page', // pagination page
 			next: '.ss__pagination .ss__pagination__page--next', // pagination next
@@ -48,33 +49,33 @@ const config = {
 
 config?.pages?.forEach((page, _i) => {
 	describe(`${page.id || _i}`, () => {
-		describe('Setup', () => {
-			it('adds snap bundle to search page', function () {
-				cy.visit(page.url);
 
-				cy.addLocalSnap();
+		/**********************************************
+        * DO NOT MOVE, SKIP, OR EDIT THE SET UP TESTS *
+        **********************************************/
+		before('Setup', () => {
+			cy.visit(page.url);
 
-				cy.waitForBundle().then(() => {
-					cy.window().then(window => {
-						expect(window.searchspring).to.exist;
-					});
-				});
+			cy.addLocalSnap();
 
-				if (config.disableGA) {
-					window[`ga-disable-${config.disableGA}`] = true;
-				}
-
-				cy.snapController().then(({ store }) => {
-					expect(typeof store).to.equal('object');
+			cy.waitForBundle().then(() => {
+				cy.window().then(window => {
+					expect(window.searchspring).to.exist;
 				});
 			});
 
-			it('has data in the store', function () {
-				cy.snapController().then(({ store }) => {
-					expect(store).to.haveOwnProperty('pagination');
-					expect(store.pagination.totalResults).to.be.greaterThan(0);
-					expect(store.pagination.page).to.equal(1);
-				});
+			if (config.disableGA) {
+				window[`ga-disable-${config.disableGA}`] = true;
+			}
+
+			cy.snapController().then(({ store }) => {
+				expect(typeof store).to.equal('object');
+			});
+		
+			cy.snapController().then(({ store }) => {
+				expect(store).to.haveOwnProperty('pagination');
+				expect(store.pagination.totalResults).to.be.greaterThan(0);
+				expect(store.pagination.page).to.equal(1);
 			});
 		});
 

@@ -29,6 +29,11 @@ const config = {
 };
 
 describe('Autocomplete', () => {
+	
+	/**********************************************
+	* DO NOT MOVE, SKIP, OR EDIT THE SET UP TESTS *
+	**********************************************/
+
 	describe('Setup', () => {
 		it('has valid config', function () {
 			cy.wrap(config).its('url').should('have.length.at.least', 1);
