@@ -13,7 +13,7 @@ export const Pagination = withController(
 		return (
 			<div className="ss__pagination">
 				{pagination.previous && (
-					<span className="ss__pagination__prev">
+					<span className="ss__pagination__page--previous">
 						<a {...pagination.previous.url.link} title="Previous">
 							Prev
 						</a>
@@ -27,7 +27,7 @@ export const Pagination = withController(
 				))}
 
 				{pagination.next && (
-					<span className="ss__pagination__next">
+					<span className="ss__pagination__page--next">
 						<a {...pagination.next.url.link} title="Next">
 							Next
 						</a>

@@ -24,7 +24,7 @@ module.exports = (on, config) => {
 			launchOptions.preferences.height = 960;
 		}
 
-		return launchOptions
+		return launchOptions;
 	});
 
 	on('after:screenshot', ({ path }) => {

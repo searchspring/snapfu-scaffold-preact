@@ -43,11 +43,11 @@ Cypress.Commands.add('addCloudSnap', (branch = 'production') => {
 Cypress.Commands.add('snapController', (controllerId = 'search', options) => {
 	const defaultOptions = {
 		delay: 200,
-	}
+	};
 
-	const mergedOptions = {...defaultOptions, ...options};
-	cy.wait(mergedOptions.delay); 
-	
+	const mergedOptions = { ...defaultOptions, ...options };
+	cy.wait(mergedOptions.delay);
+
 	return cy.window().then((window) => {
 		return new Cypress.Promise((resolve) => {
 			const checkTimeout = 100;
