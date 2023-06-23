@@ -1,17 +1,17 @@
 /**
  * End to end tests with Cypress!
- * 
- * The purpose of these tests is to prevent publishing of the bundle if a 
+ *
+ * The purpose of these tests is to prevent publishing of the bundle if a
  * breaking change has been made to the implementation code in the future
- * 
- * Start by fill out the config object below. If a selector is not provided, 
+ *
+ * Start by fill out the config object below. If a selector is not provided,
  * the applicable tests will be skipped.
- * 
+ *
  */
 
 const config = {
-	url: 'https://localhost:3333/index.html',  // page containing autocomplete (recommended: home/about/contact page)
-	disableGA: '',  // disable google analytic events (example: 'UA-123456-1')
+	url: 'https://localhost:3333/index.html', // page containing autocomplete (recommended: home/about/contact page)
+	disableGA: '', // disable google analytic events (example: 'UA-123456-1')
 	selectors: {
 		website: {
 			openInputButton: '', // selector for a button to click in order to make the input visible
@@ -49,7 +49,6 @@ describe('Autocomplete', () => {
 			if (config.disableGA) {
 				window[`ga-disable-${config.disableGA}`] = true;
 			}
-			
 		});
 
 		it('has a controller with an empty store', function () {
@@ -62,7 +61,6 @@ describe('Autocomplete', () => {
 	});
 
 	describe('Tests Autocomplete', () => {
-		
 		before('open input', function () {
 			if (config.selectors.website.openInputButton) {
 				cy.get(config.selectors.website.openInputButton).first().click({ force: true });
@@ -82,7 +80,7 @@ describe('Autocomplete', () => {
 				expect(store.state.input).to.equal(config.startingQuery);
 				expect(store.terms.length).to.greaterThan(0);
 			});
-		}) 
+		});
 
 		it('has trending results when focused', function () {
 			cy.snapController('autocomplete').then(({ store }) => {

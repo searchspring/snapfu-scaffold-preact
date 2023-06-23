@@ -1,12 +1,12 @@
 /**
  * End to end tests with Cypress!
- * 
- * The purpose of these tests is to prevent publishing of the bundle if a 
+ *
+ * The purpose of these tests is to prevent publishing of the bundle if a
  * breaking change has been made to the implementation code in the future
- * 
- * Start by fill out the config object below. If a selector is not provided, 
+ *
+ * Start by fill out the config object below. If a selector is not provided,
  * the applicable tests will be skipped.
- * 
+ *
  */
 
 const config = {
@@ -36,6 +36,7 @@ const config = {
 		},
 		pagination: {
 			infinite: false,
+			loadMoreButton: '',
 			prev: '.ss__pagination .ss__pagination__page--previous', // pagination previous
 			page: '.ss__pagination .ss__pagination__page', // pagination page
 			next: '.ss__pagination .ss__pagination__page--next', // pagination next
@@ -55,7 +56,7 @@ config?.pages?.forEach((page, _i) => {
 				cy.addLocalSnap();
 
 				cy.waitForBundle().then(() => {
-					cy.window().then(window => {
+					cy.window().then((window) => {
 						expect(window.searchspring).to.exist;
 					});
 				});
@@ -79,50 +80,82 @@ config?.pages?.forEach((page, _i) => {
 		});
 
 		describe('E2E Tests', () => {
-
-			beforeEach("reset", function () {
-				cy.snapController().then(({store, urlManager}) => {
+			beforeEach('reset', function () {
+				cy.snapController().then(({ store, urlManager }) => {
 					urlManager.set({}).go();
 					cy.wait(200);
 				});
-			}); 
-		
+			});
+
 			describe('Pagination', () => {
-
-				it("loads next page when scrolled while using Infinite Scroll", function () {
+				it('loads next page when scrolled while using Infinite Scroll', function () {
 					if (!config.selectors.pagination.infinite) this.skip();
-					cy.snapController().then(({store }) => {
-
+					cy.snapController().then(({ store }) => {
 						expect(store.pagination.page).to.equal(1);
 						cy.get(config.selectors.results?.productWrapper).should('exist').should('have.length', store.pagination.pageSize);
-
 					});
 
 					if (config.selectors.pagination.loadMoreButton) {
-						cy.get(config.selectors.pagination.loadMoreButton).should('exist').first().click({force: true});
-					}else {
+						cy.get(config.selectors.pagination.loadMoreButton).should('exist').first().click({ force: true });
+					} else {
 						cy.window().scrollTo('bottom', { ensureScrollable: false });
 					}
 
 					cy.snapController().then(({ store }) => {
 						expect(store.pagination.page).to.equal(2);
-						cy.get(config.selectors.results?.productWrapper).should('exist').should('have.length', store.pagination.pageSize * 2);
-
+						cy.get(config.selectors.results?.productWrapper)
+							.should('exist')
+							.should('have.length', store.pagination.pageSize * 2);
 					});
 
 					if (config.selectors.pagination.loadMoreButton) {
-						cy.get(config.selectors.pagination.loadMoreButton).should('exist').first().click({force: true});
-					}else {
+						cy.get(config.selectors.pagination.loadMoreButton).should('exist').first().click({ force: true });
+					} else {
 						cy.window().scrollTo('bottom', { ensureScrollable: false });
 					}
 
 					cy.snapController().then(({ store }) => {
 						expect(store.pagination.page).to.equal(3);
-						cy.get(config.selectors.results?.productWrapper).should('exist').should('have.length', store.pagination.pageSize * 3);
+						cy.get(config.selectors.results?.productWrapper)
+							.should('exist')
+							.should('have.length', store.pagination.pageSize * 3);
 						cy.window().scrollTo('top', { ensureScrollable: false });
+					});
+				});
 
+				it('loads next page when scrolled while using Infinite Scroll', function () {
+					if (!config.selectors.pagination.infinite) this.skip();
+					cy.snapController().then(({ store }) => {
+						expect(store.pagination.page).to.equal(1);
+						cy.get(config.selectors.results?.productWrapper).should('exist').should('have.length', store.pagination.pageSize);
 					});
 
+					if (config.selectors.pagination.loadMoreButton) {
+						cy.get(config.selectors.pagination.loadMoreButton).should('exist').first().click({ force: true });
+					} else {
+						cy.window().scrollTo('bottom', { ensureScrollable: false });
+					}
+
+					cy.snapController().then(({ store }) => {
+						expect(store.pagination.page).to.equal(2);
+						cy.get(config.selectors.results?.productWrapper)
+							.should('exist')
+							.should('have.length', store.pagination.pageSize * 2);
+					});
+
+					if (config.selectors.pagination.loadMoreButton) {
+						cy.get(config.selectors.pagination.loadMoreButton).should('exist').first().click({ force: true });
+					} else {
+						cy.window().scrollTo('bottom', { ensureScrollable: false });
+					}
+
+					cy.snapController().then(({ store }) => {
+						expect(store.pagination.page).to.equal(3);
+						cy.get(config.selectors.results?.productWrapper)
+							.should('exist')
+							.should('have.length', store.pagination.pageSize * 3);
+						cy.window().scrollTo('top', { ensureScrollable: false });
+					});
 				});
 
 				it('can navigate to the second page', function () {
@@ -163,20 +196,20 @@ config?.pages?.forEach((page, _i) => {
 
 				it('can use prev page buttons', function () {
 					if (!config?.selectors?.pagination?.prev && !config?.selectors?.pagination?.page) this.skip();
-				
+
 					//click page 2
 					cy.get(config.selectors.pagination.page)
-					.eq(1)
-					.should('exist')
-					.as('page2')
-					.invoke('attr', 'href')
-					.then(function (href) {
-						if (href) {
-							cy.get('@page2').click({ force: true });
-						} else {
-							cy.get('@page2').find('a, button').click({ force: true });
-						}
-					});
+						.eq(1)
+						.should('exist')
+						.as('page2')
+						.invoke('attr', 'href')
+						.then(function (href) {
+							if (href) {
+								cy.get('@page2').click({ force: true });
+							} else {
+								cy.get('@page2').find('a, button').click({ force: true });
+							}
+						});
 
 					cy.wait(200);
 					cy.snapController().then(({ store }) => {
@@ -244,7 +277,7 @@ config?.pages?.forEach((page, _i) => {
 					if (!config?.selectors?.sortBy?.native) this.skip();
 
 					cy.window().scrollTo('top', { ensureScrollable: false });
-					
+
 					cy.get(config.selectors.sortBy?.native)
 						.should('exist')
 						.find('> option')
@@ -286,19 +319,19 @@ config?.pages?.forEach((page, _i) => {
 				it('can toggle facet collapsed', function () {
 					if (
 						!config?.selectors?.sidebar?.facetWrapper ||
-						!config?.selectors?.sidebar?.facetCollapseButton &&
-						(!config?.selectors?.sidebar?.facetOpen || !config?.selectors?.sidebar?.facetCollapsed)
+						(!config?.selectors?.sidebar?.facetCollapseButton &&
+							(!config?.selectors?.sidebar?.facetOpen || !config?.selectors?.sidebar?.facetCollapsed))
 					)
 						this.skip();
 
-					cy.snapController().then(({ store}) => {
-			
+					cy.snapController().then(({ store }) => {
 						function checkCollapsed(elem) {
 							let isCollapsed;
 							if (config?.selectors?.sidebar?.facetOpen) {
 								isCollapsed = !(elem[0].matches(config.selectors.sidebar.facetOpen) || elem.find(config.selectors.sidebar.facetOpen).length > 0);
 							} else if (config?.selectors?.sidebar?.facetCollapsed) {
-								isCollapsed = elem[0].matches(config.selectors.sidebar.facetCollapsed) || elem.find(config.selectors.sidebar.facetCollapsed).length > 0;
+								isCollapsed =
+									elem[0].matches(config.selectors.sidebar.facetCollapsed) || elem.find(config.selectors.sidebar.facetCollapsed).length > 0;
 							}
 
 							return isCollapsed;
@@ -322,7 +355,6 @@ config?.pages?.forEach((page, _i) => {
 						this.skip();
 
 					cy.snapController().then(({ store }) => {
-						
 						const overflowFacets = store.facets.filter((facet) => facet.overflow?.enabled);
 						const facetElementsWithOverflow = [];
 
@@ -370,7 +402,6 @@ config?.pages?.forEach((page, _i) => {
 						this.skip();
 
 					cy.snapController().then(({ store }) => {
-					
 						const facetElementsWithInputs = [];
 						cy.get(`${config.selectors.sidebar.facetWrapper}`)
 							.each((el, index) => {
@@ -404,7 +435,6 @@ config?.pages?.forEach((page, _i) => {
 						this.skip();
 
 					cy.snapController().then(({ store }) => {
-
 						// find first display='list' facet
 						const listFacet = store.facets.filter((facet) => facet.display === 'list')[0];
 						if (!listFacet) this.skip();
@@ -435,7 +465,6 @@ config?.pages?.forEach((page, _i) => {
 					if (!config?.selectors?.sidebar?.facetWrapper || !config?.selectors?.sidebar?.facetTitle) this.skip();
 
 					cy.snapController().then(({ store }) => {
-
 						// find first display='slider' facet
 						const sliderFacet = store.facets.filter((facet) => facet.display === 'slider')[0];
 						if (!sliderFacet) this.skip();
@@ -477,23 +506,18 @@ config?.pages?.forEach((page, _i) => {
 				it('can remove applied filters individually', function () {
 					if (!config?.selectors?.sidebar?.summaryWrapper || !config?.selectors?.sidebar?.appliedFacetRemoveButton) this.skip();
 					cy.snapController().then(({ store }) => {
-						
 						// apply some filter
 						let previousFilterLength;
 
 						cy.get(`${config.selectors.sidebar.facetWrapper}`).each((facet, idx) => {
-
-							if(idx == 0){ 
-							
+							if (idx == 0) {
 								// click on an option in facet and ensure urlManager contains new state
 								const facetListOption = facet.find(config.selectors.sidebar.facetOption)[0];
 								cy.get(facetListOption).click({ force: true });
 								cy.snapController().then(({ store }) => {
 									expect(store.filters.length).to.greaterThan(0);
 									previousFilterLength = store.filters.length;
-
 								});
-								
 							}
 						});
 
@@ -512,7 +536,6 @@ config?.pages?.forEach((page, _i) => {
 						this.skip();
 
 					cy.snapController().then(({ store }) => {
-						
 						// find first display='grid' facet
 						const gridFacet = store.facets.filter((facet) => facet.display === 'grid')[0];
 						if (!gridFacet) this.skip();
@@ -549,7 +572,6 @@ config?.pages?.forEach((page, _i) => {
 						this.skip();
 
 					cy.snapController().then(({ store }) => {
-						
 						// find first display='palette' facet
 						const paletteFacet = store.facets.filter((facet) => facet.display === 'palette')[0];
 						if (!paletteFacet) this.skip();
@@ -586,7 +608,6 @@ config?.pages?.forEach((page, _i) => {
 						this.skip();
 
 					cy.snapController().then(({ store }) => {
-						
 						// find first display='hierarchy' facet
 						const hierarchyFacet = store.facets.filter((facet) => facet.display === 'hierarchy')[0];
 						if (!hierarchyFacet) this.skip();
@@ -622,15 +643,14 @@ config?.pages?.forEach((page, _i) => {
 					if (!config?.selectors?.sidebar?.removeAllFacetsButton) this.skip();
 
 					cy.snapController().then(({ store }) => {
-					
-						if (!config?.selectors?.sidebar?.facetWrapper || !config?.selectors?.sidebar?.facetTitle || !config?.selectors?.sidebar?.facetOption){
+						if (!config?.selectors?.sidebar?.facetWrapper || !config?.selectors?.sidebar?.facetTitle || !config?.selectors?.sidebar?.facetOption) {
 							this.skip();
-						}else {
+						} else {
 							cy.get(`${config.selectors.sidebar.facetWrapper}`).each((facet, idx) => {
 								if (idx == 0) {
 									// click on an option in facet and ensure urlManager contains new state
 									const facetListOption = facet.find(config.selectors.sidebar.facetOption)[0];
-									if (facetListOption){
+									if (facetListOption) {
 										cy.get(facetListOption).click({ force: true });
 										cy.wait(100);
 									}
@@ -639,13 +659,12 @@ config?.pages?.forEach((page, _i) => {
 						}
 					});
 
-					cy.get(config?.selectors?.sidebar?.removeAllFacetsButton).first().should('exist').click({ force: true });				
+					cy.get(config?.selectors?.sidebar?.removeAllFacetsButton).first().should('exist').click({ force: true });
 					cy.wait(200);
 					cy.snapController().then(({ store }) => {
 						expect(store.filters.length).to.equal(0);
 					});
 				});
-
 			});
 
 			describe('Results', () => {
