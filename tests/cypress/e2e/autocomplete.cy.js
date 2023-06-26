@@ -70,7 +70,7 @@ describe('Autocomplete', () => {
 		beforeEach('can make single letter query', function () {
 			if (!config.startingQuery || !config?.selectors?.website?.input) this.skip();
 
-			cy.get(config.selectors.website.input).first().should('exist').clear().blur();
+			cy.get(config.selectors.website.input).first().should('exist').clear({ force: true });
 
 			cy.get(config.selectors.website.input).first().should('exist').focus().type(config.startingQuery, { force: true });
 
