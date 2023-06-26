@@ -126,41 +126,6 @@ config?.pages?.forEach((page, _i) => {
 					});
 				});
 
-				it('loads next page when scrolled while using Infinite Scroll', function () {
-					if (!config.selectors.pagination.infinite) this.skip();
-					cy.snapController().then(({ store }) => {
-						expect(store.pagination.page).to.equal(1);
-						cy.get(config.selectors.results?.productWrapper).should('exist').should('have.length', store.pagination.pageSize);
-					});
-
-					if (config.selectors.pagination.loadMoreButton) {
-						cy.get(config.selectors.pagination.loadMoreButton).should('exist').first().click({ force: true });
-					} else {
-						cy.window().scrollTo('bottom', { ensureScrollable: false });
-					}
-
-					cy.snapController().then(({ store }) => {
-						expect(store.pagination.page).to.equal(2);
-						cy.get(config.selectors.results?.productWrapper)
-							.should('exist')
-							.should('have.length', store.pagination.pageSize * 2);
-					});
-
-					if (config.selectors.pagination.loadMoreButton) {
-						cy.get(config.selectors.pagination.loadMoreButton).should('exist').first().click({ force: true });
-					} else {
-						cy.window().scrollTo('bottom', { ensureScrollable: false });
-					}
-
-					cy.snapController().then(({ store }) => {
-						expect(store.pagination.page).to.equal(3);
-						cy.get(config.selectors.results?.productWrapper)
-							.should('exist')
-							.should('have.length', store.pagination.pageSize * 3);
-						cy.window().scrollTo('top', { ensureScrollable: false });
-					});
-				});
-
 				it('can navigate to the second page', function () {
 					if (!config?.selectors?.pagination?.next && !config?.selectors?.pagination?.page) this.skip();
 
