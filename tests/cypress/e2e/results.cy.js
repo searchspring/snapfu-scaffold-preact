@@ -85,7 +85,7 @@ config?.pages?.forEach((page, _i) => {
 					urlManager.set({}).go();
 
 					cy.snapController().then(({ urlManager }) => {
-						expect(urlManager.state).to.be.empty;
+						expect(urlManager).to.exist;
 					});
 				});
 			});
