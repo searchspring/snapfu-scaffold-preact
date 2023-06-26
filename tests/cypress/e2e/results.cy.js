@@ -79,11 +79,14 @@ config?.pages?.forEach((page, _i) => {
 			});
 		});
 
-		describe('E2E Tests', () => {
+		describe('Results Tests', () => {
 			beforeEach('reset', function () {
 				cy.snapController().then(({ store, urlManager }) => {
 					urlManager.set({}).go();
-					cy.wait(200);
+
+					cy.snapController().then(({ urlManager }) => {
+						expect(urlManager.state).to.be.empty;
+					});
 				});
 			});
 
@@ -173,6 +176,11 @@ config?.pages?.forEach((page, _i) => {
 								} else {
 									cy.get('@next').find('a, button').click({ force: true });
 								}
+							})
+							.then(function() {
+								cy.snapController().then(({ store }) => {
+									expect(store.pagination.page).to.equal(2);
+								});
 							});
 					} else if (config?.selectors?.pagination?.page) {
 						cy.get(config.selectors.pagination.page)
@@ -186,20 +194,22 @@ config?.pages?.forEach((page, _i) => {
 								} else {
 									cy.get('@page2').find('a, button').click({ force: true });
 								}
+							})
+							.then(function() {
+								cy.snapController().then(({ store }) => {
+									expect(store.pagination.page).to.equal(2);
+								});
 							});
 					}
-
-					cy.snapController().then(({ store }) => {
-						expect(store.pagination.page).to.equal(2);
-					});
 				});
 
 				it('can use prev page buttons', function () {
 					if (!config?.selectors?.pagination?.prev && !config?.selectors?.pagination?.page) this.skip();
 
-					//click page 2
+					// click page 2
 					cy.get(config.selectors.pagination.page)
 						.eq(1)
+						.first()
 						.should('exist')
 						.as('page2')
 						.invoke('attr', 'href')
@@ -209,12 +219,12 @@ config?.pages?.forEach((page, _i) => {
 							} else {
 								cy.get('@page2').find('a, button').click({ force: true });
 							}
+						})
+						.then(function() {
+							cy.snapController().then(({ store }) => {
+								expect(store.pagination.page).to.equal(2);
+							});
 						});
-
-					cy.wait(200);
-					cy.snapController().then(({ store }) => {
-						expect(store.pagination.page).to.equal(2);
-					});
 
 					if (config?.selectors?.pagination?.prev) {
 						cy.get(`${config.selectors.pagination.prev}`)
@@ -228,6 +238,11 @@ config?.pages?.forEach((page, _i) => {
 								} else {
 									cy.get('@prev').find('a, button').click({ force: true });
 								}
+							})
+							.then(function() {
+								cy.snapController().then(({ store }) => {
+									expect(store.pagination.page).to.equal(1);
+								});
 							});
 					} else if (config?.selectors?.pagination?.page) {
 						cy.get(config.selectors.pagination.page)
@@ -241,12 +256,13 @@ config?.pages?.forEach((page, _i) => {
 								} else {
 									cy.get('@page1').find('a, button').click({ force: true });
 								}
+							})
+							.then(function() {
+								cy.snapController().then(({ store }) => {
+									expect(store.pagination.page).to.equal(1);
+								});
 							});
 					}
-
-					cy.snapController().then(({ store }) => {
-						expect(store.pagination.page).to.equal(1);
-					});
 				});
 
 				it('can go to the third page', function () {
@@ -264,11 +280,12 @@ config?.pages?.forEach((page, _i) => {
 							} else {
 								cy.get('@page3').find('a, button').click({ force: true });
 							}
+						})
+						.then(function() {
+							cy.snapController().then(({ store }) => {
+								expect(store.pagination.page).to.equal(3);
+							});
 						});
-
-					cy.snapController().then(({ store }) => {
-						expect(store.pagination.page).to.equal(3);
-					});
 				});
 			});
 
@@ -652,17 +669,21 @@ config?.pages?.forEach((page, _i) => {
 									const facetListOption = facet.find(config.selectors.sidebar.facetOption)[0];
 									if (facetListOption) {
 										cy.get(facetListOption).click({ force: true });
-										cy.wait(100);
 									}
 								}
+							})
+							.then(function() {
+								cy.snapController().then(({ store }) => {
+									expect(store.filters.length).to.equal(1);
+								});
 							});
 						}
 					});
 
-					cy.get(config?.selectors?.sidebar?.removeAllFacetsButton).first().should('exist').click({ force: true });
-					cy.wait(200);
-					cy.snapController().then(({ store }) => {
-						expect(store.filters.length).to.equal(0);
+					cy.get(config?.selectors?.sidebar?.removeAllFacetsButton).first().should('exist').click({ force: true }).then(function() {
+						cy.snapController().then(({ store }) => {
+							expect(store.filters.length).to.equal(0);
+						});
 					});
 				});
 			});
