@@ -82,7 +82,9 @@ config?.pages?.forEach((page, _i) => {
 		describe('Results Tests', () => {
 			beforeEach('reset', function () {
 				cy.snapController().then(({ store, urlManager }) => {
-					urlManager.set({}).go();
+					// preserve initial query
+					const query = urlManager.state.query;
+					urlManager.set({ query }).go();
 
 					cy.snapController().then(({ urlManager }) => {
 						expect(urlManager).to.exist;
