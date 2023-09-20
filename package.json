@@ -1,6 +1,6 @@
 {
-	"name": "{{snapfu.name}}",
-	"author": "{{snapfu.author}}",
+	"name": "Shopware",
+	"author": "",
 	"version": "0.1.0",
 	"license": "MIT",
 	"main": "index.js",
@@ -11,7 +11,7 @@
 		"build": "rm -rf ./dist && webpack --config webpack.modern.js && webpack --config webpack.universal.js",
 		"cypress": "cypress open --project tests",
 		"clean": "rm -rf ./node_modules && rm -f ./package-lock.json",
-		"dev": "kill $(lsof -ti:3333,8888); webpack serve --config webpack.dev.js",
+		"dev": "webpack serve --config webpack.dev.js",
 		"format": "prettier --write \"**/*.{js,jsx,ts,tsx,json}\"",
 		"lint": "eslint --fix \"./src/**/*.{js,jsx,ts,tsx}\"",
 		"test": "kill $(lsof -ti:3333,8888); webpack serve --config webpack.dev.js & (cypress run --project tests && kill $(lsof -ti:3333,8888))",
@@ -20,8 +20,8 @@
 	},
 	"searchspring": {
 		"siteId": {
-			"{{snapfu.siteId}}": {
-				"name": "{{snapfu.name}}"
+			"h4hlbp": {
+				"name": "Shopware"
 			}
 		},
 		"framework": "preact",

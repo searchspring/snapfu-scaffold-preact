@@ -1,4 +1,4 @@
-# {{snapfu.name}}
+# Shopware
 
 Snap SDK packages and components built with Preact.
 

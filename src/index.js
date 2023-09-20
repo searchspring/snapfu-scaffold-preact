@@ -32,7 +32,7 @@ const config = {
 	},
 	client: {
 		globals: {
-			siteId: '{{snapfu.siteId}}',
+			siteId: 'h4hlbp',
 		},
 	},
 	instantiators: {
