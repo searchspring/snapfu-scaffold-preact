@@ -1,1 +1,1 @@
-export { until } from '@searchspring-toolbox';
+export { until } from '@searchspring/snap-toolbox';
