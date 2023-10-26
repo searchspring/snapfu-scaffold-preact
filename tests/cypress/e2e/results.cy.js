@@ -144,7 +144,7 @@ config?.pages?.forEach((page, _i) => {
 									cy.get('@next').find('a, button').click({ force: true });
 								}
 							})
-							.then(function() {
+							.then(function () {
 								cy.snapController().then(({ store }) => {
 									expect(store.pagination.page).to.equal(2);
 								});
@@ -162,7 +162,7 @@ config?.pages?.forEach((page, _i) => {
 									cy.get('@page2').find('a, button').click({ force: true });
 								}
 							})
-							.then(function() {
+							.then(function () {
 								cy.snapController().then(({ store }) => {
 									expect(store.pagination.page).to.equal(2);
 								});
@@ -187,7 +187,7 @@ config?.pages?.forEach((page, _i) => {
 								cy.get('@page2').find('a, button').click({ force: true });
 							}
 						})
-						.then(function() {
+						.then(function () {
 							cy.snapController().then(({ store }) => {
 								expect(store.pagination.page).to.equal(2);
 							});
@@ -206,7 +206,7 @@ config?.pages?.forEach((page, _i) => {
 									cy.get('@prev').find('a, button').click({ force: true });
 								}
 							})
-							.then(function() {
+							.then(function () {
 								cy.snapController().then(({ store }) => {
 									expect(store.pagination.page).to.equal(1);
 								});
@@ -224,7 +224,7 @@ config?.pages?.forEach((page, _i) => {
 									cy.get('@page1').find('a, button').click({ force: true });
 								}
 							})
-							.then(function() {
+							.then(function () {
 								cy.snapController().then(({ store }) => {
 									expect(store.pagination.page).to.equal(1);
 								});
@@ -248,7 +248,7 @@ config?.pages?.forEach((page, _i) => {
 								cy.get('@page3').find('a, button').click({ force: true });
 							}
 						})
-						.then(function() {
+						.then(function () {
 							cy.snapController().then(({ store }) => {
 								expect(store.pagination.page).to.equal(3);
 							});
@@ -630,28 +630,33 @@ config?.pages?.forEach((page, _i) => {
 						if (!config?.selectors?.sidebar?.facetWrapper || !config?.selectors?.sidebar?.facetTitle || !config?.selectors?.sidebar?.facetOption) {
 							this.skip();
 						} else {
-							cy.get(`${config.selectors.sidebar.facetWrapper}`).each((facet, idx) => {
-								if (idx == 0) {
-									// click on an option in facet and ensure urlManager contains new state
-									const facetListOption = facet.find(config.selectors.sidebar.facetOption)[0];
-									if (facetListOption) {
-										cy.get(facetListOption).click({ force: true });
+							cy.get(`${config.selectors.sidebar.facetWrapper}`)
+								.each((facet, idx) => {
+									if (idx == 0) {
+										// click on an option in facet and ensure urlManager contains new state
+										const facetListOption = facet.find(config.selectors.sidebar.facetOption)[0];
+										if (facetListOption) {
+											cy.get(facetListOption).click({ force: true });
+										}
 									}
-								}
-							})
-							.then(function() {
-								cy.snapController().then(({ store }) => {
-									expect(store.filters.length).to.equal(1);
+								})
+								.then(function () {
+									cy.snapController().then(({ store }) => {
+										expect(store.filters.length).to.equal(1);
+									});
 								});
-							});
 						}
 					});
 
-					cy.get(config?.selectors?.sidebar?.removeAllFacetsButton).first().should('exist').click({ force: true }).then(function() {
-						cy.snapController().then(({ store }) => {
-							expect(store.filters.length).to.equal(0);
+					cy.get(config?.selectors?.sidebar?.removeAllFacetsButton)
+						.first()
+						.should('exist')
+						.click({ force: true })
+						.then(function () {
+							cy.snapController().then(({ store }) => {
+								expect(store.filters.length).to.equal(0);
+							});
 						});
-					});
 				});
 			});
 
