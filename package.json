@@ -25,17 +25,17 @@
 			}
 		},
 		"framework": "preact",
-		"template": "snapfu-template-preact",
 		"updates": [
 			"all"
 		],
 		"tags": [],
-		"version": "0.49.1"
+		"version": "0.50.0",
+		"scaffold": "snapfu-template-preact"
 	},
 	"prettier": "@searchspring/prettier",
 	"dependencies": {
-		"@searchspring/snap-preact": "0.49.1",
-		"@searchspring/snap-preact-components": "0.49.1",
+		"@searchspring/snap-preact": "0.50.0",
+		"@searchspring/snap-preact-components": "0.50.0",
 		"mobx": "6.9.0",
 		"mobx-react": "7.6.0",
 		"preact": "10.9.0"
