@@ -430,6 +430,7 @@ config?.pages?.forEach((page, _i) => {
 								if (listFacet.collapsed) {
 									// toggle visibility if collapsed
 									listFacet.toggleCollapse();
+									cy.wait(1);
 								}
 
 								// click on an option in facet and ensure urlManager contains new state
@@ -463,6 +464,7 @@ config?.pages?.forEach((page, _i) => {
 									if (sliderFacet.collapsed) {
 										// toggle visibility if collapsed
 										sliderFacet.toggleCollapse();
+										cy.wait(1);
 									}
 								}
 							})
@@ -477,10 +479,28 @@ config?.pages?.forEach((page, _i) => {
 										.type('{rightarrow}', { force: true });
 
 									cy.snapController().then(({ store }) => {
-										cy.get(facetSliderElement.find('.ss__facet-slider__handles button')[0])
-											.should('have.attr', 'aria-valuenow', sliderFacet.active.low + sliderFacet.step)
-											.should('have.attr', 'aria-valuemin', sliderFacet.active.low)
-											.should('have.attr', 'aria-valuemax', sliderFacet.active.high);
+										// after re-render find the first display='slider' facet and DOM element again (since DOM references can be lost)
+										const sliderFacet = store.facets.filter((facet) => facet.display === 'slider')[0];
+										if (!sliderFacet) this.skip();
+
+										let facetSliderElement;
+										cy.get(`${config.selectors.sidebar.facetWrapper}`)
+											.each((facet) => {
+												// find matching facet in dom after re-render
+												const title = facet.find(config.selectors.sidebar.facetTitle);
+												if (!facetSliderElement && sliderFacet.label.trim() === title.text().trim()) {
+													facetSliderElement = facet;
+												}
+											})
+											.then(() => {
+												const leftHandle = cy.get(facetSliderElement.find('.ss__facet-slider__handles button')[0]);
+												if (leftHandle) {
+													leftHandle
+														.should('have.attr', 'aria-valuenow', sliderFacet.active.low)
+														.should('have.attr', 'aria-valuemin', sliderFacet.active.low - sliderFacet.step)
+														.should('have.attr', 'aria-valuemax', sliderFacet.active.high);
+												}
+											});
 									});
 								}
 							});
@@ -534,6 +554,7 @@ config?.pages?.forEach((page, _i) => {
 									if (gridFacet.collapsed) {
 										// toggle visibility if collapsed
 										gridFacet.toggleCollapse();
+										cy.wait(1);
 									}
 								}
 							})
@@ -570,6 +591,7 @@ config?.pages?.forEach((page, _i) => {
 									if (paletteFacet.collapsed) {
 										// toggle visibility if collapsed
 										paletteFacet.toggleCollapse();
+										cy.wait(1);
 									}
 								}
 							})
@@ -606,6 +628,7 @@ config?.pages?.forEach((page, _i) => {
 									if (hierarchyFacet.collapsed) {
 										// toggle visibility if collapsed
 										hierarchyFacet.toggleCollapse();
+										cy.wait(1);
 									}
 								}
 							})
