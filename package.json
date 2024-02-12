@@ -29,13 +29,13 @@
 			"all"
 		],
 		"tags": [],
-		"version": "0.51.1",
+		"version": "0.51.2",
 		"scaffold": "snapfu-scaffold-preact"
 	},
 	"prettier": "@searchspring/prettier",
 	"dependencies": {
-		"@searchspring/snap-preact": "0.51.1",
-		"@searchspring/snap-preact-components": "0.51.1",
+		"@searchspring/snap-preact": "0.51.2",
+		"@searchspring/snap-preact-components": "0.51.2",
 		"mobx": "6.9.0",
 		"mobx-react": "7.6.0",
 		"preact": "10.9.0"
