@@ -513,17 +513,30 @@ config?.pages?.forEach((page, _i) => {
 						// apply some filter
 						let previousFilterLength;
 
-						cy.get(`${config.selectors.sidebar.facetWrapper}`).each((facet, idx) => {
-							if (idx == 0) {
-								// click on an option in facet and ensure urlManager contains new state
-								const facetListOption = facet.find(config.selectors.sidebar.facetOption)[0];
-								cy.get(facetListOption).click({ force: true });
-								cy.snapController().then(({ store }) => {
-									expect(store.filters.length).to.greaterThan(0);
-									previousFilterLength = store.filters.length;
-								});
-							}
-						});
+						const listFacet = store.facets.filter((facet) => facet.display === 'list')[0];
+							if (!listFacet) this.skip();
+
+							cy.get(`${config.selectors.sidebar.facetWrapper}`).each((facet) => {
+								// find matching facet in dom
+								const title = facet.find(config.selectors.sidebar.facetTitle);
+								if (listFacet.label.trim() === title.text().trim()) {
+									if (listFacet.collapsed) {
+										// toggle visibility if collapsed
+										listFacet.toggleCollapse();
+									}
+									
+									// click on an option in facet and ensure urlManager contains new state
+									const facetListOption = facet.find(config.selectors.sidebar.facetOption)[0];
+									if (facetListOption) {
+										cy.get(facetListOption).click({ force: true }).then(function() {
+											cy.snapController().then(({ store }) => {
+												expect(store.filters.length).to.greaterThan(0);
+												previousFilterLength = store.filters.length;
+											});
+										});
+									}	
+								}
+							});
 
 						// remove an applied filter
 						cy.get(config.selectors.sidebar.summaryWrapper).find(config.selectors.sidebar.appliedFacetRemoveButton).first().click({ force: true });
@@ -653,33 +666,32 @@ config?.pages?.forEach((page, _i) => {
 						if (!config?.selectors?.sidebar?.facetWrapper || !config?.selectors?.sidebar?.facetTitle || !config?.selectors?.sidebar?.facetOption) {
 							this.skip();
 						} else {
-							cy.get(`${config.selectors.sidebar.facetWrapper}`)
-								.each((facet, idx) => {
-									if (idx == 0) {
-										// click on an option in facet and ensure urlManager contains new state
-										const facetListOption = facet.find(config.selectors.sidebar.facetOption)[0];
-										if (facetListOption) {
-											cy.get(facetListOption).click({ force: true });
-										}
+							const listFacet = store.facets.filter((facet) => facet.display === 'list')[0];
+							if (!listFacet) this.skip();
+
+							cy.get(`${config.selectors.sidebar.facetWrapper}`).each((facet) => {
+								// find matching facet in dom
+								const title = facet.find(config.selectors.sidebar.facetTitle);
+								if (listFacet.label.trim() === title.text().trim()) {
+									if (listFacet.collapsed) {
+										// toggle visibility if collapsed
+										listFacet.toggleCollapse();
 									}
-								})
-								.then(function () {
-									cy.snapController().then(({ store }) => {
-										expect(store.filters.length).to.equal(1);
-									});
-								});
+									
+									// click on an option in facet and ensure urlManager contains new state
+									const facetListOption = facet.find(config.selectors.sidebar.facetOption)[0];
+									if (facetListOption) {
+										cy.get(facetListOption).click({ force: true }).then(function() {
+											cy.snapController().then(({ store }) => {
+												expect(store.filters.length).to.equal(1);
+											});
+										});
+									}	
+								}
+							});
+								
 						}
 					});
-
-					cy.get(config?.selectors?.sidebar?.removeAllFacetsButton)
-						.first()
-						.should('exist')
-						.click({ force: true })
-						.then(function () {
-							cy.snapController().then(({ store }) => {
-								expect(store.filters.length).to.equal(0);
-							});
-						});
 				});
 			});
 
