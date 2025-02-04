@@ -67,7 +67,7 @@ const SlideoutContent = (props) => {
 			<>
 				{/* slideout content here */}
 				<FilterSummary />
-				<Facets theme={theme} />
+				<Facets />
 			</>
 		)
 	);

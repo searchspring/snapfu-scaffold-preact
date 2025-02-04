@@ -12,7 +12,7 @@ export const Sidebar = observer((props) => {
 			<ControllerProvider controller={controller}>
 				<div className="ss__sidebar">
 					<FilterSummary controller={controller} />
-					<Facets controller={controller} theme={theme} />
+					<Facets controller={controller} />
 					<FilterMessages />
 					<Banner content={merchandising.content} type="left" />
 				</div>
