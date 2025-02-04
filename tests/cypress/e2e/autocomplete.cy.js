@@ -84,7 +84,7 @@ describe('Autocomplete', () => {
 
 		it('has trending results when focused', function () {
 			cy.snapController('autocomplete').then(({ store }) => {
-				if (store.config.settings.trending?.showResults) {
+				if (store.config.settings.trending?.showResults && (store.config.settings.trending?.limit > 0)) {
 					if (config.selectors.website.openInputButton) {
 						cy.get(config.selectors.website.openInputButton).first().click({ force: true });
 					}

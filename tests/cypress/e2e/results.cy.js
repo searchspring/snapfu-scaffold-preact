@@ -22,14 +22,14 @@ const config = {
 			facetWrapper: '.ss__facet', // facet wrapper
 			facetTitle: '.ss__facet__header', // facet title, should contain facet.label innerText
 			facetCollapseButton: '.ss__facet__header', // facet collapse button, should contain onClick to toggle collapse
-			facetOpen: '', // facet open state class
-			facetCollapsed: '.ss__facet--collapsed', // facet closed state class
-			facetOption: '.ss__facet-options a', // facet option, should be <a> element or element handling onClick
+			facetOpen: '.ss__dropdown--open', // facet open state class
+			facetCollapsed: '', // facet closed state class
+			facetOption: '.ss__facet__options a', // facet option, should be <a> element or element handling onClick
 			showMoreButton: '.ss__facet__show-more-less', // facet show more button, should contain onClick
-			searchWithinInput: '', // facet search within, should be <input> element
-			summaryWrapper: '.ss__filters', // filter summary wrapper
-			appliedFacetRemoveButton: '.ss__filters__filter a', // filter summary - a filter's remove button onClick and/or <a> element
-			removeAllFacetsButton: '.ss__filters__clear-all', // filter summary clear all button
+			searchWithinInput: '.ss__search-input__input', // facet search within, should be <input> element
+			summaryWrapper: '.ss__filter-summary', // filter summary wrapper
+			appliedFacetRemoveButton: 'a.ss__filter', // filter summary - a filter's remove button onClick and/or <a> element
+			removeAllFacetsButton: '.ss__filter-summary__clear-all', // filter summary clear all button
 		},
 		sortBy: {
 			native: 'select#ss__sort--select', // sort by <select> element (if applicable)
@@ -322,6 +322,7 @@ config?.pages?.forEach((page, _i) => {
 						}
 
 						cy.get(config.selectors.sidebar.facetWrapper).each((el, index) => {
+							
 							// for each facet, expect the facet collapsed state to be correct
 							expect(store.facets[index].collapsed).to.equal(checkCollapsed(el));
 							// click on the facet collapsed button to toggle collapsed
@@ -362,6 +363,7 @@ config?.pages?.forEach((page, _i) => {
 								// ensure visible facet options is limited
 								facetElementsWithOverflow.forEach((overflowingFacet, index) => {
 									const visibleOptions = overflowingFacet.find(config.selectors.sidebar.facetOption);
+									
 									expect(visibleOptions.length).to.equal(overflowFacets[index].overflow.limit);
 								});
 							})
@@ -399,12 +401,12 @@ config?.pages?.forEach((page, _i) => {
 									// type in the first two characters of the first value
 									const valueToType = store.facets[obj.index].values[0].label.substring(0, 2).toLowerCase();
 									const input = obj.el.find(config.selectors.sidebar.searchWithinInput)[0];
-									cy.get(input).type(valueToType);
+									cy.get(input).type(valueToType, {force: true});
 
 									cy.snapController().then(({ store }) => {
 										// expect visible values to be filtered
 										const refinedOptions = store.facets[obj.index].refinedValues.filter((valueOption) =>
-											valueOption.value.toLowerCase().includes(valueToType)
+											valueOption.label.toLowerCase().includes(valueToType)
 										);
 										const visibleOptions = obj.el.find(config.selectors.sidebar.facetOption);
 										expect(refinedOptions.length).to.equal(visibleOptions.length);
