@@ -12,7 +12,7 @@
 const config = {
 	// pages to test (recommended: 1 search page, 1 category page)
 	pages: [
-		{ url: 'https://localhost:3333/index.html', id: 'Search' },
+		{ url: 'https://localhost:3333/index.html?q=*', id: 'Search' },
 		// { url: 'https://try.searchspring.com/dresses', id: 'Category' },
 	],
 	disableGA: '', // disable google analytic events (example: 'UA-123456-1')
