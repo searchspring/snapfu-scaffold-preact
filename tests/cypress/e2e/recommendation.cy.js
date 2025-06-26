@@ -10,7 +10,7 @@
  */
 
 const config = {
-	url: 'https://localhost:3333/recommendation-default.html', // page containing recommendation
+	url: '', // page containing recommendation to test
 	disableGA: '', // disable google analytic events (example: 'UA-123456-1')
 	controller: 'recommend_trending_0',
 	selectors: {
