@@ -210,7 +210,7 @@ describe('Autocomplete', () => {
 });
 
 // begin beacon tracking testing
-describe.skip('Tracking', () => {
+describe('Tracking', () => {
 	it('sends beacon events', function () {
 		if (typeof config === 'undefined' || !config.url || !config?.selectors?.website?.input || !config?.startingQuery || !config.selectors.autocomplete.result) this.skip();
 

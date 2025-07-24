@@ -709,7 +709,7 @@ config?.pages?.forEach((page, _i) => {
 });
 
 // begin beacon tracking testing
-describe.skip('Tracking', () => {
+describe('Tracking', () => {
 	it('sends beacon events', function () {
 		if (typeof config === 'undefined' || !config?.pages.length || !config.selectors.results?.productWrapper) this.skip();
 
