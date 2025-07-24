@@ -51,4 +51,11 @@ beforeEach(() => {
 	cy.intercept(/.*snapui.searchspring.io\/.*.js.*$/, (req) => {
 		req.destroy();
 	});
+
+	cy.intercept('POST', /beacon.searchspring.io\/beacon\/v2\/.*\/autocomplete\/impression/, { success: true }).as('beacon2/autocomplete/impression');
+	cy.intercept('POST', /beacon.searchspring.io\/beacon\/v2\/.*\/autocomplete\/clickthrough/, { success: true }).as('beacon2/autocomplete/clickthrough');
+	cy.intercept('POST', /beacon.searchspring.io\/beacon\/v2\/.*\/search\/impression/, { success: true }).as('beacon2/search/impression');
+	cy.intercept('POST', /beacon.searchspring.io\/beacon\/v2\/.*\/search\/clickthrough/, { success: true }).as('beacon2/search/clickthrough');
+	cy.intercept('POST', /beacon.searchspring.io\/beacon\/v2\/.*\/category\/impression/, { success: true }).as('beacon2/category/impression');
+	cy.intercept('POST', /beacon.searchspring.io\/beacon\/v2\/.*\/category\/clickthrough/, { success: true }).as('beacon2/category/clickthrough');
 });
