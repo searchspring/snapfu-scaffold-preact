@@ -727,9 +727,6 @@ config?.pages?.forEach((page, _i) => {
 				it('has correct product count per page', function () {
 					if (!config?.selectors?.results?.productWrapper) this.skip();
 
-					// cy.snapController().then(({ store }) => {
-					// 	cy.get(config.selectors.results?.productWrapper).should('exist').should('have.length', store.pagination.pageSize);
-					// });
 					cy.snapController().then(({ store }) => {
 						if (store.pagination.pageSize > store.pagination.totalResults) {
 							cy.get(config.selectors.results?.productWrapper).should('exist').should('have.length', store.pagination.totalResults);
