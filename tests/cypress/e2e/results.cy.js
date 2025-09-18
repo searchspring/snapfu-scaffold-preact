@@ -398,6 +398,11 @@ config?.pages?.forEach((page, _i) => {
 							})
 							.then(() => {
 								facetElementsWithInputs.forEach((obj) => {
+									// toggle open facet for search within
+									if (store.facets[obj.index] && store.facets[obj.index].collapsed) {
+										store.facets[obj.index].toggleCollapse();
+									}
+									
 									// type in the first two characters of the first value
 									const valueToType = store.facets[obj.index].values[0].label.substring(0, 2).toLowerCase();
 									const input = obj.el.find(config.selectors.sidebar.searchWithinInput)[0];
