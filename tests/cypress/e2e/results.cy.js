@@ -524,13 +524,13 @@ config?.pages?.forEach((page, _i) => {
 						if (!nonHierarchyFacet) this.skip();
 
 						// this is the actual DOM element of the facet
-						let facetHierarchyElement;
+						let facetElement;
 						cy.get(`${config.selectors.sidebar.facetWrapper}`)
 							.each((facet) => {
 								// find matching facet in dom
 								const title = facet.find(config.selectors.sidebar.facetTitle);
-								if (!facetHierarchyElement && nonHierarchyFacet.label.trim() === title.text().trim()) {
-									facetHierarchyElement = facet;
+								if (!facetElement && nonHierarchyFacet.label.trim() === title.text().trim()) {
+									facetElement = facet;
 									if (nonHierarchyFacet.collapsed) {
 										// toggle visibility if collapsed
 										nonHierarchyFacet.toggleCollapse();
@@ -543,7 +543,7 @@ config?.pages?.forEach((page, _i) => {
 								let previousFilterLength;
 
 								// click on an option in facet and ensure urlManager contains new state
-								const facetListOption = facetHierarchyElement.find(config.selectors.sidebar.facetOption)[0];
+								const facetListOption = facetElement.find(config.selectors.sidebar.facetOption)[0];
 								cy.get(facetListOption).click({ force: true });
 								cy.snapController().then(({ store }) => {
 									expect(store.filters.length).to.greaterThan(0);
@@ -685,13 +685,13 @@ config?.pages?.forEach((page, _i) => {
 							if (!nonHierarchyFacet) this.skip();
 
 							// this is the actual DOM element of the facet
-							let facetHierarchyElement;
+							let facetElement;
 							cy.get(`${config.selectors.sidebar.facetWrapper}`)
 								.each((facet) => {
 									// find matching facet in dom
 									const title = facet.find(config.selectors.sidebar.facetTitle);
-									if (!facetHierarchyElement && nonHierarchyFacet.label.trim() === title.text().trim()) {
-										facetHierarchyElement = facet;
+									if (!facetElement && nonHierarchyFacet.label.trim() === title.text().trim()) {
+										facetElement = facet;
 										if (nonHierarchyFacet.collapsed) {
 											// toggle visibility if collapsed
 											nonHierarchyFacet.toggleCollapse();
@@ -702,7 +702,7 @@ config?.pages?.forEach((page, _i) => {
 								.then(() => {
 						
 									// click on an option in facet and ensure urlManager contains new state
-									const facetListOption = facetHierarchyElement.find(config.selectors.sidebar.facetOption)[0];
+									const facetListOption = facetElement.find(config.selectors.sidebar.facetOption)[0];
 									if (facetListOption) {
 										cy.get(facetListOption).click({ force: true });
 									}
