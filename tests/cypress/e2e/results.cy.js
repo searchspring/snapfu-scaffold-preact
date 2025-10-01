@@ -398,6 +398,11 @@ config?.pages?.forEach((page, _i) => {
 							})
 							.then(() => {
 								facetElementsWithInputs.forEach((obj) => {
+									// toggle open facet for search within
+									if (store.facets[obj.index] && store.facets[obj.index].collapsed) {
+										store.facets[obj.index].toggleCollapse();
+									}
+									
 									// type in the first two characters of the first value
 									const valueToType = store.facets[obj.index].values[0].label.substring(0, 2).toLowerCase();
 									const input = obj.el.find(config.selectors.sidebar.searchWithinInput)[0];
@@ -512,28 +517,47 @@ config?.pages?.forEach((page, _i) => {
 				it('can remove applied filters individually', function () {
 					if (!config?.selectors?.sidebar?.summaryWrapper || !config?.selectors?.sidebar?.appliedFacetRemoveButton) this.skip();
 					cy.snapController().then(({ store }) => {
-						// apply some filter
-						let previousFilterLength;
 
-						cy.get(`${config.selectors.sidebar.facetWrapper}`).each((facet, idx) => {
-							if (idx == 0) {
+
+						// find first non display='hierarchy' facet in store
+						const nonHierarchyFacet = store.facets.filter((facet) => facet.display !== 'hierarchy')[0];
+						if (!nonHierarchyFacet) this.skip();
+
+						// this is the actual DOM element of the facet
+						let facetElement;
+						cy.get(`${config.selectors.sidebar.facetWrapper}`)
+							.each((facet) => {
+								// find matching facet in dom
+								const title = facet.find(config.selectors.sidebar.facetTitle);
+								if (!facetElement && nonHierarchyFacet.label.trim() === title.text().trim()) {
+									facetElement = facet;
+									if (nonHierarchyFacet.collapsed) {
+										// toggle visibility if collapsed
+										nonHierarchyFacet.toggleCollapse();
+										cy.wait(1);
+									}
+								}
+							})
+							.then(() => {
+								// apply some filter
+								let previousFilterLength;
+
 								// click on an option in facet and ensure urlManager contains new state
-								const facetListOption = facet.find(config.selectors.sidebar.facetOption)[0];
+								const facetListOption = facetElement.find(config.selectors.sidebar.facetOption)[0];
 								cy.get(facetListOption).click({ force: true });
 								cy.snapController().then(({ store }) => {
 									expect(store.filters.length).to.greaterThan(0);
 									previousFilterLength = store.filters.length;
 								});
-							}
-						});
 
-						// remove an applied filter
-						cy.get(config.selectors.sidebar.summaryWrapper).find(config.selectors.sidebar.appliedFacetRemoveButton).first().click({ force: true });
+								// remove an applied filter
+								cy.get(config.selectors.sidebar.summaryWrapper).find(config.selectors.sidebar.appliedFacetRemoveButton).first().click({ force: true });
 
-						// expect one less filter to be applied
-						cy.snapController().then(({ store }) => {
-							expect(store.filters.length).to.equal(previousFilterLength - 1);
-						});
+								// expect one less filter to be applied
+								cy.snapController().then(({ store }) => {
+									expect(store.filters.length).to.equal(previousFilterLength - 1);
+								});
+							});
 					});
 				});
 
@@ -655,15 +679,34 @@ config?.pages?.forEach((page, _i) => {
 						if (!config?.selectors?.sidebar?.facetWrapper || !config?.selectors?.sidebar?.facetTitle || !config?.selectors?.sidebar?.facetOption) {
 							this.skip();
 						} else {
+
+							// find first non display='hierarchy' facet in store
+							const nonHierarchyFacet = store.facets.filter((facet) => facet.display !== 'hierarchy')[0];
+							if (!nonHierarchyFacet) this.skip();
+
+							// this is the actual DOM element of the facet
+							let facetElement;
 							cy.get(`${config.selectors.sidebar.facetWrapper}`)
-								.each((facet, idx) => {
-									if (idx == 0) {
-										// click on an option in facet and ensure urlManager contains new state
-										const facetListOption = facet.find(config.selectors.sidebar.facetOption)[0];
-										if (facetListOption) {
-											cy.get(facetListOption).click({ force: true });
+								.each((facet) => {
+									// find matching facet in dom
+									const title = facet.find(config.selectors.sidebar.facetTitle);
+									if (!facetElement && nonHierarchyFacet.label.trim() === title.text().trim()) {
+										facetElement = facet;
+										if (nonHierarchyFacet.collapsed) {
+											// toggle visibility if collapsed
+											nonHierarchyFacet.toggleCollapse();
+											cy.wait(1);
 										}
 									}
+								})
+								.then(() => {
+						
+									// click on an option in facet and ensure urlManager contains new state
+									const facetListOption = facetElement.find(config.selectors.sidebar.facetOption)[0];
+									if (facetListOption) {
+										cy.get(facetListOption).click({ force: true });
+									}
+									
 								})
 								.then(function () {
 									cy.snapController().then(({ store }) => {
@@ -690,7 +733,11 @@ config?.pages?.forEach((page, _i) => {
 					if (!config?.selectors?.results?.productWrapper) this.skip();
 
 					cy.snapController().then(({ store }) => {
-						cy.get(config.selectors.results?.productWrapper).should('exist').should('have.length', store.pagination.pageSize);
+						if (store.pagination.pageSize > store.pagination.totalResults) {
+							cy.get(config.selectors.results?.productWrapper).should('exist').should('have.length', store.pagination.totalResults);
+						} else {
+							cy.get(config.selectors.results?.productWrapper).should('exist').should('have.length', store.pagination.pageSize);
+						}
 					});
 				});
 			});
