@@ -8,7 +8,7 @@ on:
 
 jobs:
   Publish:
-    runs-on: ${{ (startsWith(github.head_ref, 'updater/patch/') || startsWith(github.ref_name, 'updater/patch/') || startsWith(github.head_ref, 'updater/revert/') || startsWith(github.ref_name, 'updater/revert/') || (github.ref_name == github.event.repository.master_branch && (contains(github.event.head_commit.message,'from searchspring-implementations/updater/patch/') || contains(github.event.head_commit.message,'from searchspring-implementations/updater/revert/')))) && 'snapp-updater' || 'ubuntu-latest' }}
+    runs-on: ${{ (startsWith(github.head_ref, 'updater/patch/') || startsWith(github.ref_name, 'updater/patch/') || startsWith(github.head_ref, 'updater/revert/') || startsWith(github.ref_name, 'updater/revert/') || (github.ref_name == github.event.repository.master_branch && (contains(github.event.head_commit.message,'from snap-implementations/updater/patch/') || contains(github.event.head_commit.message,'from snap-implementations/updater/revert/')))) && 'snapp-updater' || 'ubuntu-latest' }}
     name: Snap Action
     timeout-minutes: 10
     steps:
