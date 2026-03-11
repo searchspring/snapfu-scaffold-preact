@@ -21,7 +21,7 @@ module.exports = {
 	},
 	plugins: [
 		new webpack.BannerPlugin({
-			banner: 'window.searchspring = window.searchspring || {};\nwindow.searchspring.managed = true;',
+			banner: 'window.searchspring = window.searchspring || {};\nwindow.searchspring.managed = {{ snapfu.managed }};',
 			raw: true,
 			entryOnly: true,
 		}),
