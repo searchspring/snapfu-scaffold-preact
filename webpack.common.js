@@ -1,3 +1,6 @@
+// DO NOT EDIT - THIS FILE CAN/WILL BE REPLACED!!!
+// ***********************************************
+
 const webpack = require('webpack');
 const childProcess = require('child_process');
 const path = require('path');
@@ -17,13 +20,14 @@ module.exports = {
 		modulesSpace: 70,
 	},
 	plugins: [
+		new webpack.BannerPlugin({
+			banner: 'window.searchspring = window.searchspring || {};\nwindow.searchspring.managed = true;',
+			raw: true,
+			entryOnly: true,
+		}),
 		new webpack.DefinePlugin({
 			BRANCHNAME: `"${branchName}"`,
 		}),
-		// to disable code splitting, include the following:
-		// new webpack.optimize.LimitChunkCountPlugin({
-		// 	maxChunks: 1,
-		// }),
 	],
 	module: {
 		strictExportPresence: true,
