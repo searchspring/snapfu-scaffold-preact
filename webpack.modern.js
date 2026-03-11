@@ -1,3 +1,6 @@
+// DO NOT EDIT - THIS FILE CAN/WILL BE REPLACED!!!
+// ***********************************************
+
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 const path = require('path');
@@ -32,23 +35,5 @@ module.exports = merge(common, {
 				},
 			},
 		],
-	},
-	devServer: {
-		client: false,
-		server: 'https',
-		port: 3333,
-		hot: false,
-		allowedHosts: 'all',
-		headers: {
-			'Access-Control-Allow-Origin': '*',
-		},
-		static: {
-			directory: path.join(__dirname, 'public'),
-			publicPath: ['/'],
-			watch: false,
-		},
-		devMiddleware: {
-			publicPath: '/dist/',
-		},
 	},
 });
