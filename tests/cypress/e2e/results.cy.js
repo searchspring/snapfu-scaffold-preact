@@ -520,7 +520,7 @@ config?.pages?.forEach((page, _i) => {
 
 
 						// find first non display='hierarchy' facet in store
-						const nonHierarchyFacet = store.facets.filter((facet) => facet.display !== 'hierarchy')[0];
+						const nonHierarchyFacet = store.facets.filter((facet) => facet.display !== 'hierarchy' && facet.display !== 'slider')[0];
 						if (!nonHierarchyFacet) this.skip();
 
 						// this is the actual DOM element of the facet
@@ -681,7 +681,7 @@ config?.pages?.forEach((page, _i) => {
 						} else {
 
 							// find first non display='hierarchy' facet in store
-							const nonHierarchyFacet = store.facets.filter((facet) => facet.display !== 'hierarchy')[0];
+							const nonHierarchyFacet = store.facets.filter((facet) => facet.display !== 'hierarchy' && facet.display !== 'slider')[0];
 							if (!nonHierarchyFacet) this.skip();
 
 							// this is the actual DOM element of the facet
