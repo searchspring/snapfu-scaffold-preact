@@ -777,20 +777,25 @@ describe('Tracking', () => {
 			window[`ga-disable-${config.disableGA}`] = true;
 		}
 
-		const firstResult = cy.get(`${config.selectors.results.productWrapper}[href], ${config.selectors.results.productWrapper} a[href]`)
-			.first()
-			.should('exist')
-			.scrollIntoView();
+		cy.snapController().then((controller) => {
+			const pageType = controller.page.type;
 
-		// impression tracking
-		cy.wait(`@beacon2/search/impression`).then((impression) => {
-			expect(impression.response.body).to.have.property('success').to.equal(true);
-		});
+			const firstResult = cy
+				.get(`${config.selectors.results.productWrapper}[href], ${config.selectors.results.productWrapper} a[href]`)
+				.first()
+				.should('exist')
+				.scrollIntoView();
 
-		// click tracking
-		firstResult.trigger('click', { force: true });
-		cy.wait(`@beacon2/search/clickthrough`).then((clickthrough) => {
-			expect(clickthrough.response.body).to.have.property('success').to.equal(true);
+			// impression tracking
+			cy.wait(`@beacon2/${pageType}/impression`).then((impression) => {
+				expect(impression.response.body).to.have.property('success').to.equal(true);
+			});
+
+			// click tracking
+			firstResult.trigger('click', { force: true });
+			cy.wait(`@beacon2/${pageType}/clickthrough`).then((clickthrough) => {
+				expect(clickthrough.response.body).to.have.property('success').to.equal(true);
+			});
 		});
 	});
 });
